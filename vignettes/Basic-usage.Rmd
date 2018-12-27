@@ -1,0 +1,64 @@
+---
+title: "Basic usage of tidyVA"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basic usage of tidyVA}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+To get the most out of _tidyVA_, it is best to also load the _tidyverse_ package.
+
+```{r}
+library(tidyverse)
+
+devtools::install_github("iecastro/tidyVA")
+
+```
+
+_tidyVA_ has datasets ....
+
+For this example we'll use the submarket dataset.  This is a `tidy` dataframe that includes simple features geometry for VHA submarket regions.  [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties)
+
+```{r}
+data("submarket")
+
+ggplot() + geom_sf(data=submarket, fill = NA)
+
+```
+
+Although accurate, this output is not very easy to work with. The major function in _tidyVA_: `shift_geo` will project and repositon Alaska and Hawaii. 
+
+*Functionality for other locations served by VHA (i.e. Guam and Puerto Rico, among others) is in development*
+
+```{r}
+shift_geo(submarket) %>% 
+  ggplot() + geom_sf(fill = NA) +
+  theme_minimal()
+
+```
+
+VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one or more counties. Since each VISN is defined in a hierarchy, this dataset contains attributes of all echelons above submarket - that is, Market and VISN.
+```{r}
+
+submarket <- shift_geo(submarket)
+
+ggplot() + geom_sf(data = submarket, aes(fill = VISN), color = NA) +
+  geom_sf(data = submarket, fill = NA, color = "#ffffff", size = .5) + 
+  theme_minimal() + theme(legend.position = "bottom") +
+  scale_fill_discrete()
+ 
+
+```
+
+Alternatively, you can aggregate this dataset to the VISN level, and use as needed.  Keep in mind that VHA submarkets in the Caribbean and the Pacific Ocean, are not included - thus, VISNs 21 and 8 are not fully represented.
+
+```{r}
+visn <- submarket %>% group_by(VISN) %>% summarise()
+
+ggplot() + geom_sf(data = visn, aes(fill = VISN), show.legend = FALSE) +
+ theme_minimal()
+
+```
+
+This aggregated data become easier to use than the 
