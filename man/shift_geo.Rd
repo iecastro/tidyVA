@@ -17,9 +17,10 @@ shift_geo(data)
              \url{https://geocompr.robinlovelace.net/geometric-operations.html}
 
 @examples
- shift_geo(submarket) %>% ggplot() +
- geom_sf(color = "#ffffff", size=.5, aes(fill = VISN)) +
- theme_minimal() + scale_fill_viridis_d()
+ shift_geo(submarket) %>%
+ ggplot() +
+ geom_sf() +
+ theme_minimal()
 
 @export
 }

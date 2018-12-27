@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "ivan.castro@va.gov")
 Description: What the package does (one paragraph).
-License: What license is it under?
+License: MIT + file LICENSE
 Depends: 
     R (>= 3.5.1)
 Encoding: UTF-8
