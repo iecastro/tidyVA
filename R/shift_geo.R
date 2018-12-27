@@ -9,13 +9,14 @@
 #'              \url{https://geocompr.robinlovelace.net/geometric-operations.html}
 #'
 #'  @examples
-#'  shift_geo(submarket) %>% ggplot() +
-#'  geom_sf(color = "#ffffff", size=.5, aes(fill = VISN)) +
-#'  theme_minimal() + scale_fill_viridis_d()
+#'  shift_geo(submarket) %>%
+#'  ggplot() +
+#'  geom_sf() +
+#'  theme_minimal()
 #'
 #'  @export
 
-shift_geo <- function(data){ ## currently only for submarket & sector shapefiles
+shift_geo <- function(data){
 
   # convert to Albers equal area
   proj <- "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs"
@@ -25,9 +26,9 @@ shift_geo <- function(data){ ## currently only for submarket & sector shapefiles
     matrix(c(cos(r), sin(r), -sin(r), cos(r)), nrow = 2, ncol = 2)
   }
 
-  proj_aea <- st_transform(data,proj)
-
-  if(data == tidyVA::states)
+   data <- st_transform(data,proj)
+   states <- tidyVA::states %>% st_transform(proj)
+   proj_aea <- st_intersection(states, data)
 
   # extract, then rotate, shrink & move alaska (and reset projection)
   alaska <- proj_aea %>% filter(STATEFP == "02")
