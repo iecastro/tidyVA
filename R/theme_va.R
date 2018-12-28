@@ -61,11 +61,10 @@ theme_va <- function(base_family = "", base_size = 11.5,
     ret <- ret + theme(panel.grid=element_line(color=grid_col, size=0.2))
     ret <- ret + theme(panel.grid.major=element_line(color=grid_col, size=0.2))
     ret <- ret + theme(panel.grid.minor=element_line(color=grid_col, size=0.15))
-    ret <- ret + theme(panel.grid.major.x	= element_line(color = "black", size=0.15))
 
     if (inherits(grid, "character")) {
-      if (regexpr("X", grid)[1] < 0) ret <- ret + theme(panel.grid.major.x=element_blank())
-      if (regexpr("Y", grid)[1] < 0) ret <- ret + theme(panel.grid.major.y=element_blank())
+      if (regexpr("X", grid)[1] < 0) ret <- ret + theme(panel.grid.major.x=element_line(color = "black", size=0.15))
+      if (regexpr("Y", grid)[1] < 0) ret <- ret + theme(panel.grid.major.y=element_line(color = "black", size=0.15))
       if (regexpr("x", grid)[1] < 0) ret <- ret + theme(panel.grid.minor.x=element_blank())
       if (regexpr("y", grid)[1] < 0) ret <- ret + theme(panel.grid.minor.y=element_blank())
     }
@@ -112,11 +111,13 @@ theme_va <- function(base_family = "", base_size = 11.5,
 
   ret <- ret + theme(axis.text.x=element_text(size=axis_text_size, margin=margin(t=0), color = "black"))
   ret <- ret + theme(axis.text.y=element_text(size=axis_text_size, margin=margin(r=0), color = "black"))
-  ret <- ret + theme(axis.title=element_text(size=axis_title_size, family=axis_title_family,color = "#062635"))
+  ret <- ret + theme(axis.title=element_text(size=axis_title_size, family=axis_title_family))
   ret <- ret + theme(axis.title.x=element_text(hjust=xj, size=axis_title_size,
-                                               family=axis_title_family, face=axis_title_face))
+                                               family=axis_title_family, face=axis_title_face,
+                                               color = "#062635"))
   ret <- ret + theme(axis.title.y=element_text(hjust=yj, size=axis_title_size,
-                                               family=axis_title_family, face=axis_title_face))
+                                               family=axis_title_family, face=axis_title_face,
+                                               color = "#062635"))
   ret <- ret + theme(axis.title.y.right=element_text(hjust=yj, size=axis_title_size, angle=90,
                                                      family=axis_title_family, face=axis_title_face))
   ret <- ret + theme(strip.text=element_text(hjust=0, size=strip_text_size,
