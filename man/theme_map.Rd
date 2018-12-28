@@ -7,13 +7,14 @@
 theme_map(...)
 }
 \arguments{
-\item{...}{defaults are preset
-
- @examples
- ggplot() +
- geom_sf(data) +
- theme_map()}
+\item{...}{defaults are preset}
 }
 \description{
 Minimal ggplot theme for plotting sf without axis text
+}
+\examples{
+ ggplot() +
+ geom_sf(data) +
+ theme_map()
+
 }

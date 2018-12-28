@@ -1,6 +1,5 @@
 ---
 title: "VA Open Data"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Mashup with Open Data}
