@@ -65,11 +65,12 @@ To get the most out of __tidyVA__, it is best to also load the tidyverse package
 library(tidyverse)
 
 data("submarket")
+
 ggplot() + geom_sf(data=submarket, fill = NA)
 
 ```
 
-Although accurate, this output is not very easy to work with. The major function in __tidyVA__: `shift_geo()` will project and repositon Alaska and Hawaii. 
+Although accurate, this output is not very easy to work with.  But, since this is now in tidy format, we can easily filter and manipulate the data. The major function in __tidyVA__: `shift_geo()` will project and repositon Alaska and Hawaii. 
 
 *Functionality for other locations served by VHA (i.e. Guam and Puerto Rico, among others) is in development*
 
@@ -97,6 +98,7 @@ ggplot() +
 ```
 
 Alternatively, you can aggregate this dataset to the VISN level, and use as needed.  Keep in mind that VHA submarkets in the Caribbean and the Pacific Ocean, are not included - thus, VISNs 21 and 8 are not fully represented.
+
 
 ```{r}
 visn <- submarket %>% group_by(VISN) %>% summarise()
@@ -149,9 +151,41 @@ visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>%
 
 ```
 
+## Other Functions 
+
+__tidyVA__ also includes ggplot themes: `theme_map()` and `theme_va()`. 
+
+
+### Map Theme
+This a simple modification to the minimal theme which removes the axis text.
+
+
+```{r}
+visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
+  ggplot() + geom_sf(aes(fill = NAME)) +
+  scale_fill_viridis_d() +
+  theme_map()
+```
+
+
+### VA Theme
+This is a more intricate theme with several possible parameters.  The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), but I have modified and set some defaults.
+
+```{r}
+data("visn")
+
+visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
+  geom_col() + labs(x = "VISN", y = "Shape Area", caption = "CRS - EPSG:4326") +
+  ggtitle("Shape Area of VA Service Networks", subtitle = "This is an example plot") +
+  theme_va(grid = "X")
+
+```
+
+
 # Info
 
-Development of this package is partly supported by a research grant from the National Institute on Alcohol Abuse and Alcoholism - NIH Grant #R34AA026745-01
+Development of this package is partly supported by a research grant from the National Institute on Alcohol Abuse and Alcoholism - NIH Grant #R34AA026745-01.
 
+This product is not endorsed nor certified by either the VA or NIH/NIAAA.
 
 

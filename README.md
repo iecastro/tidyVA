@@ -54,12 +54,13 @@ To get the most out of **tidyVA**, it is best to also load the tidyverse package
 library(tidyverse)
 
 data("submarket")
+
 ggplot() + geom_sf(data=submarket, fill = NA)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-Although accurate, this output is not very easy to work with. The major function in **tidyVA**: `shift_geo()` will project and repositon Alaska and Hawaii.
+Although accurate, this output is not very easy to work with. But, since this is now in tidy format, we can easily filter and manipulate the data. The major function in **tidyVA**: `shift_geo()` will project and repositon Alaska and Hawaii.
 
 *Functionality for other locations served by VHA (i.e. Guam and Puerto Rico, among others) is in development*
 
@@ -115,10 +116,10 @@ data("visn")
 glimpse(visn)
 #> Observations: 18
 #> Variables: 4
-#> $ VISN       <chr> "01", "02", "04", "05", "06", "07", "08", "09", "10", "12", "15", ...
-#> $ Shape_Leng <dbl> 133.20427, 80.95749, 48.00316, 97.94793, 166.43208, 60.96550, 182....
-#> $ Shape_Area <dbl> 19.12818, 15.28981, 14.14237, 12.04503, 21.12288, 31.41355, 15.342...
-#> $ geometry   <MULTIPOLYGON [Â°]> MULTIPOLYGON (((-73.62286 4..., MULTIPOLYGON (((-74....
+#> $ VISN       <chr> "01", "02", "04", "05", "06", "07", "08", "09", "10...
+#> $ Shape_Leng <dbl> 133.20427, 80.95749, 48.00316, 97.94793, 166.43208,...
+#> $ Shape_Area <dbl> 19.12818, 15.28981, 14.14237, 12.04503, 21.12288, 3...
+#> $ geometry   <MULTIPOLYGON [Â°]> MULTIPOLYGON (((-73.62286 4..., MULTI...
 ```
 
 With simple features we can easily perform geometric operations and gather attributes based on a spatial relationship:
@@ -126,24 +127,25 @@ With simple features we can easily perform geometric operations and gather attri
 ``` r
 visn_st <- st_intersection(states, visn)
 #> although coordinates are longitude/latitude, st_intersection assumes that they are planar
-#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
+#> Warning: attribute variables are assumed to be spatially constant
+#> throughout all geometries
 
 glimpse(visn_st)
 #> Observations: 151
 #> Variables: 13
-#> $ STATEFP    <chr> "09", "50", "23", "25", "33", "36", "44", "09", "34", "42", "50", "25", "36", "10", "...
-#> $ STATENS    <chr> "01779780", "01779802", "01779787", "00606926", "01779794", "01779796", "01219835", "...
-#> $ AFFGEOID   <chr> "0400000US09", "0400000US50", "0400000US23", "0400000US25", "0400000US33", "0400000US...
-#> $ GEOID      <chr> "09", "50", "23", "25", "33", "36", "44", "09", "34", "42", "50", "25", "36", "10", "...
-#> $ STUSPS     <chr> "CT", "VT", "ME", "MA", "NH", "NY", "RI", "CT", "NJ", "PA", "VT", "MA", "NY", "DE", "...
-#> $ NAME       <chr> "Connecticut", "Vermont", "Maine", "Massachusetts", "New Hampshire", "New York", "Rho...
-#> $ LSAD       <chr> "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "...
-#> $ ALAND      <dbl> 12542638347, 23873467535, 79885221885, 20204442852, 23187396994, 122053048985, 267789...
-#> $ AWATER     <dbl> 1815476291, 1031124865, 11748755195, 7130620748, 1028678842, 19243095591, 1323551636,...
-#> $ VISN       <chr> "01", "01", "01", "01", "01", "01", "01", "02", "02", "02", "02", "02", "02", "04", "...
-#> $ Shape_Leng <dbl> 133.20427, 133.20427, 133.20427, 133.20427, 133.20427, 133.20427, 133.20427, 80.95749...
-#> $ Shape_Area <dbl> 19.12818, 19.12818, 19.12818, 19.12818, 19.12818, 19.12818, 19.12818, 15.28981, 15.28...
-#> $ geometry   <GEOMETRY [Â°]> MULTIPOLYGON (((-72.75991 4..., POLYGON ((-73.43774 44.0450..., MULTIPOLYGO...
+#> $ STATEFP    <chr> "09", "50", "23", "25", "33", "36", "44", "09", "34...
+#> $ STATENS    <chr> "01779780", "01779802", "01779787", "00606926", "01...
+#> $ AFFGEOID   <chr> "0400000US09", "0400000US50", "0400000US23", "04000...
+#> $ GEOID      <chr> "09", "50", "23", "25", "33", "36", "44", "09", "34...
+#> $ STUSPS     <chr> "CT", "VT", "ME", "MA", "NH", "NY", "RI", "CT", "NJ...
+#> $ NAME       <chr> "Connecticut", "Vermont", "Maine", "Massachusetts",...
+#> $ LSAD       <chr> "00", "00", "00", "00", "00", "00", "00", "00", "00...
+#> $ ALAND      <dbl> 12542638347, 23873467535, 79885221885, 20204442852,...
+#> $ AWATER     <dbl> 1815476291, 1031124865, 11748755195, 7130620748, 10...
+#> $ VISN       <chr> "01", "01", "01", "01", "01", "01", "01", "02", "02...
+#> $ Shape_Leng <dbl> 133.20427, 133.20427, 133.20427, 133.20427, 133.204...
+#> $ Shape_Area <dbl> 19.12818, 19.12818, 19.12818, 19.12818, 19.12818, 1...
+#> $ geometry   <GEOMETRY [Â°]> MULTIPOLYGON (((-72.75991 4..., POLYGON (...
 ```
 
 We can now filter this dataframe by VISN and keep State attributes
@@ -170,7 +172,42 @@ visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>%
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
+Other Functions
+---------------
+
+**tidyVA** also includes ggplot themes: `theme_map()` and `theme_va()`.
+
+### Map Theme
+
+This a simple modification to the minimal theme which removes the axis text.
+
+``` r
+visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
+  ggplot() + geom_sf(aes(fill = NAME)) +
+  scale_fill_viridis_d() +
+  theme_map()
+```
+
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+
+### VA Theme
+
+This is a more intricate theme with several possible parameters. The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), but I have modified and set some defaults.
+
+``` r
+data("visn")
+
+visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
+  geom_col() + labs(x = "VISN", y = "Shape Area", caption = "CRS - EPSG:4326") +
+  ggtitle("Shape Area of VA Service Networks", subtitle = "This is an example plot") +
+  theme_va(grid = "X")
+```
+
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+
 Info
 ====
 
-Development of this package is partly supported by a research grant from the National Institute on Alcohol Abuse and Alcoholism - NIH Grant \#R34AA026745-01
+Development of this package is partly supported by a research grant from the National Institute on Alcohol Abuse and Alcoholism - NIH Grant \#R34AA026745-01.
+
+This product is not endorsed nor certified by either the VA or NIH/NIAAA.
