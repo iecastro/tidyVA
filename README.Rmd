@@ -17,13 +17,13 @@ knitr::opts_chunk$set(
 ```
 # tidyVA
 
-The goal of tidyVA is to provide [simple features](https://r-spatial.github.io/sf/articles/sf1.html) of Veterans Health Administration geographies.  Data included are `tidy` dataframes of VHA spatial data obtained from [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties).
+The goal of **tidyVA** is to provide [simple features](https://r-spatial.github.io/sf/articles/sf1.html) of Veterans Health Administration geographies.  Data included are *tidy* dataframes of VHA spatial data obtained from [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties).
 
 The benefit of simple features in R is that they allow for [tidy spatial analysis](https://edzer.github.io/UseR2017/geostat2018.html#tidyverse-list-columns).
 
 ## Installation
 
-You can install *tidyVA* from GitHub with:
+You can install **tidyVA** from GitHub with:
 
 ``` r
 devtools::install_github("iecastro/tidyVA")
@@ -33,24 +33,24 @@ devtools::install_github("iecastro/tidyVA")
 
 The following datasets have been converted to sf tibbles and have a common CRS - EPSG: 4326.
 
-Summarzed descriptions from [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties)
+Summarized descriptions from [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties)
 
 
-*`county`: The county layer is the base geographic unit of the VISN-Market-Submarket-Sector-County hierarchy. 
+-`county`: The county layer is the base geographic unit of the VISN-Market-Submarket-Sector-County hierarchy. 
 
-*`sector`: A sector is a cluster of geographically adjacent counties within a VA Submarket.
+-`sector`: A sector is a cluster of geographically adjacent counties within a VA Submarket.
 
-*`submarket`: Submarkets reflect a clustering of the enrollee population within a market and are an aggregation of Sectors.
+-`submarket`: Submarkets reflect a clustering of the enrollee population within a market and are an aggregation of Sectors.
 
-*`market`: Each market is built from submarkets and represent an aggregated geographic area having sufficient population and geographic size to benefit from planning healthcare services. Markets cross state borders where neccesary to keep the catchment area within the same market 
+-`market`: Each market is built from submarkets and represent an aggregated geographic area having sufficient population and geographic size to benefit from planning healthcare services. Markets cross state borders where neccesary to keep the catchment area within the same market 
 
-*`visn`: VISNs are the upper echelon in the VHA hierarchy. VISN boundaries align with those of their constituent markets and can span across non-contiguous areas.
+-`visn`: VISNs are the upper echelon in the VHA hierarchy. VISN boundaries align with those of their constituent markets and can span across non-contiguous areas.
 
 ### Other Data
 
-*`states`: Simple features of states and territories of the US (CRS - EPSG: 4326).  Used for spatial joins and geometric manipulations.
+-`states`: Simple features of states and territories of the US (CRS - EPSG: 4326).  Used for spatial joins and geometric manipulations.
 
-*`VAloc`: Simple features (CRS - EPSG: 4326) of all VA facilities - from all Administrations: Veterans Health Administration, Veterans Benefits Administration, and National Cemetery Administration
+-`VAloc`: Simple features (CRS - EPSG: 4326) of all VA facilities - from all Administrations: Veterans Health Administration, Veterans Benefits Administration, and National Cemetery Administration
 
 
 ## Example
@@ -59,7 +59,7 @@ This is a basic example which shows you how to solve a common problem:
 
 VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one or more counties. Since each VISN is defined in a hierarchy, this dataset contains attributes of all echelons above submarket - that is, Market and VISN.
 
-To get the most out of _tidyVA_, it is best to also load the _tidyverse_ package.
+To get the most out of __tidyVA__, it is best to also load the tidyverse package.
 
 ```{r example}
 library(tidyverse)
@@ -69,7 +69,7 @@ ggplot() + geom_sf(data=submarket, fill = NA)
 
 ```
 
-Although accurate, this output is not very easy to work with. The major function in _tidyVA_: `shift_geo` will project and repositon Alaska and Hawaii. 
+Although accurate, this output is not very easy to work with. The major function in __tidyVA__: `shift_geo()` will project and repositon Alaska and Hawaii. 
 
 *Functionality for other locations served by VHA (i.e. Guam and Puerto Rico, among others) is in development*
 
@@ -92,7 +92,7 @@ ggplot() +
   # layer 2 is mapped to show all submarkets 
   geom_sf(data = submarket, fill = NA, color = "#ffffff", size = .5) + 
   theme_minimal() + theme(legend.position = "bottom") +
-  scale_fill_discrete()
+  scale_fill_viridis_d()
 
 ```
 
@@ -122,17 +122,17 @@ With simple features we can easily perform geometric operations and gather attri
 
 ```{r}
 visn_st <- st_intersection(states, visn)
+
 glimpse(visn_st)
 
 ```
 
-We can now filter this data by VISN and keeping State attributes
+We can now filter this dataframe by VISN and keep State attributes
 
 ```{r}
 
 visn_st %>% filter(VISN %in% c("01","02")) %>% 
-  #group_by(VISN) %>% summarise() %>% 
-  ggplot() + geom_sf(aes(fill = VISN)) +
+  ggplot() + geom_sf(aes(fill = VISN), color = "#ffffff") +
   scale_fill_viridis_d(option = "cividis") +
   theme_minimal()
 
@@ -148,6 +148,10 @@ visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>%
   theme_minimal()
 
 ```
+
+# Info
+
+Development of this package is partly supported by a research grant from the National Institute on Alcohol Abuse and Alcoholism - NIH Grant #R34AA026745-01
 
 
 
