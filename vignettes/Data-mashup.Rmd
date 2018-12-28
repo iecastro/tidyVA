@@ -7,7 +7,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-To get the most out of _tidyVA_, it is best to also load the _tidyverse_ package.
+To get the most out of __tidyVA__, it is best to also load the __tidyverse__ package.
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -16,11 +16,12 @@ library(sf)
 
 #devtools::install_github("iecastro/tidyVA")
 
-#data("sector")
-#data("VAloc")
+data("sector")
+data("VAloc")
 
 ```
 
+### Import from VA Open Data
 ```{r}
 ptsd <- jsonlite::fromJSON("https://www.data.va.gov/sites/default/files/NEPEC_Overview_PTSD_FY15.json",
                            "text", simplifyDataFrame = TRUE) %>% as.tibble()
@@ -28,7 +29,7 @@ ptsd <- jsonlite::fromJSON("https://www.data.va.gov/sites/default/files/NEPEC_Ov
 ptsd$Value <- as.numeric(ptsd$Value)
 ```
 
-## Number of Veterans with PTSD by VISN
+## Number of Veterans with PTSD by VISN during FY2015
 
 Lets highlight the Northeastern and Mid-Atlantic regions
 
@@ -36,10 +37,12 @@ Lets highlight the Northeastern and Mid-Atlantic regions
 
 visn_data <- ptsd %>% filter(Category == "VISN-level Stats" & Item == "N with PTSD")
 
-visn_data %>% mutate(NEMA = case_when(Location %in% c("VISN1","VISN2","VISN4","VISN5","VISN6") ~ "yes",
-                                   !Location %in% c("VISN1","VISN2","VISN4","VISN5","VISN6") ~ "no")) %>%
+visn_data %>% 
+  mutate(NEMA = case_when(Location %in% c("VISN1","VISN2","VISN4","VISN5","VISN6") ~ "yes",
+                          !Location %in% c("VISN1","VISN2","VISN4","VISN5","VISN6") ~ "no")) %>%
   ggplot(aes(reorder(Location, Value), Value, fill=NEMA)) + 
-  geom_col() + coord_flip() + scale_fill_manual(values = c("yes" = "darkred", "no" = "gray50"), guide = FALSE) +
+  geom_col() + coord_flip() + 
+  scale_fill_manual(values = c("yes" = "darkred", "no" = "gray50"), guide = FALSE) +
   theme_minimal() + theme(axis.text = element_text(color = "black")) +
   labs(y = "", x = " ") + scale_y_continuous(labels = scales::comma)
   
@@ -54,35 +57,52 @@ visn_geo <- sector %>% filter(VISN %in% c("01","02","04","05","06")) %>%
   group_by(VISN) %>% summarise()
 
 NEMA <- visn_data %>% filter(Location %in% c("VISN1","VISN2","VISN4","VISN5","VISN6")) %>%
-  mutate(VISN = case_when(Location == "VISN1" ~ "01", Location == "VISN2" ~ "02", Location == "VISN4" ~ "04",
-                          Location == "VISN5" ~ "05", Location == "VISN" ~ "06"))
+  mutate(VISN = case_when(Location == "VISN1" ~ "01", Location == "VISN2" ~ "02", 
+                          Location == "VISN4" ~ "04",Location == "VISN5" ~ "05", 
+                          Location == "VISN" ~ "06"))
 
 visn <- left_join(visn_geo,NEMA, by = "VISN") 
 
 ```
 
+Filter Health Administration from `VAloc` data
 
 ```{r}
 
 vha <- VAloc %>% filter(VAAdministration == "VHA") %>% 
   rename(Location = StationNumber) %>% select(Location, Shape)
 
+```
+
+Filter station-level statistics from PTSD data. Merge to facilities simple features and subset locations in the Northeast and Mid-Atlantic based on spatial intersection.
+
+```{r}
 sites <- ptsd %>% filter(Category == "Station-Level Stats" & Item == "% of Veterans with PTSD that received any MH care") %>% mutate(pct = Value /100)
 
-sites <- left_join(sites,vha, by = "Location") %>% st_as_sf() %>%
+sites <- left_join(sites,vha, by = "Location") %>% 
+  st_as_sf() %>%
   st_intersection(visn)
 
 ```
 
+These data now include station-level statistics for *% of Veterans with PTSD that received any MH care*, *location (facility) number*, and a *simple feature geometry* for each site, as well as VISN-level data.
+
+```{r}
+str(sites)
+```
 
 
 ```{r}
 
 ggplot() + geom_sf(data = visn, aes(fill = Value), color = NA) +
     geom_sf(data = visn, fill = NA, color = "#ffffff") +
-    geom_sf(data = sites, fill = NA, color = "darkred", aes(size = pct), show.legend = "point") +
+    geom_sf(data = sites, fill = NA, color = "darkred", 
+            aes(size = pct), show.legend = "point") +
     scale_fill_viridis_c(labels = scales::comma) +
-    scale_size_continuous(labels = scales::percent)
+    scale_size_continuous(labels = scales::percent) +
+  labs(fill = "N with PTSD \n at VISN level", 
+       size = "% of Veterans with PTSD \nwith any MH care \nStation-level") +
+  theme_minimal() + theme(axis.text = element_blank())
 
 ```
 
