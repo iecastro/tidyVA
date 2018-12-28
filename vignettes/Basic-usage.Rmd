@@ -1,5 +1,6 @@
 ---
 title: "Basic usage of tidyVA"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Basic usage of tidyVA}
@@ -11,12 +12,10 @@ To get the most out of __tidyVA__, it is best to also load the __tidyverse__ pac
 
 ```{r}
 library(tidyverse)
-
-devtools::install_github("iecastro/tidyVA")
-
+library(tidyVA)
 ```
 
-_tidyVA_ has datasets of VHA geographies in simple features class.
+__tidyVA__ includes simple features class tibbles of VHA geographies.
 
 For this example we'll use the submarket dataset.  This is a `tidy` dataframe that includes simple features geometry for VHA submarket regions.  [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties)
 

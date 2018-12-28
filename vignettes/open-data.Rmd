@@ -1,27 +1,26 @@
 ---
 title: "VA Open Data"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{VA Open Data}
+  %\VignetteIndexEntry{Mashup with Open Data}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
 
-To get the most out of __tidyVA__, it is best to also load the __tidyverse__ package.
+To get the most out of __tidyVA__ data, it is best to also load the __tidyverse__ package.
 
-```{r setup, include=FALSE}
+```{r setup, include=TRUE}
 library(tidyverse)
-library(tidycensus)
-library(sf)
+library(tidyVA)
 
-#devtools::install_github("iecastro/tidyVA")
-
+# load packaged data to environment
 data("sector")
 data("VAloc")
-
 ```
 
-### Import from VA Open Data
+### Import PTSD statistics from VA Open Data
+
 ```{r}
 ptsd <- jsonlite::fromJSON("https://www.data.va.gov/sites/default/files/NEPEC_Overview_PTSD_FY15.json",
                            "text", simplifyDataFrame = TRUE) %>% as.tibble()
@@ -101,7 +100,7 @@ ggplot() + geom_sf(data = visn, aes(fill = Value), color = NA) +
     scale_fill_viridis_c(labels = scales::comma) +
     scale_size_continuous(labels = scales::percent) +
   labs(fill = "N with PTSD \n at VISN level", 
-       size = "% of Veterans with PTSD \nwith any MH care \nStation-level") +
+       size = "% of Veterans with PTSD \nwith any MH care at \nStation-level") +
   theme_minimal() + theme(axis.text = element_blank())
 
 ```
