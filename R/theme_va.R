@@ -1,6 +1,6 @@
 #' A precise & pristine [ggplot2] theme with opinionated defaults and an emphasis on typography
 #'
-#' from hrbrthemes
+#' modified from hrbrthemes
 #'
 #' @param base_family,base_size base font family and size
 #' @param plot_title_family,plot_title_face,plot_title_size,plot_title_margin plot title family, face, size and margi
@@ -28,40 +28,24 @@
 #' # seminal scatterplot
 #' ggplot(mtcars, aes(mpg, wt)) +
 #'   geom_point() +
-#'   labs(x="Fuel effiiency (mpg)", y="Weight (tons)",
+#'   labs(x="Fuel efficiency (mpg)", y="Weight (tons)",
 #'        title="Seminal ggplot2 scatterplot example",
 #'        subtitle="A plot that is only useful for demonstration purposes",
 #'        caption="Brought to you by the letter 'g'") +
 #'   theme_ipsum()
-#'
-#' # seminal bar chart
-#'
-#' update_geom_font_defaults()
-#'
-#' count(mpg, class) %>%
-#'   ggplot(aes(class, n)) +
-#'   geom_col() +
-#'   geom_text(aes(label=n), nudge_y=3) +
-#'   labs(x="Fuel efficiency (mpg)", y="Weight (tons)",
-#'        title="Seminal ggplot2 bar chart example",
-#'        subtitle="A plot that is only useful for demonstration purposes",
-#'        caption="Brought to you by the letter 'g'") +
-#'   theme_ipsum(grid="Y") +
-#'   theme(axis.text.y=element_blank())
 #' }
 
-
-theme_ipsum <- function(base_family="Arial Narrow", base_size = 11.5,
-                        plot_title_family=base_family, plot_title_size = 15,
+theme_va <- function(base_family = "", base_size = 11.5,
+                        plot_title_family=base_family, plot_title_size = 14,
                         plot_title_face="bold", plot_title_margin = 10,
-                        subtitle_family=base_family, subtitle_size = 11,
+                        subtitle_family=base_family, subtitle_size = 12,
                         subtitle_face = "plain", subtitle_margin = 15,
                         strip_text_family = base_family, strip_text_size = 12,
                         strip_text_face = "plain",
                         caption_family = base_family, caption_size = 9,
-                        caption_face = "italic", caption_margin = 10,
+                        caption_face = "bold.italic", caption_margin = 10,
                         axis_text_size = 9,
-                        axis_title_family = subtitle_family, axis_title_size = 10.5,
+                        axis_title_family = subtitle_family, axis_title_size = 10,
                         axis_title_face = "plain", axis_title_just = "rt",
                         plot_margin = margin(15, 15, 15, 15),
                         grid_col = "#cccccc", grid = TRUE,
@@ -77,6 +61,7 @@ theme_ipsum <- function(base_family="Arial Narrow", base_size = 11.5,
     ret <- ret + theme(panel.grid=element_line(color=grid_col, size=0.2))
     ret <- ret + theme(panel.grid.major=element_line(color=grid_col, size=0.2))
     ret <- ret + theme(panel.grid.minor=element_line(color=grid_col, size=0.15))
+    ret <- ret + theme(panel.grid.major.x	= element_line(color = "black", size=0.15))
 
     if (inherits(grid, "character")) {
       if (regexpr("X", grid)[1] < 0) ret <- ret + theme(panel.grid.major.x=element_blank())
@@ -125,9 +110,9 @@ theme_ipsum <- function(base_family="Arial Narrow", base_size = 11.5,
   xj <- switch(tolower(substr(axis_title_just, 1, 1)), b=0, l=0, m=0.5, c=0.5, r=1, t=1)
   yj <- switch(tolower(substr(axis_title_just, 2, 2)), b=0, l=0, m=0.5, c=0.5, r=1, t=1)
 
-  ret <- ret + theme(axis.text.x=element_text(size=axis_text_size, margin=margin(t=0)))
-  ret <- ret + theme(axis.text.y=element_text(size=axis_text_size, margin=margin(r=0)))
-  ret <- ret + theme(axis.title=element_text(size=axis_title_size, family=axis_title_family))
+  ret <- ret + theme(axis.text.x=element_text(size=axis_text_size, margin=margin(t=0), color = "black"))
+  ret <- ret + theme(axis.text.y=element_text(size=axis_text_size, margin=margin(r=0), color = "black"))
+  ret <- ret + theme(axis.title=element_text(size=axis_title_size, family=axis_title_family,color = "#062635"))
   ret <- ret + theme(axis.title.x=element_text(hjust=xj, size=axis_title_size,
                                                family=axis_title_family, face=axis_title_face))
   ret <- ret + theme(axis.title.y=element_text(hjust=yj, size=axis_title_size,
@@ -139,13 +124,16 @@ theme_ipsum <- function(base_family="Arial Narrow", base_size = 11.5,
   ret <- ret + theme(panel.spacing=grid::unit(2, "lines"))
   ret <- ret + theme(plot.title=element_text(hjust=0, size=plot_title_size,
                                              margin=margin(b=plot_title_margin),
-                                             family=plot_title_family, face=plot_title_face))
+                                             family=plot_title_family, face=plot_title_face,
+                                             color = "#0a4c6a"))
   ret <- ret + theme(plot.subtitle=element_text(hjust=0, size=subtitle_size,
                                                 margin=margin(b=subtitle_margin),
-                                                family=subtitle_family, face=subtitle_face))
+                                                family=subtitle_family, face=subtitle_face,
+                                                color = "#062635"))
   ret <- ret + theme(plot.caption=element_text(hjust=1, size=caption_size,
                                                margin=margin(t=caption_margin),
-                                               family=caption_family, face=caption_face))
+                                               family=caption_family, face=caption_face,
+                                               color = "#062635"))
   ret <- ret + theme(plot.margin=plot_margin)
 
   ret

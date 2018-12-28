@@ -2,7 +2,7 @@
 #'
 #' @param ... defaults are preset
 #'
-#'  @examples
+#' @examples
 #'  ggplot() +
 #'  geom_sf(data) +
 #'  theme_map()
