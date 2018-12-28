@@ -1,5 +1,5 @@
 Package: tidyVA
-Title: What the Package Does (one line, title case)
+Title: Tidy simple features of VHA geographies
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Ivan",
