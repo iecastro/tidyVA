@@ -30,7 +30,7 @@ ptsd$Value <- as.numeric(ptsd$Value)
 
 ## Number of Veterans with PTSD by VISN during FY2015
 
-Lets highlight the Northeastern and Mid-Atlantic regions
+Lets highlight VISNs in the Northeastern and Mid-Atlantic regions and see how the numbers compare to other regions.
 
 ```{r}
 
@@ -41,9 +41,12 @@ visn_data %>%
                           !Location %in% c("VISN1","VISN2","VISN4","VISN5","VISN6") ~ "no")) %>%
   ggplot(aes(reorder(Location, Value), Value, fill=NEMA)) + 
   geom_col() + coord_flip() + 
-  scale_fill_manual(values = c("yes" = "darkred", "no" = "gray50"), guide = FALSE) +
-  theme_minimal() + theme(axis.text = element_text(color = "black")) +
-  labs(y = "", x = " ") + scale_y_continuous(labels = scales::comma)
+  scale_fill_manual(values = c("yes" = "#fdbf11", "no" = "gray50"), guide = FALSE) +
+  labs(x = "", y = "Counts aggregated to the VISN level", caption = "Source: data.va.gov") + 
+  scale_y_continuous(labels = scales::comma) +
+  ggtitle("VISNs 7 & 16 have the most enrolled Veterans \nwith a PTSD diagnosis",
+          subtitle = "Data from FY 2015") +
+  theme_va()
   
 
 ```
@@ -101,7 +104,7 @@ ggplot() + geom_sf(data = visn, aes(fill = Value), color = NA) +
     scale_size_continuous(labels = scales::percent) +
   labs(fill = "N with PTSD \n at VISN level", 
        size = "% of Veterans with PTSD \nwith any MH care at \nStation-level") +
-  theme_minimal() + theme(axis.text = element_blank())
+  theme_map()
 
 ```
 
