@@ -1,11 +1,20 @@
 ---
-title: "Basic usage of tidyVA"
+title: "Basic Usage of tidyVA"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Basic usage of tidyVA}
+  %\VignetteIndexEntry{Basic Usage of tidyVA}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 ---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 
 ```{r}
