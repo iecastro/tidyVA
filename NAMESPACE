@@ -2,7 +2,6 @@
 
 export("%>%")
 export(shift_geo)
-export(theme_map)
 export(theme_va)
 import(dplyr)
 import(sf)

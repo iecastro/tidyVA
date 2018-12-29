@@ -16,7 +16,8 @@ theme_va(base_family = "", base_size = 11.5,
   axis_title_family = subtitle_family, axis_title_size = 10,
   axis_title_face = "plain", axis_title_just = "rt",
   plot_margin = margin(15, 15, 15, 15), grid_col = "#cccccc",
-  grid = TRUE, axis_col = "#cccccc", axis = FALSE, ticks = FALSE)
+  grid = TRUE, map = FALSE, axis_col = "#cccccc", axis = FALSE,
+  ticks = FALSE)
 }
 \arguments{
 \item{base_family, base_size}{base font family and size}
