@@ -48,7 +48,7 @@ theme_va <- function(base_family = "", base_size = 11.5,
                         axis_title_family = subtitle_family, axis_title_size = 10,
                         axis_title_face = "plain", axis_title_just = "rt",
                         plot_margin = margin(15, 15, 15, 15),
-                        grid_col = "#cccccc", grid = TRUE,
+                        grid_col = "#cccccc", grid = TRUE, map = FALSE,
                         axis_col = "#cccccc", axis = FALSE, ticks = FALSE) {
 
   ret <- ggplot2::theme_minimal(base_family=base_family, base_size=base_size)
@@ -109,8 +109,14 @@ theme_va <- function(base_family = "", base_size = 11.5,
   xj <- switch(tolower(substr(axis_title_just, 1, 1)), b=0, l=0, m=0.5, c=0.5, r=1, t=1)
   yj <- switch(tolower(substr(axis_title_just, 2, 2)), b=0, l=0, m=0.5, c=0.5, r=1, t=1)
 
-  ret <- ret + theme(axis.text.x=element_text(size=axis_text_size, margin=margin(t=0), color = "black"))
-  ret <- ret + theme(axis.text.y=element_text(size=axis_text_size, margin=margin(r=0), color = "black"))
+  if(map == TRUE){
+    ret <- ret + theme(axis.text.x=element_blank())
+    ret <- ret + theme(axis.text.y=element_blank())
+  } else {
+    ret <- ret + theme(axis.text.x=element_text(size=axis_text_size, margin=margin(t=0), color = "black"))
+    ret <- ret + theme(axis.text.y=element_text(size=axis_text_size, margin=margin(r=0), color = "black"))
+  }
+
   ret <- ret + theme(axis.title=element_text(size=axis_title_size, family=axis_title_family))
   ret <- ret + theme(axis.title.x=element_text(hjust=xj, size=axis_title_size,
                                                family=axis_title_family, face=axis_title_face,
