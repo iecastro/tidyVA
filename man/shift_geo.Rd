@@ -6,21 +6,24 @@
 \usage{
 shift_geo(data)
 }
-\description{
-@param data The shapefile with the feature geography you want to shift.
-             Currently only supports sector and submarket shapefiles.
+\arguments{
+\item{data}{The shapefile with the feature geography you want to shift.
+Currently only supports sector and submarket shapefiles.}
 }
-\details{
-@return An sf tibble of VHA geographies and attributes
-
-@references \url{ https://github.com/rdinter/rd3albers}
-             \url{https://geocompr.robinlovelace.net/geometric-operations.html}
-
-@examples
- shift_geo(submarket) %>%
+\value{
+An sf tibble of VHA geographies and attributes
+}
+\description{
+Shift VHA geographies for Alaska and Hawaii
+}
+\examples{
+ shift_geo(submarket) \%>\%
  ggplot() +
  geom_sf() +
  theme_minimal()
 
-@export
+}
+\references{
+\url{ https://github.com/rdinter/rd3albers}
+             \url{https://geocompr.robinlovelace.net/geometric-operations.html}
 }

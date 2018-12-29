@@ -1,10 +1,6 @@
 ---
 title: "VA Open Data"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Mashup with Open Data}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+output: rmarkdown::html_document()
 ---
 
 To get the most out of __tidyVA__ data, it is best to also load the __tidyverse__ package.

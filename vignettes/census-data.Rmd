@@ -1,13 +1,9 @@
 ---
 title: "Merging to Census data"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Merging to Census data}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+output: rmarkdown::html_document()
 ---
 
-To get the most out of __tidyVA__, it is best to also load the __tidyverse__ package.
+To get the most out of __tidyVA__, it is easiest to load the __tidyverse__.
 
 ```{r setup, include=FALSE}
 library(tidyverse)

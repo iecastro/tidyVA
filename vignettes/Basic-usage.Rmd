@@ -7,14 +7,14 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-To get the most out of __tidyVA__, it is best to also load the __tidyverse__ package.
 
 ```{r}
-library(tidyverse)
+library(ggplot2)
+library(dplyr)
 library(tidyVA)
 ```
 
-__tidyVA__ includes simple features class tibbles of VHA geographies.
+__tidyVA__ includes simple features tibbles of VHA geographies.
 
 For this example we'll use the submarket dataset.  This is a `tidy` dataframe that includes simple features geometry for VHA submarket regions.  [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties)
 

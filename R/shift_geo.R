@@ -1,20 +1,20 @@
 #'  Shift VHA geographies for Alaska and Hawaii
 #'
-#'  @param data The shapefile with the feature geography you want to shift.
+#' @param data The shapefile with the feature geography you want to shift.
 #'              Currently only supports sector and submarket shapefiles.
 #'
-#'  @return An sf tibble of VHA geographies and attributes
+#' @return An sf tibble of VHA geographies and attributes
 #'
-#'  @references \url{ https://github.com/rdinter/rd3albers}
+#' @references \url{ https://github.com/rdinter/rd3albers}
 #'              \url{https://geocompr.robinlovelace.net/geometric-operations.html}
 #'
-#'  @examples
+#' @examples
 #'  shift_geo(submarket) %>%
 #'  ggplot() +
 #'  geom_sf() +
 #'  theme_minimal()
 #'
-#'  @export
+#' @export
 
 shift_geo <- function(data){
 
@@ -57,8 +57,4 @@ shift_geo <- function(data){
 
   return(out)
 }
-
-
-
-
 
