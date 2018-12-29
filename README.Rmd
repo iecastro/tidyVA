@@ -2,11 +2,11 @@
 output: github_document
 ---
 
+<!-- badges: start -->
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-
 [![Travis build status](https://travis-ci.org/iecastro/tidyVA.svg?branch=master)](https://travis-ci.org/iecastro/tidyVA)
+<!-- badges: end -->
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -60,10 +60,11 @@ This is a basic example which shows you how to solve a common problem:
 
 VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one or more counties. Since each VISN is defined in a hierarchy, this dataset contains attributes of all echelons above submarket - that is, Market and VISN.
 
-To get the most out of __tidyVA__, it is best to also load the tidyverse package.
 
 ```{r example}
-library(tidyverse)
+library(ggplot2)
+library(tidyVA)
+library(dplyr)
 
 data("submarket")
 
@@ -86,7 +87,7 @@ shift_geo(submarket) %>%
 If you create an R object, this object can be mapped multiple times as individual layers:
 
 ```{r}
- submarket <- shift_geo(submarket)
+submarket <- shift_geo(submarket)
 
 ggplot() + 
   # layer 1 is mapped to represent VISNs
@@ -152,25 +153,11 @@ visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>%
 
 ```
 
-## Other Functions 
+## Theme Function
 
-__tidyVA__ also includes ggplot themes: `theme_map()` and `theme_va()`. 
+__tidyVA__ also includes a ggplot themes: `theme_va()`. 
 
-
-### Map Theme
-This a simple modification to the minimal theme which removes the axis text.
-
-
-```{r}
-visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
-  ggplot() + geom_sf(aes(fill = NAME)) +
-  scale_fill_viridis_d() +
-  theme_map()
-```
-
-
-### VA Theme
-This is a more intricate theme with several possible parameters.  The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), but I have modified and set some defaults.
+This is theme has several possible parameters.  The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), but I have modified and set some defaults.
 
 ```{r}
 data("visn")
@@ -180,6 +167,20 @@ visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
   ggtitle("Shape Area of VA Service Networks", subtitle = "This is an example plot") +
   theme_va(grid = "X")
 
+```
+
+### Map Theme
+
+When plotting maps, you may want to remove the axis text from geom_sf(). For this, the `map` argument of `theme_va()` can be set to TRUE.
+
+```{r}
+visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
+  ggplot() + geom_sf(aes(fill = NAME)) +
+  scale_fill_viridis_d(option = "cividis") +
+  labs(caption = "Caption wil go here", fill = "") +
+  ggtitle("Example Plot for Maps", 
+          subtitle = "Cividis Pallete goes well with VA theme") +
+  theme_va(map = TRUE) 
 ```
 
 

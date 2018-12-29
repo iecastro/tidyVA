@@ -1,9 +1,7 @@
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+<!-- badges: start -->
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) [![Travis build status](https://travis-ci.org/iecastro/tidyVA.svg?branch=master)](https://travis-ci.org/iecastro/tidyVA) <!-- badges: end -->
 
-[![Travis build status](https://travis-ci.org/iecastro/tidyVA.svg?branch=master)](https://travis-ci.org/iecastro/tidyVA)
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 tidyVA
 ======
 
@@ -50,10 +48,10 @@ This is a basic example which shows you how to solve a common problem:
 
 VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one or more counties. Since each VISN is defined in a hierarchy, this dataset contains attributes of all echelons above submarket - that is, Market and VISN.
 
-To get the most out of **tidyVA**, it is best to also load the tidyverse package.
-
 ``` r
-library(tidyverse)
+library(ggplot2)
+library(tidyVA)
+library(dplyr)
 
 data("submarket")
 
@@ -75,12 +73,12 @@ shift_geo(submarket) %>%
 #> Please note: Alaska and Hawaii are being shifted and are not to scale.
 ```
 
-<img src="man/figures/README-unnamed-chunk-1-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" />
 
 If you create an R object, this object can be mapped multiple times as individual layers:
 
 ``` r
- submarket <- shift_geo(submarket)
+submarket <- shift_geo(submarket)
 #> Warning: attribute variables are assumed to be spatially constant
 #> throughout all geometries
 #> Please note: Alaska and Hawaii are being shifted and are not to scale.
@@ -94,7 +92,7 @@ ggplot() +
   scale_fill_viridis_d()
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
 
 Alternatively, you can aggregate this dataset to the VISN level, and use as needed. Keep in mind that VHA submarkets in the Caribbean and the Pacific Ocean, are not included - thus, VISNs 21 and 8 are not fully represented.
 
@@ -105,7 +103,7 @@ ggplot() + geom_sf(data = visn, aes(fill = VISN), show.legend = FALSE) +
  theme_minimal() + scale_fill_viridis_d(option = "cividis")
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" />
 
 ### Spatial intersection
 
@@ -160,7 +158,7 @@ visn_st %>% filter(VISN %in% c("01","02")) %>%
   theme_minimal()
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" />
 
 Or by State, and keeping VISN attributes. New York for example is mostly within VISN 2, but, there are small catchments areas in the Western and Southern parts of the state that are outside VISN 2.
 
@@ -172,29 +170,14 @@ visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>%
   theme_minimal()
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-24-1.png" width="100%" />
 
-Other Functions
----------------
+Theme Function
+--------------
 
-**tidyVA** also includes ggplot themes: `theme_map()` and `theme_va()`.
+**tidyVA** also includes a ggplot themes: `theme_va()`.
 
-### Map Theme
-
-This a simple modification to the minimal theme which removes the axis text.
-
-``` r
-visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
-  ggplot() + geom_sf(aes(fill = NAME)) +
-  scale_fill_viridis_d() +
-  theme_map()
-```
-
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
-
-### VA Theme
-
-This is a more intricate theme with several possible parameters. The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), but I have modified and set some defaults.
+This is theme has several possible parameters. The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), but I have modified and set some defaults.
 
 ``` r
 data("visn")
@@ -205,7 +188,23 @@ visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
   theme_va(grid = "X")
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-25-1.png" width="100%" />
+
+### Map Theme
+
+When plotting maps, you may want to remove the axis text from geom\_sf(). For this, the `map` argument of `theme_va()` can be set to TRUE.
+
+``` r
+visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
+  ggplot() + geom_sf(aes(fill = NAME)) +
+  scale_fill_viridis_d(option = "cividis") +
+  labs(caption = "Caption wil go here", fill = "") +
+  ggtitle("Example Plot for Maps", 
+          subtitle = "Cividis Pallete goes well with VA theme") +
+  theme_va(map = TRUE) 
+```
+
+<img src="man/figures/README-unnamed-chunk-26-1.png" width="100%" />
 
 Info
 ====
