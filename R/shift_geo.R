@@ -8,11 +8,12 @@
 #' @references \url{ https://github.com/rdinter/rd3albers}
 #'              \url{https://geocompr.robinlovelace.net/geometric-operations.html}
 #'
-#' @examples
+#' @examples \dontrun{
 #'  shift_geo(submarket) %>%
 #'  ggplot() +
 #'  geom_sf() +
 #'  theme_minimal()
+#'  }
 #'
 #' @export
 

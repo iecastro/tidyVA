@@ -50,8 +50,18 @@ VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one o
 
 ``` r
 library(ggplot2)
-library(tidyVA)
+#> Warning: package 'ggplot2' was built under R version 3.5.2
 library(dplyr)
+#> Warning: package 'dplyr' was built under R version 3.5.2
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+library(tidyVA)
 
 data("submarket")
 
@@ -70,10 +80,11 @@ shift_geo(submarket) %>%
   theme_minimal()
 #> Warning: attribute variables are assumed to be spatially constant
 #> throughout all geometries
+#> Warning: package 'bindrcpp' was built under R version 3.5.2
 #> Please note: Alaska and Hawaii are being shifted and are not to scale.
 ```
 
-<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 If you create an R object, this object can be mapped multiple times as individual layers:
 
@@ -92,7 +103,7 @@ ggplot() +
   scale_fill_viridis_d()
 ```
 
-<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 Alternatively, you can aggregate this dataset to the VISN level, and use as needed. Keep in mind that VHA submarkets in the Caribbean and the Pacific Ocean, are not included - thus, VISNs 21 and 8 are not fully represented.
 
@@ -103,7 +114,7 @@ ggplot() + geom_sf(data = visn, aes(fill = VISN), show.legend = FALSE) +
  theme_minimal() + scale_fill_viridis_d(option = "cividis")
 ```
 
-<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 ### Spatial intersection
 
@@ -158,7 +169,7 @@ visn_st %>% filter(VISN %in% c("01","02")) %>%
   theme_minimal()
 ```
 
-<img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 Or by State, and keeping VISN attributes. New York for example is mostly within VISN 2, but, there are small catchments areas in the Western and Southern parts of the state that are outside VISN 2.
 
@@ -170,7 +181,7 @@ visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>%
   theme_minimal()
 ```
 
-<img src="man/figures/README-unnamed-chunk-24-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 Theme Function
 --------------
@@ -188,7 +199,7 @@ visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
   theme_va(grid = "X")
 ```
 
-<img src="man/figures/README-unnamed-chunk-25-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 ### Map Theme
 
@@ -204,7 +215,7 @@ visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>%
   theme_va(map = TRUE) 
 ```
 
-<img src="man/figures/README-unnamed-chunk-26-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 Info
 ====

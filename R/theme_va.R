@@ -20,20 +20,6 @@
 #' @references \url{https://hrbrmstr.github.io/hrbrthemes/reference/theme_ipsum.html}
 #'
 #' @export
-#'
-#' @examples \dontrun{
-#' library(ggplot2)
-#' library(dplyr)
-#'
-#' # seminal scatterplot
-#' ggplot(mtcars, aes(mpg, wt)) +
-#'   geom_point() +
-#'   labs(x="Fuel efficiency (mpg)", y="Weight (tons)",
-#'        title="Seminal ggplot2 scatterplot example",
-#'        subtitle="A plot that is only useful for demonstration purposes",
-#'        caption="Brought to you by the letter 'g'") +
-#'   theme_ipsum()
-#' }
 
 theme_va <- function(base_family = "", base_size = 11.5,
                         plot_title_family=base_family, plot_title_size = 14,

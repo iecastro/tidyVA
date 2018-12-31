@@ -17,10 +17,12 @@ An sf tibble of VHA geographies and attributes
 Shift VHA geographies for Alaska and Hawaii
 }
 \examples{
+\dontrun{
  shift_geo(submarket) \%>\%
  ggplot() +
  geom_sf() +
  theme_minimal()
+ }
 
 }
 \references{

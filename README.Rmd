@@ -26,7 +26,8 @@ The benefit of simple features in R is that they allow for [tidy spatial analysi
 
 You can install **tidyVA** from GitHub with:
 
-``` r
+
+```{r eval=FALSE}
 devtools::install_github("iecastro/tidyVA")
 ```
 
@@ -63,8 +64,8 @@ VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one o
 
 ```{r example}
 library(ggplot2)
-library(tidyVA)
 library(dplyr)
+library(tidyVA)
 
 data("submarket")
 

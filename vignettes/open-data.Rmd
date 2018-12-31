@@ -1,6 +1,6 @@
 ---
 title: "VA Open Data"
-output: rmarkdown::html_document()
+output: html_document()
 ---
 
 To get the most out of __tidyVA__ data, it is best to also load the __tidyverse__ package.

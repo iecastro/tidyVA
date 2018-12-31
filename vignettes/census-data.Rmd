@@ -1,6 +1,6 @@
 ---
 title: "Merging to Census data"
-output: rmarkdown::html_document()
+output: html_document()
 ---
 
 To get the most out of __tidyVA__, it is easiest to load the __tidyverse__.

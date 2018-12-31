@@ -53,7 +53,7 @@ submarket <- shift_geo(submarket)
 
 ggplot() + geom_sf(data = submarket, aes(fill = VISN), color = NA) +
   geom_sf(data = submarket, fill = NA, color = "#ffffff", size = .5) + 
-  theme_map() + theme(legend.position = "bottom") +
+  theme_va(map = TRUE) + theme(legend.position = "bottom") +
   scale_fill_viridis_d(option = "cividis")
 
 ```

@@ -51,21 +51,6 @@ theme_va(base_family = "", base_size = 11.5,
 \description{
 modified from hrbrthemes
 }
-\examples{
-\dontrun{
-library(ggplot2)
-library(dplyr)
-
-# seminal scatterplot
-ggplot(mtcars, aes(mpg, wt)) +
-  geom_point() +
-  labs(x="Fuel efficiency (mpg)", y="Weight (tons)",
-       title="Seminal ggplot2 scatterplot example",
-       subtitle="A plot that is only useful for demonstration purposes",
-       caption="Brought to you by the letter 'g'") +
-  theme_ipsum()
-}
-}
 \references{
 \url{https://hrbrmstr.github.io/hrbrthemes/reference/theme_ipsum.html}
 }
