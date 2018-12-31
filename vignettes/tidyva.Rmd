@@ -64,7 +64,7 @@ Alternatively, you can aggregate this dataset to the VISN level, and use as need
 visn <- submarket %>% group_by(VISN) %>% summarise()
 
 ggplot() + geom_sf(data = visn, aes(fill = VISN), show.legend = FALSE) +
- theme_map()
+ theme_va(map = TRUE)
 
 ```
 

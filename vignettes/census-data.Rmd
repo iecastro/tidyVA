@@ -46,7 +46,7 @@ plot <- function(var){
   geom_sf(data = VAHC, aes(fill = var), color = NA) +              #county layer
   geom_sf(data = visn, fill = NA, color = "#ffffff", size = .5) +   #visn layer                 
   scale_fill_viridis_c(labels = scales::comma) +
-  theme_map() + labs(caption = "Source: 2017 ACS 5-year Estimates", fill = "Count")
+  theme_va(map = TRUE) + labs(caption = "Source: 2017 ACS 5-year Estimates", fill = "Count")
 }
     
 plot(VAHC$Total) + ggtitle("Total Veterans with VHA Coverage")
@@ -74,7 +74,7 @@ ggplot() +
   labs(caption = "Source: 2017 ACS 5-year Estimates", fill = "Ratio") +
   ggtitle("Sex ratio of Veterans with VA Health Coverage:",
           subtitle = "calculated as number of Female Veterans \nper 100 Male Veterans") +
-  theme_map()
+  theme_va(map = TRUE)
 
 ```
 
@@ -95,7 +95,7 @@ ggplot() +
        fill = "Ratio") + 
   ggtitle("Sex ratio of Veterans with VA Health Coverage:",
           subtitle = "calculated as number of Female Veterans per 100 \nMale Veterans at the county-level") +
-  theme_map() 
+  theme_va(map = TRUE) 
 
 ```
 
@@ -112,7 +112,7 @@ ggplot() +
        fill = "Count") + 
   ggtitle("Total Veterans with VA Health Coverage", 
           subtitle = "VA Healthcare Markets within VISN 4, NY/NJ, and New England Networks") +
-  theme_map()
+  theme_va(map = TRUE)
 
 ```
 

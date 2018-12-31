@@ -99,7 +99,7 @@ ggplot() + geom_sf(data = visn, aes(fill = Value), color = NA) +
     scale_size_continuous(labels = scales::percent) +
   labs(fill = "N with PTSD \n at VISN level", 
        size = "% of Veterans with PTSD \nwith any MH care at \nStation-level") +
-  theme_map()
+  theme_va(map = TRUE)
 
 ```
 
