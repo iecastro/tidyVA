@@ -15,6 +15,9 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
+devtools::load_all()
+
 ```
 # tidyVA
 
@@ -28,7 +31,7 @@ You can install **tidyVA** from GitHub with:
 
 
 ```{r eval=FALSE}
-devtools::install_github("iecastro/tidyVA")
+remotes::install_github("iecastro/tidyVA")
 ```
 
 ## Datasets
@@ -38,21 +41,21 @@ The following datasets have been converted to sf tibbles and have a common CRS -
 Summarized descriptions from [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties)
 
 
--`county`: The county layer is the base geographic unit of the VISN-Market-Submarket-Sector-County hierarchy. 
+`county`: The county layer is the base geographic unit of the VISN-Market-Submarket-Sector-County hierarchy. 
 
--`sector`: A sector is a cluster of geographically adjacent counties within a VA Submarket.
+`sector`: A sector is a cluster of geographically adjacent counties within a VA Submarket.
 
--`submarket`: Submarkets reflect a clustering of the enrollee population within a market and are an aggregation of Sectors.
+`submarket`: Submarkets reflect a clustering of the enrollee population within a market and are an aggregation of Sectors.
 
--`market`: Each market is built from submarkets and represent an aggregated geographic area having sufficient population and geographic size to benefit from planning healthcare services. Markets cross state borders where neccesary to keep the catchment area within the same market 
+`market`: Each market is built from submarkets and represent an aggregated geographic area having sufficient population and geographic size to benefit from planning healthcare services. Markets cross state borders where neccesary to keep the catchment area within the same market 
 
--`visn`: VISNs are the upper echelon in the VHA hierarchy. VISN boundaries align with those of their constituent markets and can span across non-contiguous areas.
+`visn`: VISNs are the upper echelon in the VHA hierarchy. VISN boundaries align with those of their constituent markets and can span across non-contiguous areas.
 
 ### Other Data
 
--`states`: Simple features of states and territories of the US (CRS - EPSG: 4326).  Used for spatial joins and geometric manipulations.
+`states`: Simple features of states and territories of the US (CRS - EPSG: 4326).  Used for spatial joins and geometric manipulations.
 
--`VAloc`: Simple features (CRS - EPSG: 4326) of all VA facilities - from all Administrations: Veterans Health Administration, Veterans Benefits Administration, and National Cemetery Administration
+`VAloc`: Simple features (CRS - EPSG: 4326) of all VA facilities - from all Administrations: Veterans Health Administration, Veterans Benefits Administration, and National Cemetery Administration
 
 
 ## Example
@@ -74,8 +77,6 @@ ggplot() + geom_sf(data=submarket, fill = NA)
 ```
 
 Although accurate, this output is not very easy to work with.  But, since this is now in tidy format, we can easily filter and manipulate the data. The major function in __tidyVA__: `shift_geo()` will project and repositon Alaska and Hawaii. 
-
-*Functionality for other locations served by VHA (i.e. Guam and Puerto Rico, among others) is in development*
 
 
 ```{r}
@@ -180,7 +181,7 @@ visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>%
   scale_fill_viridis_d(option = "cividis") +
   labs(caption = "Caption wil go here", fill = "") +
   ggtitle("Example Plot for Maps", 
-          subtitle = "Cividis Pallete goes well with VA theme") +
+          subtitle = "Cividis Palette goes well with VA theme") +
   theme_va(map = TRUE) 
 ```
 

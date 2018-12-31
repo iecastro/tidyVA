@@ -1,11 +1,25 @@
 ---
 title: "VA Open Data"
-output: html_document()
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{VA Open Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+devtools::load_all()
+```
 
 To get the most out of __tidyVA__ data, it is best to also load the __tidyverse__ package.
 
-```{r setup, include=TRUE}
+
+```{r}
 library(tidyverse)
 library(tidyVA)
 

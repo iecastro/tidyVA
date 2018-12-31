@@ -1,11 +1,25 @@
 ---
 title: "Merging to Census data"
-output: html_document()
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Merging to Census data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 To get the most out of __tidyVA__, it is easiest to load the __tidyverse__.
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+devtools::load_all()
+```
+
+
+```{r}
 library(tidyverse)
 library(tidycensus)
 library(tidyVA)
@@ -13,8 +27,8 @@ library(tidyVA)
 data("county")
 
 countyshift <- shift_geo(county)
-
 ```
+
 
 ## VA Healthcare Coverage at the county-level
 
