@@ -53,6 +53,7 @@ VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one o
 
 ``` r
 library(ggplot2)
+#> Warning: package 'ggplot2' was built under R version 3.5.2
 library(dplyr)
 #> Warning: package 'dplyr' was built under R version 3.5.2
 #> 
@@ -88,6 +89,7 @@ glimpse(submarket)
 
 ``` r
 visn2 <- submarket %>% filter(VISN == "02")
+#> Warning: package 'bindrcpp' was built under R version 3.5.2
 visn2
 #> Simple feature collection with 10 features and 5 fields
 #> geometry type:  MULTIPOLYGON
@@ -116,7 +118,7 @@ ggplot() +
   geom_sf(data = visn2, fill = NA, color = "#ffffff", size = .25)
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 Functions
 =========
@@ -147,7 +149,7 @@ shift_geo(submarket) %>%
 #> Please note: Alaska and Hawaii are being shifted and are not to scale.
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ### `theme_va`
 
@@ -160,7 +162,7 @@ visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
   theme_va(grid = "X")
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ### `harvest_get`
 
