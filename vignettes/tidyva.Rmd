@@ -1,0 +1,147 @@
+---
+title: "Basic Usage of tidyVA"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basic Usage of tidyVA}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+devtools::load_all()
+library(dplyr)
+library(ggplot2)
+```
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyVA)
+```
+
+__tidyVA__ includes simple features tibbles of VHA geographies.
+
+For this example we'll use the submarket dataset.  This is a `tidy` dataframe that includes simple features geometry for VHA submarket regions.  [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties)
+
+```{r}
+data("submarket")
+
+ggplot() + geom_sf(data=submarket, fill = NA)
+
+```
+
+
+Although accurate, this output is not very easy to work with.  But, since this is now in tidy format, we can easily filter and manipulate the data. The function `shift_geo()` in __tidyVA__ will project and repositon Alaska and Hawaii. 
+
+
+```{r}
+shift_geo(submarket) %>% 
+  ggplot() + geom_sf(fill = NA) +
+  theme_minimal()
+
+```
+
+If you create an R object, this object can be mapped multiple times as individual layers:
+
+```{r}
+submarket <- shift_geo(submarket)
+
+ggplot() + 
+  # layer 1 is mapped to represent VISNs
+  geom_sf(data = submarket, aes(fill = VISN), color = NA) +  
+  # layer 2 is mapped to show all submarkets 
+  geom_sf(data = submarket, fill = NA, color = "#ffffff", size = .5) + 
+  theme_minimal() + theme(legend.position = "bottom") +
+  scale_fill_viridis_d()
+
+```
+
+Alternatively, you can aggregate this dataset to the VISN level, and use as needed.  Keep in mind that VHA submarkets in the Caribbean and the Pacific Ocean, are not included - thus, VISNs 21 and 8 are not fully represented.
+
+
+```{r}
+visn <- submarket %>% group_by(VISN) %>% summarise()
+
+ggplot() + geom_sf(data = visn, aes(fill = VISN), show.legend = FALSE) +
+ theme_minimal() + scale_fill_viridis_d(option = "cividis")
+
+```
+
+# Spatial intersection
+
+A major limitation of the original data is that attributes were present based on a geography's hierachy. The `county` dataset has VHA attributes in addition to State and County attributes.  The `visn` dataset only has a VISN attribute:
+
+```{r}
+data("states")
+data("visn")
+
+glimpse(visn)
+
+```
+
+With simple features we can easily perform geometric operations and gather attributes based on a spatial relationship:
+
+```{r}
+visn_st <- st_intersection(states, visn)
+
+glimpse(visn_st)
+
+```
+
+We can now filter this dataframe by VISN and keep State attributes
+
+```{r}
+
+visn_st %>% filter(VISN %in% c("01","02")) %>% 
+  ggplot() + geom_sf(aes(fill = VISN), color = "#ffffff") +
+  scale_fill_viridis_d(option = "cividis") +
+  theme_minimal()
+
+```
+
+Or by State, and keeping VISN attributes. New York for example is mostly within VISN 2, but, there are small catchments areas in the Western and Southern parts of the state that are outside VISN 2.
+
+```{r}
+
+visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
+  ggplot() + geom_sf(aes(fill = NAME)) +
+  scale_fill_viridis_d() +
+  theme_minimal()
+
+```
+
+# Theme Function
+
+__tidyVA__ also includes a ggplot themes: `theme_va()`. 
+
+This is theme has several possible parameters.  The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), but I have modified and set some defaults.
+
+```{r}
+data("visn")
+
+visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
+  geom_col() + labs(x = "VISN", y = "Shape Area", caption = "CRS - EPSG:4326") +
+  ggtitle("Shape Area of VA Service Networks", subtitle = "This is an example plot") +
+  theme_va(grid = "X")
+
+```
+
+### Map Theme
+
+When plotting maps, you may want to remove the axis text from geom_sf(). For this, the `map` argument of `theme_va()` can be set to TRUE.
+
+```{r}
+visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
+  ggplot() + geom_sf(aes(fill = NAME)) +
+  scale_fill_viridis_d(option = "cividis") +
+  labs(caption = "Caption wil go here", fill = "") +
+  ggtitle("Example Plot for Maps", 
+          subtitle = "Cividis Palette goes well with VA theme") +
+  theme_va(map = TRUE) 
+```

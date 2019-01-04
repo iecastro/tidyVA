@@ -1,0 +1,11 @@
+^open-data\.Rmd$
+^census-data\.Rmd$
+^\.travis\.yml$
+^docs$
+^_pkgdown\.yml$
+^LICENSE\.md$
+^README\.Rmd$
+^tidyVA\.Rproj$
+^\.Rproj\.user$
+^examples$
+^run_setup$
