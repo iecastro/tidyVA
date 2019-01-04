@@ -16,6 +16,7 @@
 #' @param axis_text_size font size of axis text
 #' @param axis add x or y axes? `TRUE`, `FALSE`, "`xy`"
 #' @param ticks ticks if `TRUE` add ticks
+#' @param map if `TRUE` will not display axis text
 #'
 #' @references \url{https://hrbrmstr.github.io/hrbrthemes/reference/theme_ipsum.html}
 #'

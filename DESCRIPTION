@@ -15,7 +15,13 @@ Depends:
 Imports: 
     dplyr,
     magrittr,
-    sf
+    sf,
+    jsonlite,
+    tidyr,
+    purrr,
+    stringr,
+    curl,
+    readxl
 Suggests: 
     ggplot2,
     knitr,

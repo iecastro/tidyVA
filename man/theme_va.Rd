@@ -44,6 +44,8 @@ theme_va(base_family = "", base_size = 11.5,
 
 \item{grid}{panel grid (`TRUE`, `FALSE`, or a combination of `X`, `x`, `Y`, `y`)}
 
+\item{map}{if `TRUE` will not display axis text}
+
 \item{axis}{add x or y axes? `TRUE`, `FALSE`, "`xy`"}
 
 \item{ticks}{ticks if `TRUE` add ticks}
