@@ -14,13 +14,18 @@ knitr::opts_chunk$set(
 )
 
 devtools::load_all()
+library(jsonlite)
+library(ggplot2)
+library(sf)
+library(dplyr)
 ```
 
 To get the most out of __tidyVA__ data, it is best to also load the __tidyverse__ package.
 
 
 ```{r}
-library(tidyverse)
+library(ggplot2)
+library(sf)
 library(tidyVA)
 
 # load packaged data to environment
