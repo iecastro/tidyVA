@@ -88,3 +88,25 @@ ggplot(pop, aes(date, diff, color = Site.x)) +
 
 ``` 
 
+
+```{r}
+
+data %>%filter(Measure =="1. Acute care Standardized Mortality Ratio (SMR)") %>%
+  tidyr::unite(YrQ, Year, Quarter, sep = "-") %>%
+  mutate(date = as.yearqtr(YrQ), 
+         SMR = as.numeric(Value)) %>% 
+  filter(date == "2018-2") %>%
+  ggplot(aes(SMR, Site.x)) +
+  geom_segment(aes(x = 0, y = Site.x, xend = SMR, yend = Site.x)) +
+  geom_point() +
+  geom_vline(xintercept = 0.409, lty = "dashed", color = "darkred") +
+  labs(x = "Standardized Ratio", y = " ") +
+  ggtitle("Acute Care Standardized Mortality Ratio (SMR)",
+          subtitle = "VISN 2 - 2018 Q2") +
+  theme_va(grid = FALSE)
+  
+
+```
+
+
+
