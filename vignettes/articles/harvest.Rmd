@@ -31,7 +31,7 @@ glimpse(links)
 
 ```
 
-An object created with `harvest_get()` can be piped to `harvest_wrngl` to import and tidy the datasets.
+An object created with `harvest_get` can be piped to `harvest_wrngl` to import and tidy the datasets into one tibble.
 
 ```{r}
 data <- links %>% harvest_wrngl()
@@ -39,7 +39,7 @@ data <- links %>% harvest_wrngl()
 data
 ```
 
-
+This can then easily be explored within the __tidyverse__
 
 ```{r}
 unique(data$Measure)
@@ -47,6 +47,9 @@ unique(data$Measure)
 ```
 
 ```{r}
+library(ggplot2)
+library(tidyr)
+library(zoo)
 
 data %>% filter(Measure == "1. Population coverage") %>%
   tidyr::unite(YrQ, Year, Quarter, sep = "-") %>%
