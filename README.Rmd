@@ -25,7 +25,7 @@ The goal of **tidyVA** is to provide [simple features](https://r-spatial.github.
 
 The benefit of simple features in R is that they allow for [tidy spatial analysis](https://edzer.github.io/UseR2017/geostat2018.html#tidyverse-list-columns).
 
-## Installation
+# Installation
 
 You can install **tidyVA** from GitHub with:
 
@@ -34,9 +34,11 @@ You can install **tidyVA** from GitHub with:
 remotes::install_github("iecastro/tidyVA")
 ```
 
-## Datasets
+# Datasets
 
-The following datasets have been converted to sf tibbles and have a common CRS - EPSG: 4326.
+## VHA Geographies 
+
+The following included datasets are sf tibbles of VHA geographies and have a common CRS - EPSG: 4326.
 
 Summarized descriptions from [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties)
 
@@ -76,90 +78,52 @@ ggplot() + geom_sf(data=submarket, fill = NA)
 
 ```
 
-Although accurate, this output is not very easy to work with.  But, since this is now in tidy format, we can easily filter and manipulate the data. The major function in __tidyVA__: `shift_geo()` will project and repositon Alaska and Hawaii. 
+Although accurate, this output is not very easy to work with.  But, since this is in tidy format, we can easily filter and manipulate the data. 
 
+```{r}
+glimpse(submarket)
+
+```
+
+```{r}
+visn2 <- submarket %>% filter(VISN == "02")
+visn2
+
+```
+
+```{r}
+ggplot() + 
+  geom_sf(data=visn2, aes(fill = MARKET), color = NA) +
+  geom_sf(data = visn2, fill = NA, color = "#ffffff", size = .25)
+  
+
+```
+
+# Functions 
+
+`shift_geo()` will project and reposition Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).
+
+`theme_va()` is a ggplot theme with some default colors and plotting parameters. The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), with some modifications and defaults.
+
+### Harvest functions
+
+These functions serve as a homebrewed API for fetching Hospital Performance datasets.  VA Open Data uses a harvesting framework from [DKAN](https://docs.getdkan.com/en/latest/components/harvest.html).  Currently the [VHA Harvest](https://www.data.va.gov/harvest_source/vha-harvest-datasets) only includes hospital performance datasets.
+
+`harvest_get()` will return a tibble of URLs and attributes for each dataset.
+
+`harvest_wrngl()` will import and tidy datasets from an object created with `harvest_get`
+
+## Examples
+
+### `shift_geo` 
 
 ```{r}
 shift_geo(submarket) %>% 
   ggplot() + geom_sf(fill = NA) +
   theme_minimal()
-
 ```
 
-If you create an R object, this object can be mapped multiple times as individual layers:
-
-```{r}
-submarket <- shift_geo(submarket)
-
-ggplot() + 
-  # layer 1 is mapped to represent VISNs
-  geom_sf(data = submarket, aes(fill = VISN), color = NA) +  
-  # layer 2 is mapped to show all submarkets 
-  geom_sf(data = submarket, fill = NA, color = "#ffffff", size = .5) + 
-  theme_minimal() + theme(legend.position = "bottom") +
-  scale_fill_viridis_d()
-
-```
-
-Alternatively, you can aggregate this dataset to the VISN level, and use as needed.  Keep in mind that VHA submarkets in the Caribbean and the Pacific Ocean, are not included - thus, VISNs 21 and 8 are not fully represented.
-
-
-```{r}
-visn <- submarket %>% group_by(VISN) %>% summarise()
-
-ggplot() + geom_sf(data = visn, aes(fill = VISN), show.legend = FALSE) +
- theme_minimal() + scale_fill_viridis_d(option = "cividis")
-
-```
-
-### Spatial intersection
-
-A major limitation of the original data is that attributes were present based on a geography's hierachy. The `county` dataset has VHA attributes in addition to State and County attributes.  The `visn` dataset only has a VISN attribute:
-
-```{r}
-data("states")
-data("visn")
-
-glimpse(visn)
-
-```
-
-With simple features we can easily perform geometric operations and gather attributes based on a spatial relationship:
-
-```{r}
-visn_st <- st_intersection(states, visn)
-
-glimpse(visn_st)
-
-```
-
-We can now filter this dataframe by VISN and keep State attributes
-
-```{r}
-
-visn_st %>% filter(VISN %in% c("01","02")) %>% 
-  ggplot() + geom_sf(aes(fill = VISN), color = "#ffffff") +
-  scale_fill_viridis_d(option = "cividis") +
-  theme_minimal()
-
-```
-
-Or by State, and keeping VISN attributes. New York for example is mostly within VISN 2, but, there are small catchments areas in the Western and Southern parts of the state that are outside VISN 2.
-
-```{r}
-
-visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
-  ggplot() + geom_sf(aes(fill = NAME)) +
-  scale_fill_viridis_d() +
-  theme_minimal()
-
-```
-
-## Theme Function
-
-__tidyVA__ also includes a ggplot themes: `theme_va()`. 
-
-This is theme has several possible parameters.  The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), but I have modified and set some defaults.
+### `theme_va` 
 
 ```{r}
 data("visn")
@@ -171,18 +135,23 @@ visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
 
 ```
 
-### Map Theme
+### `harvest_get`
 
-When plotting maps, you may want to remove the axis text from geom_sf(). For this, the `map` argument of `theme_va()` can be set to TRUE.
+This function is a wrapper for `filter` so that queries can be built.  If no arguments are entered, all available datasets are returned.
 
 ```{r}
-visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
-  ggplot() + geom_sf(aes(fill = NAME)) +
-  scale_fill_viridis_d(option = "cividis") +
-  labs(caption = "Caption wil go here", fill = "") +
-  ggtitle("Example Plot for Maps", 
-          subtitle = "Cividis Palette goes well with VA theme") +
-  theme_va(map = TRUE) 
+links <- harvest_get(Year == "2018" & VISN == "VISN 2")
+
+links
+```
+
+
+### `harvest_wrngl`
+
+```{r}
+data <- harvest_wrngl(links) #object created with harvest_get()
+
+data
 ```
 
 
