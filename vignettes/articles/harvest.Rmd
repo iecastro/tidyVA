@@ -1,0 +1,90 @@
+---
+title: "VHA Harvest Datasets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{VHA Harvest}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+devtools::load_all()
+library(ggplot2)
+library(zoo)
+library(jsonlite)
+library(tidyr)
+```
+
+
+The harvest functions are a homebrewed API to fetch VA hospital performance data.  `harvest_get()` will fetch a list of URLs and convert it to a tibble for easy subsetting
+
+```{r}
+library(tidyVA)
+
+links <- harvest_get(VISN == "VISN 2")
+glimpse(links)
+
+```
+
+An object created with `harvest_get()` can be piped to `harvest_wrngl` to import and tidy the datasets.
+
+```{r}
+data <- links %>% harvest_wrngl()
+
+data
+```
+
+
+
+```{r}
+unique(data$Measure)
+
+```
+
+```{r}
+
+data %>% filter(Measure == "1. Population coverage") %>%
+  tidyr::unite(YrQ, Year, Quarter, sep = "-") %>%
+  mutate(date = as.yearqtr(YrQ)) %>%
+  ggplot(aes(date, Value, color = Site.x)) +
+  geom_point() +
+  geom_line(aes(group = Site.x)) +
+  scale_color_viridis_d(guide = FALSE) +
+  scale_x_yearqtr(format = "%Y-%q") +
+  labs(y = "Standardized Score", x = "Year-Quarter",
+       color= "Site") +
+  ggtitle("Population Coverage - Mental Health",
+          subtitle = "SAIL Metrics for VISN 2") +
+  theme_va()
+```
+
+
+
+```{r}
+
+pop <- data %>% filter(Measure == "1. Population coverage") %>%
+  tidyr::unite(YrQ, Year, Quarter, sep = "-") %>%
+  mutate(date = as.yearqtr(YrQ),
+         diff = as.numeric(Value) - as.numeric(Benchmark))
+
+
+ggplot(pop, aes(date, diff, color = Site.x)) +
+  geom_point() +
+  geom_line(aes(group = Site.x)) +
+  scale_x_yearqtr(format = "%Y-%q") +
+  scale_color_viridis_d(guide = FALSE) +
+  labs(y = "Difference from Benchmark", x = "Year-Quarter") +
+  ggtitle("Population Coverage - Mental Health",
+          subtitle = "SAIL Metrics for VISN 2") +
+  theme_va() +
+  geom_text(data = subset(pop, pop$date == "2018 Q2"),
+            aes(label = Site.x), hjust = "inward", vjust = "outward",
+            position_nudge(y = .07), stat = "identity", check_overlap = TRUE)
+
+``` 
+
