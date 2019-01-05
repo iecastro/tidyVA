@@ -22,7 +22,7 @@ navbar:
   structure:
     left:
     - home
-    - basic usage
+    - intro
     - reference
     - articles
     right: github
@@ -30,9 +30,6 @@ navbar:
     home:
       icon: fa-home fa-lg
       href: index.html
-    basic usage:
-      text: Basic Usage
-      href: articles/tidyva.html
     reference:
       text: Reference
       href: reference/index.html
@@ -45,6 +42,8 @@ navbar:
         href: articles/open-data.html
       - text: VHA Harvest Datasets
         href: articles/harvest.html
+      - text: Basic Usage of tidyVA
+        href: articles/tidyva.html
     github:
       icon: fa-github fa-lg
       href: https://github.com/iecastro/tidyVA
