@@ -37,7 +37,7 @@ data("VAloc")
 
 ```{r}
 ptsd <- jsonlite::fromJSON("https://www.data.va.gov/sites/default/files/NEPEC_Overview_PTSD_FY15.json",
-                           "text", simplifyDataFrame = TRUE) %>% as.tibble()
+                           "text", simplifyDataFrame = TRUE) %>% as_tibble()
 
 ptsd$Value <- as.numeric(ptsd$Value)
 ```
