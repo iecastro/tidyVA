@@ -87,7 +87,7 @@ glimpse(visn)
 With simple features we can easily perform geometric operations and gather attributes based on a spatial relationship:
 
 ```{r}
-visn_st <- st_intersection(states, visn)
+visn_st <- sf::st_intersection(states, visn)
 
 glimpse(visn_st)
 
