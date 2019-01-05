@@ -29,6 +29,9 @@ navbar:
     home:
       icon: fa-home fa-lg
       href: index.html
+    basic usage:
+      text: Basic Usage
+      href: articles/tidyva.html
     reference:
       text: Reference
       href: reference/index.html
