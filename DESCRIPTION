@@ -11,7 +11,7 @@ License: MIT + file LICENSE
 URL: https://github.com/iecastro/tidyVA
 BugReports: https://github.com/iecastro/tidyVA/issues
 Depends: 
-    R (>= 3.5.1)
+    R (>= 3.5.0)
 Imports: 
     dplyr,
     magrittr,
