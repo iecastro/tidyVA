@@ -22,6 +22,7 @@ navbar:
   structure:
     left:
     - home
+    - basic usage
     - reference
     - articles
     right: github
