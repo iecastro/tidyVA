@@ -21,7 +21,8 @@ Imports:
     purrr,
     stringr,
     curl,
-    readxl
+    readxl,
+    units
 Suggests: 
     ggplot2,
     knitr,
