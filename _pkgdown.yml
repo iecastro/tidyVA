@@ -41,10 +41,10 @@ navbar:
       menu:
       - text: Merging to Census data
         href: articles/articles/census-data.html
-      - text: VA Open Data
-        href: articles/articles/open-data.
       - text: VHA Harvest Datasets
         href: articles/articles/harvest.html
+      - text: VA Open Data
+        href: articles/articles/open-data.html
     github:
       icon: fa-github fa-lg
       href: https://github.com/iecastro/tidyVA
