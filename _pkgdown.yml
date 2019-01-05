@@ -1,3 +1,23 @@
+template:
+  params:
+    bootswatch: flatly
+
+reference:
+- title: Functions
+  contents:
+  - shift_geo
+  - theme_va
+  - starts_with("harvest_")
+- title: Data
+  contents:
+  - visn
+  - market
+  - submarket
+  - sector
+  - county
+  - states
+  - VAloc
+
 navbar:
   structure:
     left:
