@@ -12,7 +12,6 @@ knitr::opts_chunk$set( warning = FALSE,
   collapse = TRUE,
   comment = "#>"
 )
-
 #devtools::load_all()
 library(dplyr)
 library(ggplot2)
