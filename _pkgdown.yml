@@ -35,7 +35,7 @@ navbar:
       href: reference/index.html
     intro:
       text: Get started
-      href: articles/tidyVA.html
+      href: articles/index.html
     articles:
       text: Articles
       menu:
