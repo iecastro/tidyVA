@@ -33,17 +33,18 @@ navbar:
     reference:
       text: Reference
       href: reference/index.html
+    intro:
+      text: Get started
+      href: articles/tidyVA.html
     articles:
       text: Articles
       menu:
       - text: Merging to Census data
-        href: articles/census-data.html
+        href: articles/articles/census-data.html
       - text: VA Open Data
-        href: articles/open-data.html
+        href: articles/articles/open-data.
       - text: VHA Harvest Datasets
-        href: articles/harvest.html
-      - text: Basic Usage of tidyVA
-        href: articles/tidyva.html
+        href: articles/articles/harvest.html
     github:
       icon: fa-github fa-lg
       href: https://github.com/iecastro/tidyVA
