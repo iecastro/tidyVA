@@ -6,10 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Merging to Census data • tidyVA</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Merging to Census data">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
+<script src="../../pkgdown.js"></script><meta property="og:title" content="Merging to Census data">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -29,7 +29,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">tidyVA</a>
+        <a class="navbar-link" href="../../index.html">tidyVA</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
       </span>
     </div>
@@ -37,16 +37,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
+  <a href="../../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/tidyVA.html">Get started</a>
+  <a href="../../articles/tidyVA.html">Get started</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -56,10 +56,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/census-data.html">Merging to Census data</a>
+      <a href="../../articles/articles/census-data.html">Merging to Census data</a>
     </li>
     <li>
-      <a href="../articles/open-data.html">VA Open Data</a>
+      <a href="../../articles/articles/harvest.html">VHA Harvest Datasets</a>
+    </li>
+    <li>
+      <a href="../../articles/articles/open-data.html">VA Open Data</a>
     </li>
   </ul>
 </li>
@@ -86,7 +89,7 @@
       <h1>Merging to Census data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/iecastro/tidyVA/blob/master/vignettes/census-data.Rmd"><code>vignettes/census-data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/iecastro/tidyVA/blob/master/vignettes/articles/census-data.Rmd"><code>vignettes/articles/census-data.Rmd</code></a></small>
       <div class="hidden name"><code>census-data.Rmd</code></div>
 
     </div>
@@ -94,31 +97,13 @@
     
     
 <p>To get the most out of <strong>tidyVA</strong>, it is easiest to load the <strong>tidyverse</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)
-<span class="co">#&gt; Warning: package 'tidyverse' was built under R version 3.5.2</span>
-<span class="co">#&gt; -- Attaching packages -------------------------------------------------------------------------- tidyverse 1.2.1 --</span>
-<span class="co">#&gt; v ggplot2 3.1.0     v purrr   0.2.5</span>
-<span class="co">#&gt; v tibble  1.4.2     v dplyr   0.7.8</span>
-<span class="co">#&gt; v tidyr   0.8.2     v stringr 1.3.1</span>
-<span class="co">#&gt; v readr   1.3.1     v forcats 0.3.0</span>
-<span class="co">#&gt; Warning: package 'ggplot2' was built under R version 3.5.2</span>
-<span class="co">#&gt; Warning: package 'tibble' was built under R version 3.5.2</span>
-<span class="co">#&gt; Warning: package 'tidyr' was built under R version 3.5.2</span>
-<span class="co">#&gt; Warning: package 'readr' was built under R version 3.5.2</span>
-<span class="co">#&gt; Warning: package 'purrr' was built under R version 3.5.2</span>
-<span class="co">#&gt; Warning: package 'dplyr' was built under R version 3.5.2</span>
-<span class="co">#&gt; Warning: package 'stringr' was built under R version 3.5.2</span>
-<span class="co">#&gt; Warning: package 'forcats' was built under R version 3.5.2</span>
-<span class="co">#&gt; -- Conflicts ----------------------------------------------------------------------------- tidyverse_conflicts() --</span>
-<span class="co">#&gt; x dplyr::filter() masks tidyVA::filter(), stats::filter()</span>
-<span class="co">#&gt; x dplyr::lag()    masks tidyVA::lag(), stats::lag()</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidycensus)
-<span class="co">#&gt; Warning: package 'tidycensus' was built under R version 3.5.2</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyVA)
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"county"</span>)
 
-countyshift &lt;-<span class="st"> </span><span class="kw"><a href="../reference/shift_geo.html">shift_geo</a></span>(county)
+countyshift &lt;-<span class="st"> </span><span class="kw">shift_geo</span>(county)
 <span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant</span>
 <span class="co">#&gt; throughout all geometries</span>
 <span class="co">#&gt; Warning: package 'bindrcpp' was built under R version 3.5.2</span>
@@ -141,7 +126,7 @@ VAHC &lt;-<span class="st"> </span>tigris<span class="op">::</span><span class="
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"visn"</span>)
 
-visn &lt;-<span class="st"> </span>visn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/shift_geo.html">shift_geo</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+visn &lt;-<span class="st"> </span>visn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">shift_geo</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(VISN) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>()
 <span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant</span>
 <span class="co">#&gt; throughout all geometries</span>
@@ -151,7 +136,7 @@ visn &lt;-<span class="st"> </span>visn <span class="op">%&gt;%</span><span clas
 <span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC, <span class="kw">aes</span>(<span class="dt">fill =</span> var), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">              </span><span class="co">#county layer</span>
 <span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> .<span class="dv">5</span>) <span class="op">+</span><span class="st">   </span><span class="co">#visn layer                 </span>
 <span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, <span class="dt">fill =</span> <span class="st">"Count"</span>)
+<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, <span class="dt">fill =</span> <span class="st">"Count"</span>)
 }
     
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(VAHC<span class="op">$</span>Total) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VHA Coverage"</span>)</code></pre></div>
@@ -169,7 +154,7 @@ visn &lt;-<span class="st"> </span>visn <span class="op">%&gt;%</span><span clas
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,
           <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans </span><span class="ch">\n</span><span class="st">per 100 Male Veterans"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"market"</span>)
 
@@ -186,7 +171,7 @@ market &lt;-<span class="st"> </span><span class="kw">st_transform</span>(market
        <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,
           <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans per 100 </span><span class="ch">\n</span><span class="st">Male Veterans at the county-level"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) </code></pre></div>
+<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) </code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="kw">ggplot</span>() <span class="op">+</span>
@@ -200,7 +185,7 @@ market &lt;-<span class="st"> </span><span class="kw">st_transform</span>(market
        <span class="dt">fill =</span> <span class="st">"Count"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VA Health Coverage"</span>, 
           <span class="dt">subtitle =</span> <span class="st">"VA Healthcare Markets within VISN 4, NY/NJ, and New England Networks"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
   </div>

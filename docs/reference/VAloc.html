@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • tidyVA</title>
+<title>VA locations — VAloc • tidyVA</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,15 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="VA locations — VAloc" />
+
+<meta property="og:description" content="A dataset of geometry and attributes of Veteran Affairs locations as of 9/30/2016
+Includes Veterans Health Administration:  Medical Centers (VAMC),
+Community - Based Outpatient Clinics (CBOC), Community Living Centers (CLC),
+Domiciliary Residential Rehabilitation Treatment Program (DRRTP), Vet Centers (VCTR).
+Veterans Benefits Administration: Regional Offices (RO).
+National Cemetery Administration:  National and State Cemeteries." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +55,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -117,20 +125,64 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>VA locations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/iecastro/tidyVA/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>VAloc.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="articles/census-data.html">Merging to Census data</a></li>
-        <li><a href="articles/harvest.html">VHA Harvest Datasets</a></li>
-        <li><a href="articles/open-data.html">VA Open Data</a></li>
-        <li><a href="tidyVA.html">Basic Usage of tidyVA</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>A dataset of geometry and attributes of Veteran Affairs locations as of 9/30/2016
+Includes Veterans Health Administration:  Medical Centers (VAMC),
+Community - Based Outpatient Clinics (CBOC), Community Living Centers (CLC),
+Domiciliary Residential Rehabilitation Treatment Program (DRRTP), Vet Centers (VCTR).
+Veterans Benefits Administration: Regional Offices (RO).
+National Cemetery Administration:  National and State Cemeteries.</p>
+    
     </div>
+
+    <pre class="usage"><span class='no'>VAloc</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A simple feature collection with 1937 rows and 45 variables:</p><dl class='dl-horizontal'>
+  <dt>StationNumber</dt><dd><p>Site ID</p></dd>
+  <dt>FacilityName</dt><dd><p>Site Name</p></dd>
+  <dt>PrimaryService</dt><dd><p>Primary service of site</p></dd>
+  <dt>PrimaryAttribute</dt><dd><p>Location type</p></dd>
+  <dt>Mobile</dt><dd><p>Whether facility is a Mobile VA Clinic</p></dd>
+  <dt>Address1</dt><dd><p>Address component</p></dd>
+  <dt>Address2</dt><dd><p>Address component</p></dd>
+  <dt>Address3</dt><dd><p>Address component</p></dd>
+  <dt>PhoneNumber</dt><dd><p>Site's phone number</p></dd>
+  <dt>City</dt><dd><p>City</p></dd>
+  <dt>StateAbbreviation </dt><dd><p>State abbreviation</p></dd>
+  <dt>Zip</dt><dd><p>ZIP Code</p></dd>
+  <dt>CemeteryType</dt><dd><p>Whether National or State</p></dd>
+  <dt>CemeteryOperations</dt><dd><p>Operations</p></dd>
+  <dt>City</dt><dd><p>City</p></dd>
+  <dt>VAAdministration</dt><dd><p>Administration ID</p></dd>
+  <dt>Latitude</dt><dd><p>Latitude</p></dd>
+  <dt>Longitude</dt><dd><p>Longitude</p></dd>
+  ...
+  <dt>geometry</dt><dd><p>Geometry of shape</p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p><a href='https://www.va.gov/vetdata/maps.asp'>https://www.va.gov/vetdata/maps.asp</a></p>
+    
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#source">Source</a></li>
+          </ul>
+
   </div>
 </div>
 

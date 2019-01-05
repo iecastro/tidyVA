@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -86,10 +86,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/census-data.html">Merging to Census data</a>
+      <a href="../articles/articles/census-data.html">Merging to Census data</a>
     </li>
     <li>
-      <a href="../articles/open-data.html">VA Open Data</a>
+      <a href="../articles/articles/harvest.html">VHA Harvest Datasets</a>
+    </li>
+    <li>
+      <a href="../articles/articles/open-data.html">VA Open Data</a>
     </li>
   </ul>
 </li>
@@ -128,7 +131,7 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-functions" class="hasAnchor"><a href="#section-functions" class="anchor"></a>Functions</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -147,9 +150,66 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="tidyVA.html">tidyVA</a></code> </p>
+          <p><code><a href="harvest_get.html">harvest_get()</a></code> </p>
         </td>
-        <td><p>Tidy dataframes and simple features of VHA geographies</p></td>
+        <td><p>set of functions to fetch VHA harvest URLs and dowload in tidy format</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="harvest_wrngl.html">harvest_wrngl()</a></code> </p>
+        </td>
+        <td><p>harvest_wrngl() will import and tidy data on VA SAIL metrics.  This function requires
+an object created with harvest_get()</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="visn.html">visn</a></code> </p>
+        </td>
+        <td><p>VHA geography - visn level</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="market.html">market</a></code> </p>
+        </td>
+        <td><p>VHA geography - market level</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="submarket.html">submarket</a></code> </p>
+        </td>
+        <td><p>VHA geography - submarket level</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sector.html">sector</a></code> </p>
+        </td>
+        <td><p>VHA geography - sector level</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="county.html">county</a></code> </p>
+        </td>
+        <td><p>VHA geography - county level</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="states.html">states</a></code> </p>
+        </td>
+        <td><p>States</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="VAloc.html">VAloc</a></code> </p>
+        </td>
+        <td><p>VA locations</p></td>
       </tr>
     </tbody>
     </table>
@@ -158,7 +218,8 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-functions">Functions</a></li>
+      <li><a href="#section-data">Data</a></li>
     </ul>
   </div>
 </div>
