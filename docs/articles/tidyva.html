@@ -43,6 +43,9 @@
   </a>
 </li>
 <li>
+  <a href="../tidyva.html">Basic Usage</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -105,19 +108,14 @@
 
 <span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_sf</span>(<span class="dt">data=</span>submarket, <span class="dt">fill =</span> <span class="ot">NA</span>)</code></pre></div>
 <p><img src="tidyva_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<p>Although accurate, this output is not very easy to work with. But, since this is now in tidy format, we can easily filter and manipulate the data. The function <code>shift_geo()</code> in <strong>tidyVA</strong> will project and repositon Alaska and Hawaii.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shift_geo</span>(submarket) <span class="op">%&gt;%</span><span class="st"> </span>
+<p>Although accurate, this output is not very easy to work with. But, since this is now in tidy format, we can easily filter and manipulate the data. The function <code><a href="../reference/shift_geo.html">shift_geo()</a></code> in <strong>tidyVA</strong> will project and repositon Alaska and Hawaii.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/shift_geo.html">shift_geo</a></span>(submarket) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_sf</span>(<span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_minimal</span>()
-<span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant</span>
-<span class="co">#&gt; throughout all geometries</span>
-<span class="co">#&gt; Warning: package 'bindrcpp' was built under R version 3.5.2</span>
 <span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></code></pre></div>
 <p><img src="tidyva_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>If you create an R object, this object can be mapped multiple times as individual layers:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">submarket &lt;-<span class="st"> </span><span class="kw">shift_geo</span>(submarket)
-<span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant</span>
-<span class="co">#&gt; throughout all geometries</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">submarket &lt;-<span class="st"> </span><span class="kw"><a href="../reference/shift_geo.html">shift_geo</a></span>(submarket)
 <span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span>
 
 <span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
@@ -151,8 +149,6 @@
 <p>With simple features we can easily perform geometric operations and gather attributes based on a spatial relationship:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">visn_st &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(states, visn)
 <span class="co">#&gt; although coordinates are longitude/latitude, st_intersection assumes that they are planar</span>
-<span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant</span>
-<span class="co">#&gt; throughout all geometries</span>
 
 <span class="kw">glimpse</span>(visn_st)
 <span class="co">#&gt; Observations: 151</span>
@@ -188,26 +184,26 @@ visn_st <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">
 <div id="theme-function" class="section level1">
 <h1 class="hasAnchor">
 <a href="#theme-function" class="anchor"></a>Theme Function</h1>
-<p><strong>tidyVA</strong> also includes a ggplot themes: <code>theme_va()</code>.</p>
+<p><strong>tidyVA</strong> also includes a ggplot themes: <code><a href="../reference/theme_va.html">theme_va()</a></code>.</p>
 <p>This is theme has several possible parameters. The core of this function is <code>theme_ipsum</code> from <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>, but I have modified and set some defaults.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"visn"</span>)
 
 visn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/reorder.factor">reorder</a></span>(VISN,Shape_Area), Shape_Area)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"VISN"</span>, <span class="dt">y =</span> <span class="st">"Shape Area"</span>, <span class="dt">caption =</span> <span class="st">"CRS - EPSG:4326"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Shape Area of VA Service Networks"</span>, <span class="dt">subtitle =</span> <span class="st">"This is an example plot"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">grid =</span> <span class="st">"X"</span>)</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="../reference/theme_va.html">theme_va</a></span>(<span class="dt">grid =</span> <span class="st">"X"</span>)</code></pre></div>
 <p><img src="tidyva_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <div id="map-theme" class="section level3">
 <h3 class="hasAnchor">
 <a href="#map-theme" class="anchor"></a>Map Theme</h3>
-<p>When plotting maps, you may want to remove the axis text from geom_sf(). For this, the <code>map</code> argument of <code>theme_va()</code> can be set to TRUE.</p>
+<p>When plotting maps, you may want to remove the axis text from geom_sf(). For this, the <code>map</code> argument of <code><a href="../reference/theme_va.html">theme_va()</a></code> can be set to TRUE.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">visn_st <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(STUSPS <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"NY"</span>,<span class="st">"CT"</span>,<span class="st">"VT"</span>,<span class="st">"ME"</span>, <span class="st">"MA"</span>,<span class="st">"NH"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_sf</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> NAME)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">option =</span> <span class="st">"cividis"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Caption wil go here"</span>, <span class="dt">fill =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Example Plot for Maps"</span>, 
           <span class="dt">subtitle =</span> <span class="st">"Cividis Palette goes well with VA theme"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) </code></pre></div>
+<span class="st">  </span><span class="kw"><a href="../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) </code></pre></div>
 <p><img src="tidyva_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 </div>

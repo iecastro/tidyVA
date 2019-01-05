@@ -43,7 +43,7 @@
   </a>
 </li>
 <li>
-  <a href="../../articles/tidyVA.html">Get started</a>
+  <a href="../../tidyva.html">Basic Usage</a>
 </li>
 <li>
   <a href="../../reference/index.html">Reference</a>
@@ -63,6 +63,9 @@
     </li>
     <li>
       <a href="../../articles/articles/open-data.html">VA Open Data</a>
+    </li>
+    <li>
+      <a href="../../articles/tidyva.html">Basic Usage of tidyVA</a>
     </li>
   </ul>
 </li>
@@ -112,13 +115,12 @@
 
 ptsd<span class="op">$</span>Value &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(ptsd<span class="op">$</span>Value)</code></pre></div>
 </div>
-<div id="number-of-veterans-with-ptsd-by-visn-during-fy2015" class="section level2">
-<h2 class="hasAnchor">
-<a href="#number-of-veterans-with-ptsd-by-visn-during-fy2015" class="anchor"></a>Number of Veterans with PTSD by VISN during FY2015</h2>
+<div id="number-of-veterans-with-ptsd-by-visn-during-fy2015" class="section level3">
+<h3 class="hasAnchor">
+<a href="#number-of-veterans-with-ptsd-by-visn-during-fy2015" class="anchor"></a>Number of Veterans with PTSD by VISN during FY2015</h3>
 <p>Lets highlight VISNs in the Northeastern and Mid-Atlantic regions and see how the numbers compare to other regions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 visn_data &lt;-<span class="st"> </span>ptsd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(Category <span class="op">==</span><span class="st"> "VISN-level Stats"</span> <span class="op">&amp;</span><span class="st"> </span>Item <span class="op">==</span><span class="st"> "N with PTSD"</span>)
-<span class="co">#&gt; Warning: package 'bindrcpp' was built under R version 3.5.2</span>
 
 visn_data <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">NEMA =</span> <span class="kw">case_when</span>(Location <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"VISN1"</span>,<span class="st">"VISN2"</span>,<span class="st">"VISN4"</span>,<span class="st">"VISN5"</span>,<span class="st">"VISN6"</span>) <span class="op">~</span><span class="st"> "yes"</span>,
@@ -130,7 +132,7 @@ visn_data <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"VISNs 7 &amp; 16 have the most enrolled Veterans </span><span class="ch">\n</span><span class="st">with a PTSD diagnosis"</span>,
           <span class="dt">subtitle =</span> <span class="st">"Data from FY 2015"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>()</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>()</code></pre></div>
 <p><img src="open-data_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>Aggregate simple features to VISN level and merge to data frame</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">visn_geo &lt;-<span class="st"> </span>sector <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(VISN <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"01"</span>,<span class="st">"02"</span>,<span class="st">"04"</span>,<span class="st">"05"</span>,<span class="st">"06"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -152,9 +154,7 @@ vha &lt;-<span class="st"> </span>VAloc <span class="op">%&gt;%</span><span clas
 sites &lt;-<span class="st"> </span><span class="kw">left_join</span>(sites,vha, <span class="dt">by =</span> <span class="st">"Location"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">st_intersection</span>(visn)
-<span class="co">#&gt; although coordinates are longitude/latitude, st_intersection assumes that they are planar</span>
-<span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant</span>
-<span class="co">#&gt; throughout all geometries</span></code></pre></div>
+<span class="co">#&gt; although coordinates are longitude/latitude, st_intersection assumes that they are planar</span></code></pre></div>
 <p>These data now include station-level statistics for <em>% of Veterans with PTSD that received any MH care</em>, <em>location (facility) number</em>, and a <em>simple feature geometry</em> for each site, as well as VISN-level data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(sites)
 <span class="co">#&gt; Classes 'sf', 'tbl_df', 'tbl' and 'data.frame':  40 obs. of  13 variables:</span>
@@ -183,19 +183,12 @@ sites &lt;-<span class="st"> </span><span class="kw">left_join</span>(sites,vha,
 <span class="st">    </span><span class="kw">scale_size_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">"N with PTSD </span><span class="ch">\n</span><span class="st"> at VISN level"</span>, 
        <span class="dt">size =</span> <span class="st">"% of Veterans with PTSD </span><span class="ch">\n</span><span class="st">with any MH care at </span><span class="ch">\n</span><span class="st">Station-level"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="open-data_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#number-of-veterans-with-ptsd-by-visn-during-fy2015">Number of Veterans with PTSD by VISN during FY2015</a></li>
-      </ul>
-</div>
       </div>
 
 </div>

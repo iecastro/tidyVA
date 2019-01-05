@@ -43,7 +43,7 @@
   </a>
 </li>
 <li>
-  <a href="../../articles/tidyVA.html">Get started</a>
+  <a href="../../tidyva.html">Basic Usage</a>
 </li>
 <li>
   <a href="../../reference/index.html">Reference</a>
@@ -63,6 +63,9 @@
     </li>
     <li>
       <a href="../../articles/articles/open-data.html">VA Open Data</a>
+    </li>
+    <li>
+      <a href="../../articles/tidyva.html">Basic Usage of tidyVA</a>
     </li>
   </ul>
 </li>
@@ -96,13 +99,10 @@
 
     
     
-<p>The harvest functions are a homebrewed API to fetch VA hospital performance data. <code>harvest_get()</code> will fetch a list of URLs and convert it to a tibble for easy subsetting</p>
+<p>The harvest functions are a homebrewed API to fetch VA hospital performance data. <code><a href="../../reference/harvest_get.html">harvest_get()</a></code> will fetch a list of URLs and convert it to a tibble for easy subsetting</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyVA)
 
-links &lt;-<span class="st"> </span><span class="kw">harvest_get</span>(VISN <span class="op">==</span><span class="st"> "VISN 2"</span>)
-<span class="co">#&gt; Warning: Expected 2 pieces. Additional pieces discarded in 438 rows [1, 2,</span>
-<span class="co">#&gt; 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].</span>
-<span class="co">#&gt; Warning: package 'bindrcpp' was built under R version 3.5.2</span>
+links &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/harvest_get.html">harvest_get</a></span>(VISN <span class="op">==</span><span class="st"> "VISN 2"</span>)
 <span class="kw">glimpse</span>(links)
 <span class="co">#&gt; Observations: 33</span>
 <span class="co">#&gt; Variables: 6</span>
@@ -113,7 +113,7 @@ links &lt;-<span class="st"> </span><span class="kw">harvest_get</span>(VISN <sp
 <span class="co">#&gt; $ Year        &lt;chr&gt; "2017", "2017", "2017", "2017", "2017", "2017", "2...</span>
 <span class="co">#&gt; $ Quarter     &lt;chr&gt; "4", "4", "4", "4", "4", "4", "4", "4", "4", "4", ...</span></code></pre></div>
 <p>An object created with <code>harvest_get</code> can be piped to <code>harvest_wrngl</code> to import and tidy the datasets into one tibble.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>links <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">harvest_wrngl</span>()
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>links <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../../reference/harvest_wrngl.html">harvest_wrngl</a></span>()
 <span class="co">#&gt; readxl works best with a newer version of the tibble package.</span>
 <span class="co">#&gt; You currently have tibble v1.4.2.</span>
 <span class="co">#&gt; Falling back to column name repair from tibble &lt;= v1.4.2.</span>
@@ -225,7 +225,7 @@ data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a 
        <span class="dt">color=</span> <span class="st">"Site"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Population Coverage - Mental Health"</span>,
           <span class="dt">subtitle =</span> <span class="st">"SAIL Metrics for VISN 2"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>()</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>()</code></pre></div>
 <p><img src="harvest_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 pop &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(Measure <span class="op">==</span><span class="st"> "1. Population coverage"</span>) <span class="op">%&gt;%</span>
@@ -242,7 +242,7 @@ pop &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Difference from Benchmark"</span>, <span class="dt">x =</span> <span class="st">"Year-Quarter"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Population Coverage - Mental Health"</span>,
           <span class="dt">subtitle =</span> <span class="st">"SAIL Metrics for VISN 2"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(pop, pop<span class="op">$</span>date <span class="op">==</span><span class="st"> "2018 Q2"</span>),
             <span class="kw">aes</span>(<span class="dt">label =</span> Site.x), <span class="dt">hjust =</span> <span class="st">"inward"</span>, <span class="dt">vjust =</span> <span class="st">"outward"</span>,
             <span class="kw">position_nudge</span>(<span class="dt">y =</span> .<span class="dv">07</span>), <span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">check_overlap =</span> <span class="ot">TRUE</span>)</code></pre></div>
@@ -260,9 +260,7 @@ data <span class="op">%&gt;%</span><span class="kw"><a href="https://www.rdocume
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"Standardized Ratio"</span>, <span class="dt">y =</span> <span class="st">" "</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Acute Care Standardized Mortality Ratio (SMR)"</span>,
           <span class="dt">subtitle =</span> <span class="st">"VISN 2 - 2018 Q2"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">grid =</span> <span class="ot">FALSE</span>)
-<span class="co">#&gt; Warning: Removed 1 rows containing missing values (geom_segment).</span>
-<span class="co">#&gt; Warning: Removed 1 rows containing missing values (geom_point).</span></code></pre></div>
+<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">grid =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p><img src="harvest_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
   </div>
 

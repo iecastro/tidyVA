@@ -7,10 +7,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-To get the most out of __tidyVA__, it is easiest to load the __tidyverse__.
+To get the most out of __tidyVA__, it is easiest to load the __tidyverse__.  For fetching data from the Census API load __tidycensus__ (this will require you first sign up for an API key).
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
+knitr::opts_chunk$set(warning = FALSE,
   collapse = TRUE,
   comment = "#>"
 )
@@ -32,7 +32,7 @@ countyshift <- shift_geo(county)
 ```
 
 
-## VA Healthcare Coverage at the county-level
+VA Healthcare Coverage at the county-level
 
 ```{r}
 

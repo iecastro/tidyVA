@@ -53,17 +53,7 @@ VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one o
 
 ``` r
 library(ggplot2)
-#> Warning: package 'ggplot2' was built under R version 3.5.2
 library(dplyr)
-#> Warning: package 'dplyr' was built under R version 3.5.2
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 library(tidyVA)
 
 data("submarket")
@@ -89,7 +79,7 @@ glimpse(submarket)
 
 ``` r
 visn2 <- submarket %>% filter(VISN == "02")
-#> Warning: package 'bindrcpp' was built under R version 3.5.2
+
 visn2
 #> Simple feature collection with 10 features and 5 fields
 #> geometry type:  MULTIPOLYGON
@@ -118,7 +108,7 @@ ggplot() +
   geom_sf(data = visn2, fill = NA, color = "#ffffff", size = .25)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 Functions
 =========
@@ -144,11 +134,10 @@ Examples
 shift_geo(submarket) %>% 
   ggplot() + geom_sf(fill = NA) +
   theme_minimal()
-#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
 #> Please note: Alaska and Hawaii are being shifted and are not to scale.
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ### `theme_va`
 
@@ -161,7 +150,7 @@ visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
   theme_va(grid = "X")
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 ### `harvest_get`
 
@@ -169,23 +158,21 @@ This function is a wrapper for `filter` so that queries can be built. If no argu
 
 ``` r
 links <- harvest_get(Year == "2018" & VISN == "VISN 2")
-#> Warning: Expected 2 pieces. Additional pieces discarded in 438 rows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-#> 15, 16, 17, 18, 19, 20, ...].
 
 links
 #> # A tibble: 22 x 6
-#>    VISN   Site          downloadURL                                                            format Year  Quarter
-#>    <chr>  <chr>         <chr>                                                                  <chr>  <chr> <chr>  
-#>  1 VISN 2 Albany        https://www.va.gov/QUALITYOFCARE/SAIL_FY18_Q1/SAIL-2_albany_fy18q1.xls XLS    2018  1      
-#>  2 VISN 2 Bath          https://www.va.gov/QUALITYOFCARE/SAIL_FY18_Q1/SAIL-2_bath_fy18q1.xls   XLS    2018  1      
-#>  3 VISN 2 Bronx         https://www.va.gov/QUALITYOFCARE/SAIL_FY18_Q1/SAIL-2_bronx_fy18q1.xls  XLS    2018  1      
-#>  4 VISN 2 Brooklyn      https://www.va.gov/QUALITYOFCARE/SAIL_FY18_Q1/SAIL-2_brooklyn_fy18q1.~ XLS    2018  1      
-#>  5 VISN 2 Buffalo       https://www.va.gov/QUALITYOFCARE/SAIL_FY18_Q1/SAIL-2_buffalo_fy18q1.x~ XLS    2018  1      
-#>  6 VISN 2 Canandaigua   https://www.va.gov/QUALITYOFCARE/SAIL_FY18_Q1/SAIL-2_canandaigua_fy18~ XLS    2018  1      
-#>  7 VISN 2 East Orange   https://www.va.gov/QUALITYOFCARE/SAIL_FY18_Q1/SAIL-2_eastorange_fy18q~ XLS    2018  1      
-#>  8 VISN 2 Hudson Valley https://www.va.gov/QUALITYOFCARE/SAIL_FY18_Q1/SAIL-2_hudsonvalley_fy1~ XLS    2018  1      
-#>  9 VISN 2 New York      https://www.va.gov/QUALITYOFCARE/SAIL_FY18_Q1/SAIL-2_newyork_fy18q1.x~ XLS    2018  1      
-#> 10 VISN 2 Northport     https://www.va.gov/QUALITYOFCARE/SAIL_FY18_Q1/SAIL-2_northport_fy18q1~ XLS    2018  1      
+#>    VISN   Site     downloadURL                         format Year  Quarter
+#>    <chr>  <chr>    <chr>                               <chr>  <chr> <chr>  
+#>  1 VISN 2 Albany   https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      
+#>  2 VISN 2 Bath     https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      
+#>  3 VISN 2 Bronx    https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      
+#>  4 VISN 2 Brooklyn https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      
+#>  5 VISN 2 Buffalo  https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      
+#>  6 VISN 2 Cananda~ https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      
+#>  7 VISN 2 East Or~ https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      
+#>  8 VISN 2 Hudson ~ https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      
+#>  9 VISN 2 New York https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      
+#> 10 VISN 2 Northpo~ https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      
 #> # ... with 12 more rows
 ```
 
@@ -200,19 +187,20 @@ data <- harvest_wrngl(links) #object created with harvest_get()
 
 data
 #> # A tibble: 1,562 x 9
-#>    Measure                          `Measure Unit` Benchmark `10th-50th-90th pti~ Site.x Value  VISN  Year  Quarter
-#>    <chr>                            <chr>          <chr>     <chr>                <chr>  <chr>  <chr> <chr> <chr>  
-#>  1 Acute care mortality             <NA>           <NA>      <NA>                 Albany <NA>   VISN~ 2018  1      
-#>  2 1. Acute care Standardized Mort~ O/E            0.480     0.480 - 0.890 - 1.2~ Albany 0.943  VISN~ 2018  1      
-#>  3 2. Acute care 30-day Standardiz~ O/E            0.727     0.727 - 0.960 - 1.1~ Albany 0.907  VISN~ 2018  1      
-#>  4 a. AMI RSMR                      %              7.003     7.003 - 7.967 - 8.9~ Albany 8.320  VISN~ 2018  1      
-#>  5 b. CHF RSMR                      %              4.870     4.870 - 5.970 - 7.2~ Albany 7.201  VISN~ 2018  1      
-#>  6 c. Pneumonia RSMR                %              17.195    17.195 - 18.393 - 1~ Albany 18.209 VISN~ 2018  1      
-#>  7 d. COPD RSMR                     %              3.757     3.757 - 4.725 - 5.8~ Albany 5.244  VISN~ 2018  1      
-#>  8 Avoidable adverse events         <NA>           <NA>      <NA>                 Albany <NA>   VISN~ 2018  1      
-#>  9 1. In-hospital complications     O/E            0.231     0.231 - 0.922 - 1.4~ Albany 1.066  VISN~ 2018  1      
-#> 10 2. Healthcare associated infect~ <NA>           <NA>      <NA>                 Albany <NA>   VISN~ 2018  1      
-#> # ... with 1,552 more rows
+#>    Measure `Measure Unit` Benchmark `10th-50th-90th~ Site.x Value VISN 
+#>    <chr>   <chr>          <chr>     <chr>            <chr>  <chr> <chr>
+#>  1 Acute ~ <NA>           <NA>      <NA>             Albany <NA>  VISN~
+#>  2 1. Acu~ O/E            0.480     0.480 - 0.890 -~ Albany 0.943 VISN~
+#>  3 2. Acu~ O/E            0.727     0.727 - 0.960 -~ Albany 0.907 VISN~
+#>  4 a. AMI~ %              7.003     7.003 - 7.967 -~ Albany 8.320 VISN~
+#>  5 b. CHF~ %              4.870     4.870 - 5.970 -~ Albany 7.201 VISN~
+#>  6 c. Pne~ %              17.195    17.195 - 18.393~ Albany 18.2~ VISN~
+#>  7 d. COP~ %              3.757     3.757 - 4.725 -~ Albany 5.244 VISN~
+#>  8 Avoida~ <NA>           <NA>      <NA>             Albany <NA>  VISN~
+#>  9 1. In-~ O/E            0.231     0.231 - 0.922 -~ Albany 1.066 VISN~
+#> 10 2. Hea~ <NA>           <NA>      <NA>             Albany <NA>  VISN~
+#> # ... with 1,552 more rows, and 2 more variables: Year <chr>,
+#> #   Quarter <chr>
 ```
 
 Info

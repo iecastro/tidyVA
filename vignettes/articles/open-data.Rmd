@@ -8,7 +8,7 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
+knitr::opts_chunk$set(warning = FALSE,
   collapse = TRUE,
   comment = "#>"
 )
@@ -42,7 +42,7 @@ ptsd <- jsonlite::fromJSON("https://www.data.va.gov/sites/default/files/NEPEC_Ov
 ptsd$Value <- as.numeric(ptsd$Value)
 ```
 
-## Number of Veterans with PTSD by VISN during FY2015
+### Number of Veterans with PTSD by VISN during FY2015
 
 Lets highlight VISNs in the Northeastern and Mid-Atlantic regions and see how the numbers compare to other regions.
 

@@ -13,10 +13,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  warning = FALSE
 )
 
 devtools::load_all()
+library(ggplot2)
+library(dplyr)
 
 ```
 # tidyVA
@@ -87,8 +90,8 @@ glimpse(submarket)
 
 ```{r}
 visn2 <- submarket %>% filter(VISN == "02")
-visn2
 
+visn2
 ```
 
 ```{r}

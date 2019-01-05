@@ -43,7 +43,7 @@
   </a>
 </li>
 <li>
-  <a href="../../articles/tidyVA.html">Get started</a>
+  <a href="../../tidyva.html">Basic Usage</a>
 </li>
 <li>
   <a href="../../reference/index.html">Reference</a>
@@ -63,6 +63,9 @@
     </li>
     <li>
       <a href="../../articles/articles/open-data.html">VA Open Data</a>
+    </li>
+    <li>
+      <a href="../../articles/tidyva.html">Basic Usage of tidyVA</a>
     </li>
   </ul>
 </li>
@@ -96,21 +99,16 @@
 
     
     
-<p>To get the most out of <strong>tidyVA</strong>, it is easiest to load the <strong>tidyverse</strong>.</p>
+<p>To get the most out of <strong>tidyVA</strong>, it is easiest to load the <strong>tidyverse</strong>. For fetching data from the Census API load <strong>tidycensus</strong> (this will require you first sign up for an API key).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidycensus)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyVA)
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"county"</span>)
 
-countyshift &lt;-<span class="st"> </span><span class="kw">shift_geo</span>(county)
-<span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant</span>
-<span class="co">#&gt; throughout all geometries</span>
-<span class="co">#&gt; Warning: package 'bindrcpp' was built under R version 3.5.2</span>
+countyshift &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/shift_geo.html">shift_geo</a></span>(county)
 <span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></code></pre></div>
-<div id="va-healthcare-coverage-at-the-county-level" class="section level2">
-<h2 class="hasAnchor">
-<a href="#va-healthcare-coverage-at-the-county-level" class="anchor"></a>VA Healthcare Coverage at the county-level</h2>
+<p>VA Healthcare Coverage at the county-level</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 vars &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">Male18to64 =</span> <span class="st">"C27009_007E"</span>, <span class="dt">Male65over =</span> <span class="st">"C27009_010E"</span>,
           <span class="dt">Female18to64 =</span> <span class="st">"C27009_017E"</span>, <span class="dt">Female65over =</span> <span class="st">"C27009_020E"</span>)
@@ -126,17 +124,15 @@ VAHC &lt;-<span class="st"> </span>tigris<span class="op">::</span><span class="
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"visn"</span>)
 
-visn &lt;-<span class="st"> </span>visn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">shift_geo</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+visn &lt;-<span class="st"> </span>visn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../../reference/shift_geo.html">shift_geo</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(VISN) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>()
-<span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant</span>
-<span class="co">#&gt; throughout all geometries</span>
 <span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot &lt;-<span class="st"> </span><span class="cf">function</span>(var){
   <span class="kw">ggplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC, <span class="kw">aes</span>(<span class="dt">fill =</span> var), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">              </span><span class="co">#county layer</span>
 <span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> .<span class="dv">5</span>) <span class="op">+</span><span class="st">   </span><span class="co">#visn layer                 </span>
 <span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, <span class="dt">fill =</span> <span class="st">"Count"</span>)
+<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, <span class="dt">fill =</span> <span class="st">"Count"</span>)
 }
     
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(VAHC<span class="op">$</span>Total) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VHA Coverage"</span>)</code></pre></div>
@@ -154,7 +150,7 @@ visn &lt;-<span class="st"> </span>visn <span class="op">%&gt;%</span><span clas
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,
           <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans </span><span class="ch">\n</span><span class="st">per 100 Male Veterans"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"market"</span>)
 
@@ -171,7 +167,7 @@ market &lt;-<span class="st"> </span><span class="kw">st_transform</span>(market
        <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,
           <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans per 100 </span><span class="ch">\n</span><span class="st">Male Veterans at the county-level"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) </code></pre></div>
+<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) </code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="kw">ggplot</span>() <span class="op">+</span>
@@ -185,19 +181,11 @@ market &lt;-<span class="st"> </span><span class="kw">st_transform</span>(market
        <span class="dt">fill =</span> <span class="st">"Count"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VA Health Coverage"</span>, 
           <span class="dt">subtitle =</span> <span class="st">"VA Healthcare Markets within VISN 4, NY/NJ, and New England Networks"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#va-healthcare-coverage-at-the-county-level">VA Healthcare Coverage at the county-level</a></li>
-      </ul>
-</div>
       </div>
 
 </div>

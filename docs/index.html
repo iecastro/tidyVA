@@ -129,17 +129,7 @@
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <p>VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one or more counties. Since each VISN is defined in a hierarchy, this dataset contains attributes of all echelons above submarket - that is, Market and VISN.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
-<span class="co">#&gt; Warning: package 'ggplot2' was built under R version 3.5.2</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
-<span class="co">#&gt; Warning: package 'dplyr' was built under R version 3.5.2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyVA)
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"submarket"</span>)
@@ -157,7 +147,7 @@
 <span class="co">#&gt; $ Shape_Area &lt;dbl&gt; 1.78751288, 9.66806953, 5.47709016, 2.19550641, 4.9...</span>
 <span class="co">#&gt; $ geometry   &lt;MULTIPOLYGON [Â°]&gt; MULTIPOLYGON (((-71.56974 4..., MULTI...</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">visn2 &lt;-<span class="st"> </span>submarket <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(VISN <span class="op">==</span><span class="st"> "02"</span>)
-<span class="co">#&gt; Warning: package 'bindrcpp' was built under R version 3.5.2</span>
+
 visn2
 <span class="co">#&gt; Simple feature collection with 10 features and 5 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
@@ -187,14 +177,14 @@ visn2
 <div id="functions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#functions" class="anchor"></a>Functions</h1>
-<p><code>shift_geo()</code> will project and reposition Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).</p>
-<p><code>theme_va()</code> is a ggplot theme with some default colors and plotting parameters. The core of this function is <code>theme_ipsum</code> from <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>, with some modifications and defaults.</p>
+<p><code><a href="reference/shift_geo.html">shift_geo()</a></code> will project and reposition Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).</p>
+<p><code><a href="reference/theme_va.html">theme_va()</a></code> is a ggplot theme with some default colors and plotting parameters. The core of this function is <code>theme_ipsum</code> from <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>, with some modifications and defaults.</p>
 <div id="harvest-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#harvest-functions" class="anchor"></a>Harvest functions</h3>
 <p>These functions serve as a homebrewed API for fetching Hospital Performance datasets. VA Open Data uses a harvesting framework from <a href="https://docs.getdkan.com/en/latest/components/harvest.html">DKAN</a>. Currently the <a href="https://www.data.va.gov/harvest_source/vha-harvest-datasets">VHA Harvest</a> only includes hospital performance datasets.</p>
-<p><code>harvest_get()</code> will return a tibble of URLs and attributes for each dataset.</p>
-<p><code>harvest_wrngl()</code> will import and tidy datasets from an object created with <code>harvest_get</code></p>
+<p><code><a href="reference/harvest_get.html">harvest_get()</a></code> will return a tibble of URLs and attributes for each dataset.</p>
+<p><code><a href="reference/harvest_wrngl.html">harvest_wrngl()</a></code> will import and tidy datasets from an object created with <code>harvest_get</code></p>
 </div>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
@@ -203,11 +193,9 @@ visn2
 <h3 class="hasAnchor">
 <a href="#shift_geo" class="anchor"></a><code>shift_geo</code>
 </h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shift_geo</span>(submarket) <span class="op">%&gt;%</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/shift_geo.html">shift_geo</a></span>(submarket) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_sf</span>(<span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_minimal</span>()
-<span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant</span>
-<span class="co">#&gt; throughout all geometries</span>
 <span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
 </div>
@@ -220,7 +208,7 @@ visn2
 visn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/reorder.factor">reorder</a></span>(VISN,Shape_Area), Shape_Area)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"VISN"</span>, <span class="dt">y =</span> <span class="st">"Shape Area"</span>, <span class="dt">caption =</span> <span class="st">"CRS - EPSG:4326"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Shape Area of VA Service Networks"</span>, <span class="dt">subtitle =</span> <span class="st">"This is an example plot"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">grid =</span> <span class="st">"X"</span>)</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="reference/theme_va.html">theme_va</a></span>(<span class="dt">grid =</span> <span class="st">"X"</span>)</code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
 <div id="harvest_get" class="section level3">
@@ -228,9 +216,7 @@ visn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggp
 <a href="#harvest_get" class="anchor"></a><code>harvest_get</code>
 </h3>
 <p>This function is a wrapper for <code>filter</code> so that queries can be built. If no arguments are entered, all available datasets are returned.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">links &lt;-<span class="st"> </span><span class="kw">harvest_get</span>(Year <span class="op">==</span><span class="st"> "2018"</span> <span class="op">&amp;</span><span class="st"> </span>VISN <span class="op">==</span><span class="st"> "VISN 2"</span>)
-<span class="co">#&gt; Warning: Expected 2 pieces. Additional pieces discarded in 438 rows [1, 2,</span>
-<span class="co">#&gt; 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">links &lt;-<span class="st"> </span><span class="kw"><a href="reference/harvest_get.html">harvest_get</a></span>(Year <span class="op">==</span><span class="st"> "2018"</span> <span class="op">&amp;</span><span class="st"> </span>VISN <span class="op">==</span><span class="st"> "VISN 2"</span>)
 
 links
 <span class="co">#&gt; # A tibble: 22 x 6</span>
@@ -252,7 +238,7 @@ links
 <h3 class="hasAnchor">
 <a href="#harvest_wrngl" class="anchor"></a><code>harvest_wrngl</code>
 </h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">harvest_wrngl</span>(links) <span class="co">#object created with harvest_get()</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw"><a href="reference/harvest_wrngl.html">harvest_wrngl</a></span>(links) <span class="co">#object created with harvest_get()</span>
 <span class="co">#&gt; readxl works best with a newer version of the tibble package.</span>
 <span class="co">#&gt; You currently have tibble v1.4.2.</span>
 <span class="co">#&gt; Falling back to column name repair from tibble &lt;= v1.4.2.</span>
