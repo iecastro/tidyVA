@@ -8,5 +8,4 @@
 ^README\.Rmd$
 ^tidyVA\.Rproj$
 ^\.Rproj\.user$
-^examples$
 ^run_setup$

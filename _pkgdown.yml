@@ -22,10 +22,8 @@ navbar:
   structure:
     left:
     - home
-    - intro
     - reference
     - articles
-    - news
     right: github
   components:
     home:
@@ -41,8 +39,8 @@ navbar:
         href: articles/census-data.html
       - text: VA Open Data
         href: articles/open-data.html
-      - text: Basic Usage of tidyVA
-        href: articles/tidyva.html
+      - text: VHA Harvest Datasets
+        href: articles/harvest.html
     github:
       icon: fa-github fa-lg
       href: https://github.com/iecastro/tidyVA
