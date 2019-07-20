@@ -14,7 +14,6 @@
 #' links2 <- harves_get(Site %in% c("Syracuse", "Buffalo", "Rochester") & Year == 2017)
 #' }
 #'
-#' @export
 
 harvest_get <- function(...){
 
@@ -52,7 +51,6 @@ harvest_get <- function(...){
 #' data <- links %>% harvest_wrgnl()
 #' }
 #'
-#' @export
 
 
 harvest_wrngl <- function(data){
