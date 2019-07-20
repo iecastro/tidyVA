@@ -6,15 +6,16 @@ library(sf)
 
 temp <- tempfile()
 temp2 <- tempfile()
-download.file("https://www.va.gov/vetdata/docs/Maps/VAFacilitiesFY16Q4_web.gdb.zip",temp)
+download.file("https://www.va.gov/vetdata/docs/Maps/VAFacilitiesFY18Q2Webgdb.zip",temp)
 unzip(temp, exdir = temp2)
 
 ## all
-VAloc <- read_sf(file.path(dsn=temp2,layer="VAFacilitiesFY16Q4_web.gdb")) %>% st_zm()
+VAloc <- read_sf(file.path(dsn=temp2,layer="VAFacilitiesFY18Q2_web.gdb")) %>% st_zm()
 
 ## save file
 #st_write(VAloc,"vaspatial/VAlocations/VAloc.shp")
 
+usethis::use_data(VAloc, overwrite = TRUE)
 
 ##=================== VA VISN shapefile =====================================
 ## visn level geometry
