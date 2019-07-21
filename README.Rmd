@@ -77,7 +77,8 @@ library(tidyVA)
 
 data("submarket")
 
-ggplot() + geom_sf(data=submarket, fill = NA)
+ggplot() + 
+  geom_sf(data = submarket, fill = NA)
 
 ```
 
@@ -89,14 +90,15 @@ glimpse(submarket)
 ```
 
 ```{r}
-visn2 <- submarket %>% filter(VISN == "02")
+visn2 <- submarket %>% 
+  filter(VISN == "02")
 
 visn2
 ```
 
 ```{r}
 ggplot() + 
-  geom_sf(data=visn2, aes(fill = MARKET), color = NA) +
+  geom_sf(data = visn2, aes(fill = MARKET), color = NA) +
   geom_sf(data = visn2, fill = NA, color = "#ffffff", size = .25)
   
 
@@ -104,58 +106,53 @@ ggplot() +
 
 # Functions 
 
-`shift_geo()` will project and reposition Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).
-
-`theme_va()` is a ggplot theme with some default colors and plotting parameters. The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), with some modifications and defaults.
-
-### Harvest functions
-
-These functions serve as a homebrewed API for fetching Hospital Performance datasets.  VA Open Data uses a harvesting framework from [DKAN](https://docs.getdkan.com/en/latest/components/harvest.html).  Currently the [VHA Harvest](https://www.data.va.gov/harvest_source/vha-harvest-datasets) only includes hospital performance datasets.
-
-`harvest_get()` will return a tibble of URLs and attributes for each dataset.
-
-`harvest_wrngl()` will import and tidy datasets from an object created with `harvest_get`
-
-## Examples
-
 ### `shift_geo` 
+
+`shift_geo()` will project and reposition Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).
 
 ```{r}
 shift_geo(submarket) %>% 
-  ggplot() + geom_sf(fill = NA) +
+  ggplot() + 
+  geom_sf(fill = NA) +
   theme_minimal()
 ```
 
-### `theme_va` 
+### `theme_va()` 
+
+`theme_va()` is a ggplot theme with some default colors and plotting parameters. The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), with some modifications and defaults.
 
 ```{r}
 data("visn")
 
-visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
-  geom_col() + labs(x = "VISN", y = "Shape Area", caption = "CRS - EPSG:4326") +
-  ggtitle("Shape Area of VA Service Networks", subtitle = "This is an example plot") +
-  theme_va(grid = "X")
+visn %>% 
+  ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
+  geom_col() + 
+  labs(x = "VISN", y = "Shape Area", 
+       caption = "CRS - EPSG:4326") +
+  ggtitle("Shape Area of VA Service Networks", 
+          subtitle = "This is an example plot") +
+  theme_va(grid = "Y")
 
 ```
 
-### `harvest_get`
 
-This function is a wrapper for `filter` so that queries can be built.  If no arguments are entered, all available datasets are returned.
+### `sail_tidy`
+`sail_tidy` will return a tibble of VA SAIL metrics when provided a [data table url](https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp).  
 
 ```{r}
-links <- harvest_get(Year == "2018" & VISN == "VISN 2")
-
-links
+sail_tidy("https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx")
 ```
 
 
-### `harvest_wrngl`
+### Harvest functions
 
-```{r}
-data <- harvest_wrngl(links) #object created with harvest_get()
+      These functions have been removed from the namespace due to the VA Open Data site being taken down.
 
-data
-```
+>These functions serve as a homebrewed API for fetching Hospital Performance datasets.  VA Open Data uses a harvesting framework from [DKAN](https://docs.getdkan.com/en/latest/components/harvest.html).  Currently the [VHA Harvest](https://www.data.va.gov/harvest_source/vha-harvest-datasets) only includes hospital performance datasets.
+>
+>`harvest_get()` will return a tibble of URLs and attributes for each dataset.
+>
+>`harvest_wrngl()` will import and tidy datasets from an object created with `harvest_get`
 
 
 # Info
