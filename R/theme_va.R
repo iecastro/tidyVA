@@ -1,6 +1,6 @@
 #' A precise & pristine [ggplot2] theme with opinionated defaults and an emphasis on typography
 #'
-#' modified from hrbrthemes
+#' modified from hrbrthemes::theme_ipsum()
 #'
 #' @param base_family,base_size base font family and size
 #' @param plot_title_family,plot_title_face,plot_title_size,plot_title_margin plot title family, face, size and margi
@@ -23,20 +23,20 @@
 #' @export
 
 theme_va <- function(base_family = "", base_size = 11.5,
-                        plot_title_family=base_family, plot_title_size = 14,
-                        plot_title_face="bold", plot_title_margin = 10,
-                        subtitle_family=base_family, subtitle_size = 12,
-                        subtitle_face = "plain", subtitle_margin = 15,
-                        strip_text_family = base_family, strip_text_size = 12,
-                        strip_text_face = "plain",
-                        caption_family = base_family, caption_size = 9,
-                        caption_face = "bold.italic", caption_margin = 10,
-                        axis_text_size = 9,
-                        axis_title_family = subtitle_family, axis_title_size = 10,
-                        axis_title_face = "plain", axis_title_just = "rt",
-                        plot_margin = margin(15, 15, 15, 15),
-                        grid_col = "#cccccc", grid = TRUE, map = FALSE,
-                        axis_col = "#cccccc", axis = FALSE, ticks = FALSE) {
+                     plot_title_family=base_family, plot_title_size = 14,
+                     plot_title_face="bold", plot_title_margin = 10,
+                     subtitle_family=base_family, subtitle_size = 12,
+                     subtitle_face = "plain", subtitle_margin = 15,
+                     strip_text_family = base_family, strip_text_size = 12,
+                     strip_text_face = "plain",
+                     caption_family = base_family, caption_size = 9,
+                     caption_face = "bold.italic", caption_margin = 10,
+                     axis_text_size = 9,
+                     axis_title_family = subtitle_family, axis_title_size = 10,
+                     axis_title_face = "plain", axis_title_just = "rt",
+                     plot_margin = margin(15, 15, 15, 15),
+                     grid_col = "#cccccc", grid = TRUE, map = FALSE,
+                     axis_col = "#cccccc", axis = FALSE, ticks = FALSE) {
 
   ret <- ggplot2::theme_minimal(base_family=base_family, base_size=base_size)
 
@@ -50,8 +50,8 @@ theme_va <- function(base_family = "", base_size = 11.5,
     ret <- ret + theme(panel.grid.minor=element_line(color=grid_col, size=0.15))
 
     if (inherits(grid, "character")) {
-      if (regexpr("X", grid)[1] < 0) ret <- ret + theme(panel.grid.major.x=element_line(color = "black", size=0.15))
-      if (regexpr("Y", grid)[1] < 0) ret <- ret + theme(panel.grid.major.y=element_line(color = "black", size=0.15))
+      if (regexpr("X", grid)[1] < 0) ret <- ret + theme(panel.grid.major.x=element_blank())
+      if (regexpr("Y", grid)[1] < 0) ret <- ret + theme(panel.grid.major.y=element_blank())
       if (regexpr("x", grid)[1] < 0) ret <- ret + theme(panel.grid.minor.x=element_blank())
       if (regexpr("y", grid)[1] < 0) ret <- ret + theme(panel.grid.minor.y=element_blank())
     }
