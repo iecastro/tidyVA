@@ -26,9 +26,10 @@
   \item{Longitude}{Longitude}
   \item{SuppService}{Supplemental Services}
   ...
+
   \item{STCD}{Combined ID for State FIPS and Congressional District number}
   \item{StateFIPS}{State FIPS Code}
-  \item{Congressional District where facility is located}
+  \item{CD}{Congressional District where facility is located}
   \item{LASTNAME}{U.S. Representative - Last Name}
   \item{FIRSTNAME}{U.S. Representative - First Name}
   \item{FIPS}{County FIPS Code}
@@ -55,12 +56,16 @@ Veterans Health Administration (VHA):
 Medical Centers (VAMC), Community - Based Outpatient Clinics (CBOC),
 Community Living Centers (CLC), Domiciliary Residential Rehabilitation Treatment Program (DRRTP),
 Vet Centers (VCTR).
+}
+\details{
 Veterans Benefits Administration (VBA):  Regional Offices (RO).
+
 National Cemetery Administration (NCA):  National and State Cemeteries.
 }
 \section{Notes}{
 
 *2010 Secondary RUCA codes were revised on 7/3/2019 affecting 10,909 census tracts. \url{https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/}
+
 **In early 2019 VA Districts were restructured from five to four. \url{https://www.va.gov/opa/pressrel/pressrelease.cfm?id=5194}
 }
 
