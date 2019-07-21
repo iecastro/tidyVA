@@ -31,7 +31,8 @@ For this example we'll use the submarket dataset.  This is a `tidy` dataframe th
 ```{r}
 data("submarket")
 
-ggplot() + geom_sf(data=submarket, fill = NA)
+ggplot() + 
+  geom_sf(data=submarket, fill = NA)
 
 ```
 
@@ -41,22 +42,24 @@ Although accurate, this output is not very easy to work with.  But, since this i
 
 ```{r}
 shift_geo(submarket) %>% 
-  ggplot() + geom_sf(fill = NA) +
+  ggplot() + 
+  geom_sf(fill = NA) +
   theme_minimal()
 
 ```
 
-If you create an R object, this object can be mapped multiple times as individual layers:
+If you create an R object, this object can be mapped multiple times as individual layers representing different attributes:
 
 ```{r}
 submarket <- shift_geo(submarket)
 
 ggplot() + 
-  # layer 1 is mapped to represent VISNs
-  geom_sf(data = submarket, aes(fill = VISN), color = NA) +  
-  # layer 2 is mapped to show all submarkets 
-  geom_sf(data = submarket, fill = NA, color = "#ffffff", size = .5) + 
-  theme_minimal() + theme(legend.position = "bottom") +
+  geom_sf(data = submarket,           
+          aes(fill = VISN), color = NA) +  
+  geom_sf(data = submarket, fill = NA, 
+          color = "#ffffff", size = .5) + 
+  theme_minimal() + 
+  theme(legend.position = "bottom") +
   scale_fill_viridis_d()
 
 ```
@@ -65,10 +68,15 @@ Alternatively, you can aggregate this dataset to the VISN level, and use as need
 
 
 ```{r}
-visn <- submarket %>% group_by(VISN) %>% summarise()
+visn <- submarket %>% 
+  group_by(VISN) %>% 
+  summarise()
 
-ggplot() + geom_sf(data = visn, aes(fill = VISN), show.legend = FALSE) +
- theme_minimal() + scale_fill_viridis_d(option = "cividis")
+ggplot() + 
+  geom_sf(data = visn, aes(fill = VISN), 
+          show.legend = FALSE) +
+  theme_minimal() + 
+  scale_fill_viridis_d(option = "cividis")
 
 ```
 
@@ -97,10 +105,12 @@ We can now filter this dataframe by VISN and keep State attributes
 
 ```{r}
 
-visn_st %>% filter(VISN %in% c("01","02")) %>% 
-  ggplot() + geom_sf(aes(fill = VISN), color = "#ffffff") +
+visn_st %>% 
+  filter(VISN %in% c("01","02")) %>% 
+  ggplot() + 
+  geom_sf(aes(fill = VISN), color = "#ffffff") +
   scale_fill_viridis_d(option = "cividis") +
-  theme_minimal()
+  theme_va()
 
 ```
 
@@ -108,26 +118,32 @@ Or by State, and keeping VISN attributes. New York for example is mostly within 
 
 ```{r}
 
-visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
-  ggplot() + geom_sf(aes(fill = NAME)) +
+visn_st %>% 
+  filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
+  ggplot() + 
+  geom_sf(aes(fill = NAME)) +
   scale_fill_viridis_d() +
-  theme_minimal()
+  theme_va()
 
 ```
 
 # Theme Function
 
-__tidyVA__ also includes a ggplot themes: `theme_va()`. 
+__tidyVA__ also includes a ggplot theme: `theme_va()`. 
 
-This is theme has several possible parameters.  The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), but I have modified and set some defaults.
+This theme has several possible parameters.  The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), but with some changes and set defaults.
 
 ```{r}
 data("visn")
 
-visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
-  geom_col() + labs(x = "VISN", y = "Shape Area", caption = "CRS - EPSG:4326") +
-  ggtitle("Shape Area of VA Service Networks", subtitle = "This is an example plot") +
-  theme_va(grid = "X")
+visn %>% 
+  ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
+  geom_col() + 
+  labs(x = "VISN", y = "Shape Area", 
+       caption = "CRS - EPSG:4326") +
+  ggtitle("Shape Area of VA Service Networks", 
+          subtitle = "This is an example plot") +
+  theme_va(grid = "Y")
 
 ```
 
@@ -135,12 +151,16 @@ visn %>% ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
 
 When plotting maps, you may want to remove the axis text from geom_sf(). For this, the `map` argument of `theme_va()` can be set to TRUE.
 
+Additionally, setting the `grid_col` argument to "transparent" will remove panel grid lines from the plot.
+
 ```{r}
-visn_st %>% filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
-  ggplot() + geom_sf(aes(fill = NAME)) +
+visn_st %>% 
+  filter(STUSPS %in% c("NY","CT","VT","ME", "MA","NH")) %>% 
+  ggplot() + 
+  geom_sf(aes(fill = NAME)) +
   scale_fill_viridis_d(option = "cividis") +
   labs(caption = "Caption wil go here", fill = "") +
   ggtitle("Example Plot for Maps", 
           subtitle = "Cividis Palette goes well with VA theme") +
-  theme_va(map = TRUE) 
+  theme_va(map = TRUE, grid_col = "transparent") 
 ```

@@ -57,7 +57,7 @@ theme_va <- function(base_family = "", base_size = 11.5,
     }
 
   } else {
-    ret <- ret + theme(panel.grid=element_blank())
+    ret <- ret + theme(panel.grid.major = element_line(colour = "transparent"))
   }
 
   if (inherits(axis, "character") | axis == TRUE) {
