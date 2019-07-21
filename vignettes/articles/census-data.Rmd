@@ -42,15 +42,19 @@ vars <- c(Male18to64 = "C27009_007E", Male65over = "C27009_010E",
 VAHC <- get_acs(geography = "county",
                 variables = vars,
                 output = "wide", year = 2017) %>%
-  mutate(TotalMale = Male18to64 + Male65over, TotalFemale = Female18to64 + Female65over,
+  mutate(TotalMale = Male18to64 + Male65over, 
+         TotalFemale = Female18to64 + Female65over,
          Total = TotalMale + TotalFemale)
 
-VAHC <- tigris::geo_join(countyshift, VAHC, by_sp = "FIPS", by_df = "GEOID")
+VAHC <- tigris::geo_join(countyshift, VAHC, 
+                         by_sp = "FIPS", by_df = "GEOID")
 
 data("visn")
 
-visn <- visn %>% shift_geo() %>% 
-  group_by(VISN) %>% summarise()
+visn <- visn %>% 
+  shift_geo() %>% 
+  group_by(VISN) %>% 
+  summarise()
 
 ```
 
@@ -59,13 +63,17 @@ visn <- visn %>% shift_geo() %>%
 ```{r}
 plot <- function(var){
   ggplot() +
-  geom_sf(data = VAHC, aes(fill = var), color = NA) +              #county layer
-  geom_sf(data = visn, fill = NA, color = "#ffffff", size = .5) +   #visn layer                 
-  scale_fill_viridis_c(labels = scales::comma) +
-  theme_va(map = TRUE) + labs(caption = "Source: 2017 ACS 5-year Estimates", fill = "Count")
+    geom_sf(data = VAHC, aes(fill = var), color = NA) +              #county layer
+    geom_sf(data = visn, fill = NA, 
+            color = "#ffffff", size = .5) +   #visn layer                 
+    scale_fill_viridis_c(labels = scales::comma) +
+    theme_va(map = TRUE) + 
+    labs(caption = "Source: 2017 ACS 5-year Estimates", 
+         fill = "Count")
 }
-    
-plot(VAHC$Total) + ggtitle("Total Veterans with VHA Coverage")
+
+plot(VAHC$Total) + 
+  ggtitle("Total Veterans with VHA Coverage")
 
 ```
 
@@ -73,8 +81,9 @@ plot(VAHC$Total) + ggtitle("Total Veterans with VHA Coverage")
 
 ```{r}
 
-plot(VAHC$TotalFemale) + ggtitle("Female Veterans with VHA Coverage", 
-                        subtitle = "Counts aggregated at the county-level")
+plot(VAHC$TotalFemale) + 
+  ggtitle("Female Veterans with VHA Coverage", 
+          subtitle = "Counts aggregated at the county-level")
 
 ```
 
@@ -84,10 +93,13 @@ Sex ratio in the population tends to be 1:1, but that's not the case among Veter
 ```{r}
 
 ggplot() +
-  geom_sf(data = VAHC, aes(fill = (TotalFemale/TotalMale)*100), color = NA) +       
-  geom_sf(data = visn, fill = NA, color = "#ffffff", size = .5) +                  
+  geom_sf(data = VAHC, 
+          aes(fill = (TotalFemale/TotalMale)*100), color = NA) +       
+  geom_sf(data = visn, 
+          fill = NA, color = "#ffffff", size = .5) +                  
   scale_fill_viridis_c(labels = scales::comma) + 
-  labs(caption = "Source: 2017 ACS 5-year Estimates", fill = "Ratio") +
+  labs(caption = "Source: 2017 ACS 5-year Estimates", 
+       fill = "Ratio") +
   ggtitle("Sex ratio of Veterans with VA Health Coverage:",
           subtitle = "calculated as number of Female Veterans \nper 100 Male Veterans") +
   theme_va(map = TRUE)
@@ -119,16 +131,17 @@ ggplot() +
 
 ggplot() +
   geom_sf(data = VAHC[VAHC$VISN %in% c("01","02","04"),],
-            aes(fill = Total), color = NA) +
+          aes(fill = Total), color = NA) +
   geom_sf(data = market[market$VISN %in% c("01","02","04"),], 
-            fill = NA, color = "deeppink", size = .4) +
-  geom_sf(data = visn[visn$VISN %in% c("01","02","04"),], fill = NA, color = "#ffffff", size = 1.2) +
+          fill = NA, color = "deeppink", size = .4) +
+  geom_sf(data = visn[visn$VISN %in% c("01","02","04"),], 
+          fill = NA, color = "#ffffff", size = 1.2) +
   scale_fill_viridis_c(labels = scales::comma) +
   labs(caption = "Source: 2017 ACS 5-year Estimates", 
        fill = "Count") + 
   ggtitle("Total Veterans with VA Health Coverage", 
           subtitle = "VA Healthcare Markets within VISN 4, NY/NJ, and New England Networks") +
-  theme_va(map = TRUE)
+  theme_va(map = TRUE, grid_col = "transparent")
 
 ```
 
