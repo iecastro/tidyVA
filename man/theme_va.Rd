@@ -51,7 +51,7 @@ theme_va(base_family = "", base_size = 11.5,
 \item{ticks}{ticks if `TRUE` add ticks}
 }
 \description{
-modified from hrbrthemes
+modified from hrbrthemes::theme_ipsum()
 }
 \references{
 \url{https://hrbrmstr.github.io/hrbrthemes/reference/theme_ipsum.html}
