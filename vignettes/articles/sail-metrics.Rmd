@@ -15,7 +15,6 @@ knitr::opts_chunk$set(warning = FALSE,
 
 devtools::load_all()
 library(ggplot2)
-library(zoo)
 library(purrr)
 library(tidyr)
 ```
@@ -85,7 +84,7 @@ data %>%
   filter(Measure == "1. Population coverage") %>%
   mutate(Value = as.numeric(Value)) %>%
   arrange(desc(Value)) %>% 
-  ggplot(aes(fct_inorder(Site), Value)) +
+  ggplot(aes(forcats::fct_inorder(Site), Value)) +
   geom_col(alpha = .75, fill = "#fdbf11", width = .75 ) +
   labs(y = "Standardized Score", x = "Year-Quarter",
        color= "Site") +
@@ -103,7 +102,7 @@ data %>%
   mutate(value = as.numeric(Value),
          best_10 = as.numeric(`Best 10%`)) %>% 
   arrange(desc(value)) %>% 
-  ggplot(aes(fct_inorder(Site), value)) +
+  ggplot(aes(forcats::fct_inorder(Site), value)) +
   geom_point() +
   geom_segment(aes(x = Site, y = best_10, 
                    xend = Site, yend = value)) +

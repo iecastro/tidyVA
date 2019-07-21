@@ -7,7 +7,7 @@ reference:
   contents:
   - shift_geo
   - theme_va
-  - starts_with("harvest_")
+  - sail_tidy
 - title: Data
   contents:
   - visn

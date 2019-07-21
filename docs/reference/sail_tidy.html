@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>VHA geography - county level — county • tidyVA</title>
+<title>Simple function to tidy Strategic Analytics for Improvement and Learning (SAIL)
+datasets from www.va.gov — sail_tidy • tidyVA</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +31,11 @@
 
 
 
-<meta property="og:title" content="VHA geography - county level — county" />
+<meta property="og:title" content="Simple function to tidy Strategic Analytics for Improvement and Learning (SAIL)
+datasets from www.va.gov — sail_tidy" />
 
-<meta property="og:description" content="A dataset of geometry and attributes of VHA geographies at the county level" />
+<meta property="og:description" content="Simple function to tidy Strategic Analytics for Improvement and Learning (SAIL)
+datasets from www.va.gov" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,51 +123,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>VHA geography - county level</h1>
-    <small class="dont-index">Source: <a href='https://github.com/iecastro/tidyVA/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>county.Rd</code></div>
+    <h1>Simple function to tidy Strategic Analytics for Improvement and Learning (SAIL)
+datasets from www.va.gov</h1>
+    <small class="dont-index">Source: <a href='https://github.com/iecastro/tidyVA/blob/master/R/sail.R'><code>R/sail.R</code></a></small>
+    <div class="hidden name"><code>sail_tidy.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A dataset of geometry and attributes of VHA geographies at the county level</p>
+    <p>Simple function to tidy Strategic Analytics for Improvement and Learning (SAIL)
+datasets from www.va.gov</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>county</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A simple feature collection with 3225 rows and 12 variables:</p><dl class='dl-horizontal'>
-  <dt>NAME</dt><dd><p>County Name</p></dd>
-  <dt>FIPS</dt><dd><p>County FIPS Code</p></dd>
-  <dt>STATE_NAME</dt><dd><p>State where County is located</p></dd>
-  <dt>VISN</dt><dd><p>Veteran Integrated Service Network ID</p></dd>
-  <dt>MARKET</dt><dd><p>VHA Market ID</p></dd>
-  <dt>SUBMARKET</dt><dd><p>VHA Submarket ID</p></dd>
-  <dt>SECTOR</dt><dd><p>Sector ID</p></dd>
-  <dt>STATE_FIPS</dt><dd><p>State FIPS Code</p></dd>
-  <dt>ST</dt><dd><p>State abbreviation</p></dd>
-  <dt>FIPS</dt><dd><p>County FIPS Code</p></dd>
-  <dt>Shape_Leng</dt><dd><p>Length of shape</p></dd>
-  <dt>Shape_Area</dt><dd><p>Area of shape</p></dd>
-  <dt>geometry</dt><dd><p>Geometry of shape</p></dd>
-</dl>
+    <pre class="usage"><span class='fu'>sail_tidy</span>(<span class='no'>url</span>)</pre>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>url</th>
+      <td><p>a SAIL dataset url from: <a href='https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp'>https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp</a></p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties'>https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties</a></p>
+    <p>A tibble with SAIL metrics in tidy format</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='no'>url</span> <span class='kw'>&lt;-</span> <span class='st'>"https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_albany_fy19q1.xlsx"</span>
+<span class='fu'>sail_tidy</span>(<span class='no'>url</span>)
+
+<span class='fu'>sail_tidy</span>(<span class='st'>"https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#source">Source</a></li>
-          </ul>
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

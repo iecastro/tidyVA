@@ -39,7 +39,7 @@
 <li>
   <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
-
+     
   </a>
 </li>
 <li>
@@ -51,7 +51,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
-
+     
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -59,10 +59,10 @@
       <a href="articles/articles/census-data.html">Merging to Census data</a>
     </li>
     <li>
-      <a href="articles/articles/harvest.html">VHA Harvest Datasets</a>
+      <a href="articles/articles/sail-metrics.html">VHA SAIL Metrics Datasets</a>
     </li>
     <li>
-      <a href="articles/articles/open-data.html">VA Open Data</a>
+      <a href="articles/tidyva.html">Basic Usage of tidyVA</a>
     </li>
   </ul>
 </li>
@@ -71,7 +71,7 @@
 <li>
   <a href="https://github.com/iecastro/tidyVA">
     <span class="fa fa-github fa-lg"></span>
-
+     
   </a>
 </li>
       </ul>
@@ -82,13 +82,13 @@
 </div>
 <!--/.navbar -->
 
-
+      
       </header><div class="row">
   <div class="col-md-9 contents">
+    
 
-
-
-
+    
+    
 <!-- badges: start -->
 
 <div id="tidyva" class="section level1">
@@ -101,7 +101,7 @@
 <h1 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h1>
 <p>You can install <strong>tidyVA</strong> from GitHub with:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"iecastro/tidyVA"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"iecastro/tidyVA"</span>)</a></code></pre></div>
 </div>
 <div id="datasets" class="section level1">
 <h1 class="hasAnchor">
@@ -128,139 +128,116 @@
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <p>VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one or more counties. Since each VISN is defined in a hierarchy, this dataset contains attributes of all echelons above submarket - that is, Market and VISN.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyVA)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"submarket"</span>)
-
-<span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_sf</span>(<span class="dt">data=</span>submarket, <span class="dt">fill =</span> <span class="ot">NA</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyVA)</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"submarket"</span>)</a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> submarket, <span class="dt">fill =</span> <span class="ot">NA</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" width="100%"></p>
 <p>Although accurate, this output is not very easy to work with. But, since this is in tidy format, we can easily filter and manipulate the data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glimpse</span>(submarket)
-<span class="co">#&gt; Observations: 153</span>
-<span class="co">#&gt; Variables: 6</span>
-<span class="co">#&gt; $ VISN       &lt;chr&gt; "01", "01", "01", "01", "02", "02", "02", "02", "02...</span>
-<span class="co">#&gt; $ MARKET     &lt;chr&gt; "01-a", "01-b", "01-c", "01-d", "02-a", "02-b", "02...</span>
-<span class="co">#&gt; $ SUBMARKET  &lt;chr&gt; "01-a-9", "01-b-9", "01-c-9", "01-d-9", "02-a-9", "...</span>
-<span class="co">#&gt; $ Shape_Leng &lt;dbl&gt; 38.391428, 81.160361, 13.413957, 14.839457, 13.0815...</span>
-<span class="co">#&gt; $ Shape_Area &lt;dbl&gt; 1.78751288, 9.66806953, 5.47709016, 2.19550641, 4.9...</span>
-<span class="co">#&gt; $ geometry   &lt;MULTIPOLYGON [Â°]&gt; MULTIPOLYGON (((-71.56974 4..., MULTI...</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">visn2 &lt;-<span class="st"> </span>submarket <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(VISN <span class="op">==</span><span class="st"> "02"</span>)
-
-visn2
-<span class="co">#&gt; Simple feature collection with 10 features and 5 fields</span>
-<span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
-<span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: -79.13745 ymin: 39.50577 xmax: -71.85615 ymax: 45.01585</span>
-<span class="co">#&gt; epsg (SRID):    4326</span>
-<span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span>
-<span class="co">#&gt; # A tibble: 10 x 6</span>
-<span class="co">#&gt;    VISN  MARKET SUBMARKET Shape_Leng Shape_Area                    geometry</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;         &lt;MULTIPOLYGON [Â°]&gt;</span>
-<span class="co">#&gt;  1 02    02-a   02-a-9         13.1      4.91   (((-73.34312 45.01084, -73~</span>
-<span class="co">#&gt;  2 02    02-b   02-b-9         18.8      4.01   (((-76.18704 43.66566, -76~</span>
-<span class="co">#&gt;  3 02    02-d   02-d-9          6.58     1.25   (((-78.90518 42.93351, -78~</span>
-<span class="co">#&gt;  4 02    02-e   02-e-1          2.49     0.191  (((-77.97621 43.36874, -77~</span>
-<span class="co">#&gt;  5 02    02-e   02-e-2          6.01     0.656  (((-76.94668 43.25894, -76~</span>
-<span class="co">#&gt;  6 02    02-f   02-f-2          6.14     1.63   (((-76.94756 42.76441, -76~</span>
-<span class="co">#&gt;  7 02    02-g   02-g-9         25.2      0.335  (((-73.72961 40.59637, -73~</span>
-<span class="co">#&gt;  8 02    02-h   02-h-1          9.51     0.999  (((-73.89687 40.79565, -73~</span>
-<span class="co">#&gt;  9 02    02-h   02-h-3          5.92     0.0717 (((-74.20241 40.57956, -74~</span>
-<span class="co">#&gt; 10 02    02-i   02-i-9         17.4      1.24   (((-74.30019 39.50628, -74~</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data=</span>visn2, <span class="kw">aes</span>(<span class="dt">fill =</span> MARKET), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn2, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> .<span class="dv">25</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">glimpse</span>(submarket)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; Observations: 153</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; Variables: 6</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; $ VISN       &lt;chr&gt; "01", "01", "01", "01", "02", "02", "02", "02", "02...</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; $ MARKET     &lt;chr&gt; "01-a", "01-b", "01-c", "01-d", "02-a", "02-b", "02...</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; $ SUBMARKET  &lt;chr&gt; "01-a-9", "01-b-9", "01-c-9", "01-d-9", "02-a-9", "...</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt; $ Shape_Leng &lt;dbl&gt; 38.391428, 81.160361, 13.413957, 14.839457, 13.0815...</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; $ Shape_Area &lt;dbl&gt; 1.78751288, 9.66806953, 5.47709016, 2.19550641, 4.9...</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co">#&gt; $ geometry   &lt;MULTIPOLYGON [Â°]&gt; MULTIPOLYGON (((-71.56974 4..., MULTI...</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">visn2 &lt;-<span class="st"> </span>submarket <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(VISN <span class="op">==</span><span class="st"> "02"</span>)</a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4">visn2</a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; Simple feature collection with 10 features and 5 fields</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; geometry type:  MULTIPOLYGON</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; dimension:      XY</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; bbox:           xmin: -79.13745 ymin: 39.50577 xmax: -71.85615 ymax: 45.01585</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; epsg (SRID):    4326</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; # A tibble: 10 x 6</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt;    VISN  MARKET SUBMARKET Shape_Leng Shape_Area                    geometry</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;         &lt;MULTIPOLYGON [Â°]&gt;</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt;  1 02    02-a   02-a-9         13.1      4.91   (((-73.34312 45.01084, -73~</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt;  2 02    02-b   02-b-9         18.8      4.01   (((-76.18704 43.66566, -76~</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt;  3 02    02-d   02-d-9          6.58     1.25   (((-78.90518 42.93351, -78~</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt;  4 02    02-e   02-e-1          2.49     0.191  (((-77.97621 43.36874, -77~</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt;  5 02    02-e   02-e-2          6.01     0.656  (((-76.94668 43.25894, -76~</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt;  6 02    02-f   02-f-2          6.14     1.63   (((-76.94756 42.76441, -76~</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt;  7 02    02-g   02-g-9         25.2      0.335  (((-73.72961 40.59637, -73~</span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt;  8 02    02-h   02-h-1          9.51     0.999  (((-73.89687 40.79565, -73~</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt;  9 02    02-h   02-h-3          5.92     0.0717 (((-74.20241 40.57956, -74~</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; 10 02    02-i   02-i-9         17.4      1.24   (((-74.30019 39.50628, -74~</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn2, <span class="kw">aes</span>(<span class="dt">fill =</span> MARKET), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn2, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">.25</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 </div>
 </div>
 <div id="functions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#functions" class="anchor"></a>Functions</h1>
-<p><code><a href="reference/shift_geo.html">shift_geo()</a></code> will project and reposition Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).</p>
-<p><code><a href="reference/theme_va.html">theme_va()</a></code> is a ggplot theme with some default colors and plotting parameters. The core of this function is <code>theme_ipsum</code> from <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>, with some modifications and defaults.</p>
-<div id="harvest-functions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#harvest-functions" class="anchor"></a>Harvest functions</h3>
-<p>These functions serve as a homebrewed API for fetching Hospital Performance datasets. VA Open Data uses a harvesting framework from <a href="https://docs.getdkan.com/en/latest/components/harvest.html">DKAN</a>. Currently the <a href="https://www.data.va.gov/harvest_source/vha-harvest-datasets">VHA Harvest</a> only includes hospital performance datasets.</p>
-<p><code><a href="reference/harvest_get.html">harvest_get()</a></code> will return a tibble of URLs and attributes for each dataset.</p>
-<p><code><a href="reference/harvest_wrngl.html">harvest_wrngl()</a></code> will import and tidy datasets from an object created with <code>harvest_get</code></p>
-</div>
-<div id="examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#examples" class="anchor"></a>Examples</h2>
 <div id="shift_geo" class="section level3">
 <h3 class="hasAnchor">
 <a href="#shift_geo" class="anchor"></a><code>shift_geo</code>
 </h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/shift_geo.html">shift_geo</a></span>(submarket) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_sf</span>(<span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_minimal</span>()
-<span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></code></pre></div>
+<p><code><a href="reference/shift_geo.html">shift_geo()</a></code> will project and reposition Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="reference/shift_geo.html">shift_geo</a></span>(submarket) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw">theme_minimal</span>()</a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
 </div>
 <div id="theme_va" class="section level3">
 <h3 class="hasAnchor">
-<a href="#theme_va" class="anchor"></a><code>theme_va</code>
+<a href="#theme_va" class="anchor"></a><code><a href="reference/theme_va.html">theme_va()</a></code>
 </h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"visn"</span>)
-
-visn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/reorder.factor">reorder</a></span>(VISN,Shape_Area), Shape_Area)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"VISN"</span>, <span class="dt">y =</span> <span class="st">"Shape Area"</span>, <span class="dt">caption =</span> <span class="st">"CRS - EPSG:4326"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Shape Area of VA Service Networks"</span>, <span class="dt">subtitle =</span> <span class="st">"This is an example plot"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="reference/theme_va.html">theme_va</a></span>(<span class="dt">grid =</span> <span class="st">"X"</span>)</code></pre></div>
+<p><code><a href="reference/theme_va.html">theme_va()</a></code> is a ggplot theme with some default colors and plotting parameters. The core of this function is <code>theme_ipsum</code> from <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>, with some modifications and defaults.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"visn"</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3">visn <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/reorder.factor">reorder</a></span>(VISN,Shape_Area), Shape_Area)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"VISN"</span>, <span class="dt">y =</span> <span class="st">"Shape Area"</span>, </a>
+<a class="sourceLine" id="cb7-7" title="7">       <span class="dt">caption =</span> <span class="st">"CRS - EPSG:4326"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Shape Area of VA Service Networks"</span>, </a>
+<a class="sourceLine" id="cb7-9" title="9">          <span class="dt">subtitle =</span> <span class="st">"This is an example plot"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw"><a href="reference/theme_va.html">theme_va</a></span>(<span class="dt">grid =</span> <span class="st">"Y"</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
-<div id="harvest_get" class="section level3">
+<div id="sail_tidy" class="section level3">
 <h3 class="hasAnchor">
-<a href="#harvest_get" class="anchor"></a><code>harvest_get</code>
+<a href="#sail_tidy" class="anchor"></a><code>sail_tidy</code>
 </h3>
-<p>This function is a wrapper for <code>filter</code> so that queries can be built. If no arguments are entered, all available datasets are returned.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">links &lt;-<span class="st"> </span><span class="kw"><a href="reference/harvest_get.html">harvest_get</a></span>(Year <span class="op">==</span><span class="st"> "2018"</span> <span class="op">&amp;</span><span class="st"> </span>VISN <span class="op">==</span><span class="st"> "VISN 2"</span>)
-
-links
-<span class="co">#&gt; # A tibble: 22 x 6</span>
-<span class="co">#&gt;    VISN   Site     downloadURL                         format Year  Quarter</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;                               &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  </span>
-<span class="co">#&gt;  1 VISN 2 Albany   https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      </span>
-<span class="co">#&gt;  2 VISN 2 Bath     https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      </span>
-<span class="co">#&gt;  3 VISN 2 Bronx    https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      </span>
-<span class="co">#&gt;  4 VISN 2 Brooklyn https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      </span>
-<span class="co">#&gt;  5 VISN 2 Buffalo  https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      </span>
-<span class="co">#&gt;  6 VISN 2 Cananda~ https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      </span>
-<span class="co">#&gt;  7 VISN 2 East Or~ https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      </span>
-<span class="co">#&gt;  8 VISN 2 Hudson ~ https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      </span>
-<span class="co">#&gt;  9 VISN 2 New York https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      </span>
-<span class="co">#&gt; 10 VISN 2 Northpo~ https://www.va.gov/QUALITYOFCARE/S~ XLS    2018  1      </span>
-<span class="co">#&gt; # ... with 12 more rows</span></code></pre></div>
+<p><code>sail_tidy</code> will return a tibble of VA SAIL metrics when provided a <a href="https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp">data table url</a>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="reference/sail_tidy.html">sail_tidy</a></span>(<span class="st">"https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx"</span>)</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; # A tibble: 79 x 6</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt;    Measure          `Measure Unit` `Best 10%` `10th-50th-90th ~ Site  Value</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt;</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt;  1 Acute care mort~ &lt;NA&gt;           &lt;NA&gt;       &lt;NA&gt;              Clar~ &lt;NA&gt; </span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt;  2 1. Acute care S~ O/E            0.469      0.469 - 0.857 - ~ Clar~ 1.360</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt;  3 2. Acute care 3~ O/E            0.740      0.740 - 0.952 - ~ Clar~ 1.109</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt;  4 a. AMI RSMR      %              7.219      7.219 - 7.666 - ~ Clar~ 8.106</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt;  5 b. CHF RSMR      %              5.676      5.676 - 6.820 - ~ Clar~ 8.300</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt;  6 c. Pneumonia RS~ %              7.820      7.820 - 9.026 - ~ Clar~ 11.9~</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt;  7 d. COPD RSMR     %              4.402      4.402 - 5.942 - ~ Clar~ 5.965</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt;  8 e. Stroke RSMR   %              5.134      5.134 - 5.933 - ~ Clar~ 5.531</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt;  9 Avoidable adver~ &lt;NA&gt;           &lt;NA&gt;       &lt;NA&gt;              Clar~ &lt;NA&gt; </span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; 10 1. In-hospital ~ O/E            0.000      0.000 - 0.834 - ~ Clar~ 1.580</span></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; # ... with 69 more rows</span></a></code></pre></div>
 </div>
-<div id="harvest_wrngl" class="section level3">
+<div id="harvest-functions" class="section level3">
 <h3 class="hasAnchor">
-<a href="#harvest_wrngl" class="anchor"></a><code>harvest_wrngl</code>
-</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw"><a href="reference/harvest_wrngl.html">harvest_wrngl</a></span>(links) <span class="co">#object created with harvest_get()</span>
-<span class="co">#&gt; readxl works best with a newer version of the tibble package.</span>
-<span class="co">#&gt; You currently have tibble v1.4.2.</span>
-<span class="co">#&gt; Falling back to column name repair from tibble &lt;= v1.4.2.</span>
-<span class="co">#&gt; Message displays once per session.</span>
-
-data
-<span class="co">#&gt; # A tibble: 1,562 x 9</span>
-<span class="co">#&gt;    Measure `Measure Unit` Benchmark `10th-50th-90th~ Site.x Value VISN </span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;</span>
-<span class="co">#&gt;  1 Acute ~ &lt;NA&gt;           &lt;NA&gt;      &lt;NA&gt;             Albany &lt;NA&gt;  VISN~</span>
-<span class="co">#&gt;  2 1. Acu~ O/E            0.480     0.480 - 0.890 -~ Albany 0.943 VISN~</span>
-<span class="co">#&gt;  3 2. Acu~ O/E            0.727     0.727 - 0.960 -~ Albany 0.907 VISN~</span>
-<span class="co">#&gt;  4 a. AMI~ %              7.003     7.003 - 7.967 -~ Albany 8.320 VISN~</span>
-<span class="co">#&gt;  5 b. CHF~ %              4.870     4.870 - 5.970 -~ Albany 7.201 VISN~</span>
-<span class="co">#&gt;  6 c. Pne~ %              17.195    17.195 - 18.393~ Albany 18.2~ VISN~</span>
-<span class="co">#&gt;  7 d. COP~ %              3.757     3.757 - 4.725 -~ Albany 5.244 VISN~</span>
-<span class="co">#&gt;  8 Avoida~ &lt;NA&gt;           &lt;NA&gt;      &lt;NA&gt;             Albany &lt;NA&gt;  VISN~</span>
-<span class="co">#&gt;  9 1. In-~ O/E            0.231     0.231 - 0.922 -~ Albany 1.066 VISN~</span>
-<span class="co">#&gt; 10 2. Hea~ &lt;NA&gt;           &lt;NA&gt;      &lt;NA&gt;             Albany &lt;NA&gt;  VISN~</span>
-<span class="co">#&gt; # ... with 1,552 more rows, and 2 more variables: Year &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Quarter &lt;chr&gt;</span></code></pre></div>
-</div>
+<a href="#harvest-functions" class="anchor"></a>Harvest functions</h3>
+<pre><code>  These functions have been removed from the namespace due to the VA Open Data site being taken down.</code></pre>
+<blockquote>
+<p>These functions serve as a homebrewed API for fetching Hospital Performance datasets. VA Open Data uses a harvesting framework from <a href="https://docs.getdkan.com/en/latest/components/harvest.html">DKAN</a>. Currently the <a href="https://www.data.va.gov/harvest_source/vha-harvest-datasets">VHA Harvest</a> only includes hospital performance datasets.</p>
+<p><code><a href="reference/harvest_get.html">harvest_get()</a></code> will return a tibble of URLs and attributes for each dataset.</p>
+<p><code><a href="reference/harvest_wrngl.html">harvest_wrngl()</a></code> will import and tidy datasets from an object created with <code>harvest_get</code></p>
+</blockquote>
 </div>
 </div>
 <div id="info" class="section level1">
@@ -275,9 +252,9 @@ data
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/iecastro/tidyVA">https://github.com/iecastro/tidyVA</a>
+<li>Browse source code at <br><a href="https://github.com/iecastro/tidyVA">https://​github.com/​iecastro/​tidyVA</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/iecastro/tidyVA/issues">https://github.com/iecastro/tidyVA/issues</a>
+<li>Report a bug at <br><a href="https://github.com/iecastro/tidyVA/issues">https://​github.com/​iecastro/​tidyVA/​issues</a>
 </li>
 </ul>
 </div>
@@ -317,7 +294,7 @@ data
       </footer>
 </div>
 
-
+  
 
   </body>
 </html>

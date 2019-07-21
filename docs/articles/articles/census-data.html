@@ -43,7 +43,7 @@
   </a>
 </li>
 <li>
-  <a href="../../articles/tidyVA.html">Get started</a>
+  <a href="../../articles/tidyva.html">Get started</a>
 </li>
 <li>
   <a href="../../reference/index.html">Reference</a>
@@ -59,10 +59,10 @@
       <a href="../../articles/articles/census-data.html">Merging to Census data</a>
     </li>
     <li>
-      <a href="../../articles/articles/harvest.html">VHA Harvest Datasets</a>
+      <a href="../../articles/articles/sail-metrics.html">VHA SAIL Metrics Datasets</a>
     </li>
     <li>
-      <a href="../../articles/articles/open-data.html">VA Open Data</a>
+      <a href="../../articles/tidyva.html">Basic Usage of tidyVA</a>
     </li>
   </ul>
 </li>
@@ -97,88 +97,101 @@
     
     
 <p>To get the most out of <strong>tidyVA</strong>, it is easiest to load the <strong>tidyverse</strong>. For fetching data from the Census API load <strong>tidycensus</strong> (this will require you first sign up for an API key).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidycensus)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyVA)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"county"</span>)
-
-countyshift &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/shift_geo.html">shift_geo</a></span>(county)
-<span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidycensus)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyVA)</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"county"</span>)</a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7">countyshift &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/shift_geo.html">shift_geo</a></span>(county)</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></a></code></pre></div>
 <p>VA Healthcare Coverage at the county-level</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-vars &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">Male18to64 =</span> <span class="st">"C27009_007E"</span>, <span class="dt">Male65over =</span> <span class="st">"C27009_010E"</span>,
-          <span class="dt">Female18to64 =</span> <span class="st">"C27009_017E"</span>, <span class="dt">Female65over =</span> <span class="st">"C27009_020E"</span>)
-
-VAHC &lt;-<span class="st"> </span><span class="kw">get_acs</span>(<span class="dt">geography =</span> <span class="st">"county"</span>,
-                <span class="dt">variables =</span> vars,
-                <span class="dt">output =</span> <span class="st">"wide"</span>, <span class="dt">year =</span> <span class="dv">2017</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">TotalMale =</span> Male18to64 <span class="op">+</span><span class="st"> </span>Male65over, <span class="dt">TotalFemale =</span> Female18to64 <span class="op">+</span><span class="st"> </span>Female65over,
-         <span class="dt">Total =</span> TotalMale <span class="op">+</span><span class="st"> </span>TotalFemale)
-<span class="co">#&gt; Getting data from the 2013-2017 5-year ACS</span>
-
-VAHC &lt;-<span class="st"> </span>tigris<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tigris/topics/geo_join">geo_join</a></span>(countyshift, VAHC, <span class="dt">by_sp =</span> <span class="st">"FIPS"</span>, <span class="dt">by_df =</span> <span class="st">"GEOID"</span>)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"visn"</span>)
-
-visn &lt;-<span class="st"> </span>visn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../../reference/shift_geo.html">shift_geo</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(VISN) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>()
-<span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot &lt;-<span class="st"> </span><span class="cf">function</span>(var){
-  <span class="kw">ggplot</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC, <span class="kw">aes</span>(<span class="dt">fill =</span> var), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">              </span><span class="co">#county layer</span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> .<span class="dv">5</span>) <span class="op">+</span><span class="st">   </span><span class="co">#visn layer                 </span>
-<span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, <span class="dt">fill =</span> <span class="st">"Count"</span>)
-}
-    
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(VAHC<span class="op">$</span>Total) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VHA Coverage"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"></a>
+<a class="sourceLine" id="cb2-2" title="2">vars &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">Male18to64 =</span> <span class="st">"C27009_007E"</span>, <span class="dt">Male65over =</span> <span class="st">"C27009_010E"</span>,</a>
+<a class="sourceLine" id="cb2-3" title="3">          <span class="dt">Female18to64 =</span> <span class="st">"C27009_017E"</span>, <span class="dt">Female65over =</span> <span class="st">"C27009_020E"</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">VAHC &lt;-<span class="st"> </span><span class="kw">get_acs</span>(<span class="dt">geography =</span> <span class="st">"county"</span>,</a>
+<a class="sourceLine" id="cb2-6" title="6">                <span class="dt">variables =</span> vars,</a>
+<a class="sourceLine" id="cb2-7" title="7">                <span class="dt">output =</span> <span class="st">"wide"</span>, <span class="dt">year =</span> <span class="dv">2017</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">TotalMale =</span> Male18to64 <span class="op">+</span><span class="st"> </span>Male65over, </a>
+<a class="sourceLine" id="cb2-9" title="9">         <span class="dt">TotalFemale =</span> Female18to64 <span class="op">+</span><span class="st"> </span>Female65over,</a>
+<a class="sourceLine" id="cb2-10" title="10">         <span class="dt">Total =</span> TotalMale <span class="op">+</span><span class="st"> </span>TotalFemale)</a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt; Getting data from the 2013-2017 5-year ACS</span></a>
+<a class="sourceLine" id="cb2-12" title="12"></a>
+<a class="sourceLine" id="cb2-13" title="13">VAHC &lt;-<span class="st"> </span>tigris<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tigris/topics/geo_join">geo_join</a></span>(countyshift, VAHC, </a>
+<a class="sourceLine" id="cb2-14" title="14">                         <span class="dt">by_sp =</span> <span class="st">"FIPS"</span>, <span class="dt">by_df =</span> <span class="st">"GEOID"</span>)</a>
+<a class="sourceLine" id="cb2-15" title="15"></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"visn"</span>)</a>
+<a class="sourceLine" id="cb2-17" title="17"></a>
+<a class="sourceLine" id="cb2-18" title="18">visn &lt;-<span class="st"> </span>visn <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="st">  </span><span class="kw"><a href="../../reference/shift_geo.html">shift_geo</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="st">  </span><span class="kw">group_by</span>(VISN) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="st">  </span><span class="kw">summarise</span>()</a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">plot &lt;-<span class="st"> </span><span class="cf">function</span>(var){</a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="st">    </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC, <span class="kw">aes</span>(<span class="dt">fill =</span> var), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">              </span><span class="co">#county layer</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="st">    </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn, <span class="dt">fill =</span> <span class="ot">NA</span>, </a>
+<a class="sourceLine" id="cb3-5" title="5">            <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">.5</span>) <span class="op">+</span><span class="st">   </span><span class="co">#visn layer                 </span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="st">    </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="st">    </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, </a>
+<a class="sourceLine" id="cb3-9" title="9">         <span class="dt">fill =</span> <span class="st">"Count"</span>)</a>
+<a class="sourceLine" id="cb3-10" title="10">}</a>
+<a class="sourceLine" id="cb3-11" title="11"></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(VAHC<span class="op">$</span>Total) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VHA Coverage"</span>)</a></code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(VAHC<span class="op">$</span>TotalFemale) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">"Female Veterans with VHA Coverage"</span>, 
-                        <span class="dt">subtitle =</span> <span class="st">"Counts aggregated at the county-level"</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(VAHC<span class="op">$</span>TotalFemale) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Female Veterans with VHA Coverage"</span>, </a>
+<a class="sourceLine" id="cb4-4" title="4">          <span class="dt">subtitle =</span> <span class="st">"Counts aggregated at the county-level"</span>)</a></code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Sex ratio in the population tends to be 1:1, but that’s not the case among Veterans.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw">ggplot</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC, <span class="kw">aes</span>(<span class="dt">fill =</span> (TotalFemale<span class="op">/</span>TotalMale)<span class="op">*</span><span class="dv">100</span>), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">       </span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> .<span class="dv">5</span>) <span class="op">+</span><span class="st">                  </span>
-<span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,
-          <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans </span><span class="ch">\n</span><span class="st">per 100 Male Veterans"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC, </a>
+<a class="sourceLine" id="cb5-4" title="4">          <span class="kw">aes</span>(<span class="dt">fill =</span> (TotalFemale<span class="op">/</span>TotalMale)<span class="op">*</span><span class="dv">100</span>), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">       </span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn, </a>
+<a class="sourceLine" id="cb5-6" title="6">          <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">.5</span>) <span class="op">+</span><span class="st">                  </span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, </a>
+<a class="sourceLine" id="cb5-9" title="9">       <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,</a>
+<a class="sourceLine" id="cb5-11" title="11">          <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans </span><span class="ch">\n</span><span class="st">per 100 Male Veterans"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"market"</span>)
-
-proj &lt;-<span class="st"> </span><span class="kw">st_crs</span>(visn)
-market &lt;-<span class="st"> </span><span class="kw">st_transform</span>(market,proj)
-
-<span class="kw">ggplot</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC[VAHC<span class="op">$</span>VISN <span class="op">==</span><span class="st"> "19"</span>,],
-        <span class="kw">aes</span>(<span class="dt">fill =</span> (TotalFemale<span class="op">/</span>TotalMale)<span class="op">*</span><span class="dv">100</span>), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> market[market<span class="op">$</span>VISN <span class="op">==</span><span class="st"> "19"</span>,], 
-          <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> .<span class="dv">5</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates </span><span class="ch">\n</span><span class="st">Geography: Markets in VISN 19"</span>, 
-       <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,
-          <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans per 100 </span><span class="ch">\n</span><span class="st">Male Veterans at the county-level"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) </code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"market"</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3">proj &lt;-<span class="st"> </span><span class="kw">st_crs</span>(visn)</a>
+<a class="sourceLine" id="cb6-4" title="4">market &lt;-<span class="st"> </span><span class="kw">st_transform</span>(market,proj)</a>
+<a class="sourceLine" id="cb6-5" title="5"></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC[VAHC<span class="op">$</span>VISN <span class="op">==</span><span class="st"> "19"</span>,],</a>
+<a class="sourceLine" id="cb6-8" title="8">        <span class="kw">aes</span>(<span class="dt">fill =</span> (TotalFemale<span class="op">/</span>TotalMale)<span class="op">*</span><span class="dv">100</span>), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> market[market<span class="op">$</span>VISN <span class="op">==</span><span class="st"> "19"</span>,], </a>
+<a class="sourceLine" id="cb6-10" title="10">          <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates </span><span class="ch">\n</span><span class="st">Geography: Markets in VISN 19"</span>, </a>
+<a class="sourceLine" id="cb6-13" title="13">       <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,</a>
+<a class="sourceLine" id="cb6-15" title="15">          <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans per 100 </span><span class="ch">\n</span><span class="st">Male Veterans at the county-level"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-16" title="16"><span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw">ggplot</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC[VAHC<span class="op">$</span>VISN <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"01"</span>,<span class="st">"02"</span>,<span class="st">"04"</span>),],
-            <span class="kw">aes</span>(<span class="dt">fill =</span> Total), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> market[market<span class="op">$</span>VISN <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"01"</span>,<span class="st">"02"</span>,<span class="st">"04"</span>),], 
-            <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"deeppink"</span>, <span class="dt">size =</span> .<span class="dv">4</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn[visn<span class="op">$</span>VISN <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"01"</span>,<span class="st">"02"</span>,<span class="st">"04"</span>),], <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">1.2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, 
-       <span class="dt">fill =</span> <span class="st">"Count"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VA Health Coverage"</span>, 
-          <span class="dt">subtitle =</span> <span class="st">"VA Healthcare Markets within VISN 4, NY/NJ, and New England Networks"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC[VAHC<span class="op">$</span>VISN <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"01"</span>,<span class="st">"02"</span>,<span class="st">"04"</span>),],</a>
+<a class="sourceLine" id="cb7-4" title="4">          <span class="kw">aes</span>(<span class="dt">fill =</span> Total), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> market[market<span class="op">$</span>VISN <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"01"</span>,<span class="st">"02"</span>,<span class="st">"04"</span>),], </a>
+<a class="sourceLine" id="cb7-6" title="6">          <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"deeppink"</span>, <span class="dt">size =</span> <span class="fl">.4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn[visn<span class="op">$</span>VISN <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"01"</span>,<span class="st">"02"</span>,<span class="st">"04"</span>),], </a>
+<a class="sourceLine" id="cb7-8" title="8">          <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">1.2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, </a>
+<a class="sourceLine" id="cb7-11" title="11">       <span class="dt">fill =</span> <span class="st">"Count"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VA Health Coverage"</span>, </a>
+<a class="sourceLine" id="cb7-13" title="13">          <span class="dt">subtitle =</span> <span class="st">"VA Healthcare Markets within VISN 4, NY/NJ, and New England Networks"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>, <span class="dt">grid_col =</span> <span class="st">"transparent"</span>)</a></code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
   </div>
 

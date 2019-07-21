@@ -32,12 +32,11 @@
 
 <meta property="og:title" content="VA locations — VAloc" />
 
-<meta property="og:description" content="A dataset of geometry and attributes of Veteran Affairs locations as of 9/30/2016
-Includes Veterans Health Administration:  Medical Centers (VAMC),
-Community - Based Outpatient Clinics (CBOC), Community Living Centers (CLC),
-Domiciliary Residential Rehabilitation Treatment Program (DRRTP), Vet Centers (VCTR).
-Veterans Benefits Administration: Regional Offices (RO).
-National Cemetery Administration:  National and State Cemeteries." />
+<meta property="og:description" content="A dataset of geometry and attributes of Veteran Affairs locations as of 9/30/2018.
+Veterans Health Administration (VHA):
+Medical Centers (VAMC), Community - Based Outpatient Clinics (CBOC),
+Community Living Centers (CLC), Domiciliary Residential Rehabilitation Treatment Program (DRRTP),
+Vet Centers (VCTR)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -81,7 +80,7 @@ National Cemetery Administration:  National and State Cemeteries." />
   </a>
 </li>
 <li>
-  <a href="../articles/tidyVA.html">Get started</a>
+  <a href="../articles/tidyva.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -97,10 +96,10 @@ National Cemetery Administration:  National and State Cemeteries." />
       <a href="../articles/articles/census-data.html">Merging to Census data</a>
     </li>
     <li>
-      <a href="../articles/articles/harvest.html">VHA Harvest Datasets</a>
+      <a href="../articles/articles/sail-metrics.html">VHA SAIL Metrics Datasets</a>
     </li>
     <li>
-      <a href="../articles/articles/open-data.html">VA Open Data</a>
+      <a href="../articles/tidyva.html">Basic Usage of tidyVA</a>
     </li>
   </ul>
 </li>
@@ -132,12 +131,11 @@ National Cemetery Administration:  National and State Cemeteries." />
 
     <div class="ref-description">
     
-    <p>A dataset of geometry and attributes of Veteran Affairs locations as of 9/30/2016
-Includes Veterans Health Administration:  Medical Centers (VAMC),
-Community - Based Outpatient Clinics (CBOC), Community Living Centers (CLC),
-Domiciliary Residential Rehabilitation Treatment Program (DRRTP), Vet Centers (VCTR).
-Veterans Benefits Administration: Regional Offices (RO).
-National Cemetery Administration:  National and State Cemeteries.</p>
+    <p>A dataset of geometry and attributes of Veteran Affairs locations as of 9/30/2018.
+Veterans Health Administration (VHA):
+Medical Centers (VAMC), Community - Based Outpatient Clinics (CBOC),
+Community Living Centers (CLC), Domiciliary Residential Rehabilitation Treatment Program (DRRTP),
+Vet Centers (VCTR).</p>
     
     </div>
 
@@ -145,32 +143,59 @@ National Cemetery Administration:  National and State Cemeteries.</p>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A simple feature collection with 1937 rows and 45 variables:</p><dl class='dl-horizontal'>
+    <p>A simple feature collection with 1953 rows and 50 variables:</p><dl class='dl-horizontal'>
   <dt>StationNumber</dt><dd><p>Site ID</p></dd>
   <dt>FacilityName</dt><dd><p>Site Name</p></dd>
   <dt>PrimaryService</dt><dd><p>Primary service of site</p></dd>
   <dt>PrimaryAttribute</dt><dd><p>Location type</p></dd>
-  <dt>Mobile</dt><dd><p>Whether facility is a Mobile VA Clinic</p></dd>
+  <dt>Mobile</dt><dd><p>Whether facility is/has a Mobile VA Clinic</p></dd>
   <dt>Address1</dt><dd><p>Address component</p></dd>
   <dt>Address2</dt><dd><p>Address component</p></dd>
   <dt>Address3</dt><dd><p>Address component</p></dd>
   <dt>PhoneNumber</dt><dd><p>Site's phone number</p></dd>
+  <dt>FaxNumber</dt><dd><p>Site's fax number</p></dd>
   <dt>City</dt><dd><p>City</p></dd>
-  <dt>StateAbbreviation </dt><dd><p>State abbreviation</p></dd>
+  <dt>StateAbbreviation</dt><dd><p>State abbreviation</p></dd>
   <dt>Zip</dt><dd><p>ZIP Code</p></dd>
   <dt>CemeteryType</dt><dd><p>Whether National or State</p></dd>
   <dt>CemeteryOperations</dt><dd><p>Operations</p></dd>
-  <dt>City</dt><dd><p>City</p></dd>
-  <dt>VAAdministration</dt><dd><p>Administration ID</p></dd>
+  <dt>VAAdministration</dt><dd><p>VA Administration Agency</p></dd>
   <dt>Latitude</dt><dd><p>Latitude</p></dd>
   <dt>Longitude</dt><dd><p>Longitude</p></dd>
+  <dt>SuppService</dt><dd><p>Supplemental Services</p></dd>
   ...
+    <dt>STCD</dt><dd><p>Combined ID for State FIPS and Congressional District number</p></dd>
+  <dt>StateFIPS</dt><dd><p>State FIPS Code</p></dd>
+  <dt>CD</dt><dd><p>Congressional District where facility is located</p></dd>
+  <dt>LASTNAME</dt><dd><p>U.S. Representative - Last Name</p></dd>
+  <dt>FIRSTNAME</dt><dd><p>U.S. Representative - First Name</p></dd>
+  <dt>FIPS</dt><dd><p>County FIPS Code</p></dd>
+  <dt>CountyName</dt><dd><p>County Name where facility is located</p></dd>
+  <dt>VISN</dt><dd><p>Veteran Integrated Service Network ID</p></dd>
+  <dt>MARKET</dt><dd><p>VHA Market ID</p></dd>
+  <dt>SUBMARKET</dt><dd><p>VHA Submarket ID</p></dd>
+  <dt>SECTOR</dt><dd><p>VHA Sector ID</p></dd>
+  <dt>PrimaryRUCACode2010</dt><dd><p>Primary Rural-Urban Commuting Area Code (2010 Census) of site's location</p></dd>
+  <dt>SecondaryRUCACode2010</dt><dd><p>Secondary Rural-Urban Commuting Area Code (2010 Census) of site's location*</p></dd>
+  <dt>RUCA_UrbanRural</dt><dd><p>Commuting Area Rural/Urban Classification*</p></dd>
+  <dt>VADistrictCode</dt><dd><p>VA Regional Districts: 1-Northeast, 2-Southeast, 3-Midwest, 4-Continental, 5-Pacific**</p></dd>
   <dt>geometry</dt><dd><p>Geometry of shape</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p><a href='https://www.va.gov/vetdata/maps.asp'>https://www.va.gov/vetdata/maps.asp</a></p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Veterans Benefits Administration (VBA):  Regional Offices (RO).</p>
+<p>National Cemetery Administration (NCA):  National and State Cemeteries.</p>
+    
+    <h2 class="hasAnchor" id="notes"><a class="anchor" href="#notes"></a>Notes</h2>
+
+    
+    <p>*2010 Secondary RUCA codes were revised on 7/3/2019 affecting 10,909 census tracts. <a href='https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/'>https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/</a></p>
+<p>**In early 2019 VA Districts were restructured from five to four. <a href='https://www.va.gov/opa/pressrel/pressrelease.cfm?id=5194'>https://www.va.gov/opa/pressrel/pressrelease.cfm?id=5194</a></p>
     
 
   </div>
@@ -181,6 +206,10 @@ National Cemetery Administration:  National and State Cemeteries.</p>
       <li><a href="#format">Format</a></li>
 
       <li><a href="#source">Source</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#notes">Notes</a></li>
           </ul>
 
   </div>
