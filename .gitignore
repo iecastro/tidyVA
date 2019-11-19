@@ -2,3 +2,6 @@ inst/doc
 .Rproj.user
 .Rhistory
 run_setup.R
+tidyVA.Rcheck/
+tidyVA*.tar.gz
+tidyVA*.tgz

@@ -10,3 +10,6 @@
 ^tidyVA\.Rproj$
 ^\.Rproj\.user$
 ^run_setup\.R$
+^tidyVA\.Rcheck$
+^tidyVA.*\.tar\.gz$
+^tidyVA.*\.tgz$
