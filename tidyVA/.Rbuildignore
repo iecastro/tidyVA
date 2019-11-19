@@ -1,0 +1,15 @@
+^open-data\.Rmd$
+^census-data\.Rmd$
+^harvest.Rmd$
+^\.travis\.yml$
+^docs$
+^data-raw$
+^_pkgdown\.yml$
+^LICENSE\.md$
+^README\.Rmd$
+^tidyVA\.Rproj$
+^\.Rproj\.user$
+^run_setup\.R$
+^tidyVA\.Rcheck$
+^tidyVA.*\.tar\.gz$
+^tidyVA.*\.tgz$

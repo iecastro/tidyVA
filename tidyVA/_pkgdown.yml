@@ -1,0 +1,50 @@
+template:
+  params:
+    bootswatch: flatly
+
+reference:
+- title: Functions
+  contents:
+  - shift_geo
+  - theme_va
+  - sail_tidy
+- title: Data
+  contents:
+  - visn
+  - market
+  - submarket
+  - sector
+  - county
+  - states
+  - VAloc
+
+navbar:
+  structure:
+    left:
+    - home
+    - intro
+    - reference
+    - articles
+    right: github
+  components:
+    home:
+      icon: fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    intro:
+      text: Get started
+      href: articles/tidyva.html
+    articles:
+      text: Articles
+      menu:
+      - text: Merging to Census data
+        href: articles/articles/census-data.html
+      - text: VHA Harvest Datasets
+        href: articles/articles/harvest.html
+      - text: VA Open Data
+        href: articles/articles/open-data.html
+    github:
+      icon: fa-github fa-lg
+      href: https://github.com/iecastro/tidyVA
