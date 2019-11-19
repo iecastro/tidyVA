@@ -1,6 +1,6 @@
 Package: tidyVA
 Title: Tidy simple features of VHA geographies
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
     person(given = "Ivan",
            family = "Castro",
@@ -31,5 +31,5 @@ Suggests:
     zoo
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 VignetteBuilder: knitr
