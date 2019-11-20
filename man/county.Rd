@@ -20,9 +20,6 @@
   \item{Shape_Area}{Area of shape}
   \item{geometry}{Geometry of shape}
 }}
-\source{
-\url{https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties}
-}
 \usage{
 county
 }

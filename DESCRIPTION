@@ -6,30 +6,32 @@ Authors@R:
            family = "Castro",
            role = c("aut", "cre"),
            email = "ivan.castro@va.gov")
-Description: Simple features of Veterans Health Administration geographies.  Note that this package is not officially published or endorsed by the Dept. of VA.
+Description: Simple features of Veterans Health Administration
+    geographies.  Note that this package is not officially published or
+    endorsed by the Dept. of Veterans Affairs.
 License: MIT + file LICENSE
 URL: https://github.com/iecastro/tidyVA
 BugReports: https://github.com/iecastro/tidyVA/issues
 Depends: 
     R (>= 3.5.0)
 Imports: 
-    dplyr,
-    magrittr,
-    sf,
-    jsonlite,
-    tidyr,
-    purrr,
-    stringr,
     curl,
-    readxl
-Suggests: 
+    dplyr,
     ggplot2,
+    magrittr,
+    readxl,
+    sf,
+    tibble,
+    tidyr
+Suggests: 
     knitr,
+    purrr,
     rmarkdown,
-    yaml,
     roxygen2,
-    zoo
+    tidycensus,
+    yaml
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.0
-VignetteBuilder: knitr

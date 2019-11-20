@@ -18,7 +18,6 @@
 #'   \item{Shape_Area}{Area of shape}
 #'   \item{geometry}{Geometry of shape}
 #' }
-#' @source \url{https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties}
 "county"
 
 
@@ -34,7 +33,6 @@
 #'   \item{Shape_Area}{Area of shape}
 #'   \item{geometry}{Geometry of shape}
 #' }
-#' @source \url{https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties}
 "market"
 
 
@@ -52,13 +50,13 @@
 #'   \item{Shape_Area}{Area of shape}
 #'   \item{geometry}{Geometry of shape}
 #' }
-#' @source \url{https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties}
 "sector"
 
 
 #' VHA geography - submarket level
 #'
-#' A dataset of geometry and attributes of VHA geographies at the submarket level
+#' A dataset of geometry and attributes of VHA geographies
+#' at the submarket level
 #'
 #' @format A simple feature collection with 153 rows and 6 variables:
 #' \describe{
@@ -69,7 +67,6 @@
 #'   \item{Shape_Area}{Area of shape}
 #'   \item{geometry}{Geometry of shape}
 #' }
-#' @source \url{https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties}
 "submarket"
 
 
@@ -84,16 +81,18 @@
 #'   \item{Shape_Area}{Area of shape}
 #'   \item{geometry}{Geometry of shape}
 #' }
-#' @source \url{https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties}
 "visn"
 
 
 #' VA locations
 #'
-#' A dataset of geometry and attributes of Veteran Affairs locations as of 9/30/2018.
+#' A dataset of geometry and attributes of Veteran Affairs locations
+#' as of 9/30/2018.
+#'
 #' Veterans Health Administration (VHA):
 #' Medical Centers (VAMC), Community - Based Outpatient Clinics (CBOC),
-#' Community Living Centers (CLC), Domiciliary Residential Rehabilitation Treatment Program (DRRTP),
+#' Community Living Centers (CLC),
+#' Domiciliary Residential Rehabilitation Treatment Program (DRRTP),
 #' Vet Centers (VCTR).
 #'
 #' Veterans Benefits Administration (VBA):  Regional Offices (RO).
@@ -134,16 +133,22 @@
 #'   \item{MARKET}{VHA Market ID}
 #'   \item{SUBMARKET}{VHA Submarket ID}
 #'   \item{SECTOR}{VHA Sector ID}
-#'   \item{PrimaryRUCACode2010}{Primary Rural-Urban Commuting Area Code (2010 Census) of site's location}
-#'   \item{SecondaryRUCACode2010}{Secondary Rural-Urban Commuting Area Code (2010 Census) of site's location*}
+#'   \item{PrimaryRUCACode2010}{Primary Rural-Urban Commuting Area Code (2010 Census)
+#'         of site's location}
+#'   \item{SecondaryRUCACode2010}{Secondary Rural-Urban Commuting Area Code
+#'         (2010 Census) of site's location*}
 #'   \item{RUCA_UrbanRural}{Commuting Area Rural/Urban Classification*}
-#'   \item{VADistrictCode}{VA Regional Districts: 1-Northeast, 2-Southeast, 3-Midwest, 4-Continental, 5-Pacific**}
+#'   \item{VADistrictCode}{VA Regional Districts: 1-Northeast, 2-Southeast,
+#'         3-Midwest, 4-Continental, 5-Pacific**}
 #'   \item{geometry}{Geometry of shape}
 #' }
 #' @section Notes:
-#' *2010 Secondary RUCA codes were revised on 7/3/2019 affecting 10,909 census tracts. \url{https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/}
+#' *2010 Secondary RUCA codes were revised on 7/3/2019 affecting
+#' 10,909 census tracts.
+#' \url{https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/}
 #'
-#' **In early 2019 VA Districts were restructured from five to four. \url{https://www.va.gov/opa/pressrel/pressrelease.cfm?id=5194}
+#' **In early 2019 VA Districts were restructured from five to four.
+#' \url{https://www.va.gov/opa/pressrel/pressrelease.cfm?id=5194}
 #' @source \url{https://www.va.gov/vetdata/maps.asp}
 "VAloc"
 

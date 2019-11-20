@@ -1,15 +1,17 @@
-#' Simple function to tidy Strategic Analytics for Improvement and Learning (SAIL)
-#' datasets from www.va.gov
+#' Simple function to tidy Strategic Analytics for Improvement and
+#' Learning (SAIL) datasets from www.va.gov
 #'
-#' @param url a SAIL dataset url from: \url{https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp}
+#' @param url a SAIL dataset url from:
+#' \url{https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp}
 #'
-#' @return A tibble with SAIL metrics in tidy format
+#' @return a [tibble][tibble::tibble-package] with SAIL metrics in tidy format
 #'
 #' @examples \dontrun{
 #' url <- "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_albany_fy19q1.xlsx"
 #' sail_tidy(url)
 #'
-#' sail_tidy("https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx")
+#' sail_tidy(
+#'      "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx")
 #' }
 #' @export
 

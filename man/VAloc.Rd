@@ -38,10 +38,13 @@
   \item{MARKET}{VHA Market ID}
   \item{SUBMARKET}{VHA Submarket ID}
   \item{SECTOR}{VHA Sector ID}
-  \item{PrimaryRUCACode2010}{Primary Rural-Urban Commuting Area Code (2010 Census) of site's location}
-  \item{SecondaryRUCACode2010}{Secondary Rural-Urban Commuting Area Code (2010 Census) of site's location*}
+  \item{PrimaryRUCACode2010}{Primary Rural-Urban Commuting Area Code (2010 Census)
+        of site's location}
+  \item{SecondaryRUCACode2010}{Secondary Rural-Urban Commuting Area Code
+        (2010 Census) of site's location*}
   \item{RUCA_UrbanRural}{Commuting Area Rural/Urban Classification*}
-  \item{VADistrictCode}{VA Regional Districts: 1-Northeast, 2-Southeast, 3-Midwest, 4-Continental, 5-Pacific**}
+  \item{VADistrictCode}{VA Regional Districts: 1-Northeast, 2-Southeast,
+        3-Midwest, 4-Continental, 5-Pacific**}
   \item{geometry}{Geometry of shape}
 }}
 \source{
@@ -51,22 +54,28 @@
 VAloc
 }
 \description{
-A dataset of geometry and attributes of Veteran Affairs locations as of 9/30/2018.
-Veterans Health Administration (VHA):
-Medical Centers (VAMC), Community - Based Outpatient Clinics (CBOC),
-Community Living Centers (CLC), Domiciliary Residential Rehabilitation Treatment Program (DRRTP),
-Vet Centers (VCTR).
+A dataset of geometry and attributes of Veteran Affairs locations
+as of 9/30/2018.
 }
 \details{
+Veterans Health Administration (VHA):
+Medical Centers (VAMC), Community - Based Outpatient Clinics (CBOC),
+Community Living Centers (CLC),
+Domiciliary Residential Rehabilitation Treatment Program (DRRTP),
+Vet Centers (VCTR).
+
 Veterans Benefits Administration (VBA):  Regional Offices (RO).
 
 National Cemetery Administration (NCA):  National and State Cemeteries.
 }
 \section{Notes}{
 
-*2010 Secondary RUCA codes were revised on 7/3/2019 affecting 10,909 census tracts. \url{https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/}
+*2010 Secondary RUCA codes were revised on 7/3/2019 affecting
+10,909 census tracts.
+\url{https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/}
 
-**In early 2019 VA Districts were restructured from five to four. \url{https://www.va.gov/opa/pressrel/pressrelease.cfm?id=5194}
+**In early 2019 VA Districts were restructured from five to four.
+\url{https://www.va.gov/opa/pressrel/pressrelease.cfm?id=5194}
 }
 
 \keyword{datasets}

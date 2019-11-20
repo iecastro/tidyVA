@@ -11,7 +11,7 @@ shift_geo(data)
 Currently only supports sector and submarket shapefiles.}
 }
 \value{
-An sf tibble of VHA geographies and attributes
+a [tibble][tibble::tibble-package] of VHA geographies and attributes
 }
 \description{
 Shift VHA geographies for Alaska and Hawaii
@@ -27,5 +27,5 @@ Shift VHA geographies for Alaska and Hawaii
 }
 \references{
 \url{ https://github.com/rdinter/rd3albers}
-             \url{https://geocompr.robinlovelace.net/geometric-operations.html}
+\url{https://geocompr.robinlovelace.net/geometric-operations.html}
 }

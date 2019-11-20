@@ -1,6 +1,5 @@
-^open-data\.Rmd$
+^sail-metrics\.Rmd$
 ^census-data\.Rmd$
-^harvest.Rmd$
 ^\.travis\.yml$
 ^docs$
 ^data-raw$

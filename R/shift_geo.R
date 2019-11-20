@@ -3,10 +3,10 @@
 #' @param data The shapefile with the feature geography you want to shift.
 #'              Currently only supports sector and submarket shapefiles.
 #'
-#' @return An sf tibble of VHA geographies and attributes
+#' @return a [tibble][tibble::tibble-package] of VHA geographies and attributes
 #'
 #' @references \url{ https://github.com/rdinter/rd3albers}
-#'              \url{https://geocompr.robinlovelace.net/geometric-operations.html}
+#' \url{https://geocompr.robinlovelace.net/geometric-operations.html}
 #'
 #' @examples \dontrun{
 #'  shift_geo(submarket) %>%
@@ -20,10 +20,11 @@
 shift_geo <- function(data){
 
   # convert to Albers equal area
-  proj <- "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs"
+  proj <-
+    "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs"
 
   rotate <- function(a){
-    r = a * pi / 180 #degrees to radians
+    r <- a * pi / 180 #degrees to radians
     matrix(c(cos(r), sin(r), -sin(r), cos(r)), nrow = 2, ncol = 2)
   }
 
@@ -51,7 +52,10 @@ shift_geo <- function(data){
 
   hawaii <- st_set_geometry(hawaii,hawaii_shift)
 
-  out <- proj_aea %>% filter(!STATEFP %in% c("02","15","72","78","60","66"))
+  out <- proj_aea %>%
+    filter(!STATEFP %in%
+             c("02","15","72","78","60","66"))
+
   out <- rbind(out, alaska, hawaii)
 
   message("Please note: Alaska and Hawaii are being shifted and are not to scale.")

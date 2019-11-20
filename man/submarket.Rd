@@ -13,13 +13,11 @@
   \item{Shape_Area}{Area of shape}
   \item{geometry}{Geometry of shape}
 }}
-\source{
-\url{https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties}
-}
 \usage{
 submarket
 }
 \description{
-A dataset of geometry and attributes of VHA geographies at the submarket level
+A dataset of geometry and attributes of VHA geographies
+at the submarket level
 }
 \keyword{datasets}

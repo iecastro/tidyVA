@@ -33,7 +33,7 @@ The benefit of simple features in R is that they allow for [tidy spatial analysi
 You can install **tidyVA** from GitHub with:
 
 
-```{r eval=FALSE}
+```{r remotes, eval=FALSE}
 remotes::install_github("iecastro/tidyVA")
 ```
 
@@ -79,33 +79,39 @@ data("submarket")
 
 ```
 
-```{r eval=FALSE}
+```{r plot1, eval=FALSE}
 
 ggplot() + 
   geom_sf(data = submarket, fill = NA)
 
 ```
 
-```{r echo=FALSE}
+```{r img1, echo=FALSE}
 knitr::include_graphics("man/figures/README-example-1.png")
 ```
 
 
 Although accurate, this output is not very easy to work with.  But, since this is in tidy format, we can easily filter and manipulate the data. 
 
-```{r}
+```{r glimpse}
 glimpse(submarket)
 
 ```
 
-```{r}
+```{r visn2, eval=FALSE}
 visn2 <- submarket %>% 
   filter(VISN == "02")
 
 visn2
 ```
 
-```{r eval=FALSE}
+```{r visntibble, echo=FALSE}
+submarket %>% 
+    filter(VISN == "02")
+```
+
+
+```{r plot2, eval=FALSE}
 ggplot() + 
   geom_sf(data = visn2, aes(fill = MARKET), color = NA) +
   geom_sf(data = visn2, fill = NA, color = "#ffffff", size = .25)
@@ -113,7 +119,7 @@ ggplot() +
 
 ```
 
-```{r echo=FALSE}
+```{r img2, echo=FALSE}
 knitr::include_graphics("man/figures/README-unnamed-chunk-4-1.png")
 ```
 
@@ -124,7 +130,7 @@ knitr::include_graphics("man/figures/README-unnamed-chunk-4-1.png")
 
 `shift_geo()` will project and re-position Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).
 
-```{r eval=FALSE}
+```{r plot3, eval=FALSE}
 shift_geo(submarket) %>% 
   ggplot() + 
   geom_sf(fill = NA) +
@@ -132,7 +138,7 @@ shift_geo(submarket) %>%
 ```
 
 
-```{r echo=FALSE}
+```{r img3, echo=FALSE}
 knitr::include_graphics("man/figures/README-unnamed-chunk-5-1.png")
 ```
 
@@ -140,7 +146,7 @@ knitr::include_graphics("man/figures/README-unnamed-chunk-5-1.png")
 
 `theme_va()` is a ggplot theme with some default colors and plotting parameters. The core of this function is `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), with some modifications and defaults.
 
-```{r eval=FALSE}
+```{r plot4, eval=FALSE}
 data("visn")
 
 visn %>% 
@@ -154,7 +160,7 @@ visn %>%
 
 ```
 
-```{r echo=FALSE}
+```{r img4, echo=FALSE}
 knitr::include_graphics("man/figures/README-unnamed-chunk-6-1.png")
 ```
 
@@ -163,7 +169,7 @@ knitr::include_graphics("man/figures/README-unnamed-chunk-6-1.png")
 
 `sail_tidy` will return a tibble of VA SAIL metrics when provided a [data table url](https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp).  
 
-```{r}
+```{r sail}
 sail_tidy("https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx")
 ```
 
