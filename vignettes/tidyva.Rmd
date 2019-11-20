@@ -2,7 +2,7 @@
 title: "Basic Usage of tidyVA"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Basic Usage of tidyVA}
+  %\VignetteIndexEntry{Basic usage}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,6 +12,8 @@ knitr::opts_chunk$set( warning = FALSE,
   collapse = TRUE,
   comment = "#>"
 )
+
+
 devtools::load_all()
 
 ```

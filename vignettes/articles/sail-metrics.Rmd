@@ -2,7 +2,7 @@
 title: "VHA SAIL Metrics Datasets"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{VHA Sail Metrics}
+  %\VignetteIndexEntry{VHA Sail metrics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,9 +14,7 @@ knitr::opts_chunk$set(warning = FALSE,
 )
 
 devtools::load_all()
-library(ggplot2)
-library(purrr)
-library(tidyr)
+
 ```
 
 
@@ -26,6 +24,9 @@ When provided a file's url, `sail_tidy` downloads, imports, and wrangles the dat
 
 ```{r}
 library(tidyVA)
+library(ggplot2)
+library(dplyr)
+
 
 albany_sail <- sail_tidy("https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_albany_fy19q1.xlsx")
 
@@ -53,7 +54,8 @@ data <- purrr::map_df(links, sail_tidy)
 This can then easily be explored within the __tidyverse__
 
 ```{r}
-unique(data$Measure)
+data %>% 
+  distinct(Measure)
 
 ```
 
