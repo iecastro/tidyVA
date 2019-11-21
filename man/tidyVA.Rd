@@ -3,7 +3,6 @@
 \docType{package}
 \name{tidyVA}
 \alias{tidyVA}
-\alias{tidyVA-package}
 \title{Tidy dataframes and simple features of VHA geographies}
 \description{
 Tidy dataframes and simple features of VHA geographies
