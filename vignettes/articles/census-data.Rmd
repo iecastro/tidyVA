@@ -23,6 +23,7 @@ devtools::load_all()
 ```{r}
 library(ggplot2)
 library(tidycensus)
+library(dplyr)
 library(tidyVA)
 
 data("county")
@@ -62,7 +63,7 @@ visn <- visn %>%
 ```{r}
 plot <- function(var){
   ggplot() +
-    geom_sf(data = VAHC, aes(fill = var), color = NA) +              #county layer
+    geom_sf(data = VAHC, aes(fill = var), color = NA) + #county layer
     geom_sf(data = visn, fill = NA, 
             color = "#ffffff", size = .5) +   #visn layer                 
     scale_fill_viridis_c(labels = scales::comma) +
@@ -109,8 +110,8 @@ ggplot() +
 ```{r}
 data("market")
 
-proj <- st_crs(visn)
-market <- st_transform(market,proj)
+proj <- sf::st_crs(visn)
+market <- sf::st_transform(market,proj)
 
 ggplot() +
   geom_sf(data = VAHC[VAHC$VISN == "19",],
