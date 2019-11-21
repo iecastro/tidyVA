@@ -53,7 +53,7 @@ shift_geo <- function(data){
   hawaii <- st_set_geometry(hawaii,hawaii_shift)
 
   out <- proj_aea %>%
-    filter(!STATEFP %in%
+    filter(!.data$STATEFP %in%
              c("02","15","72","78","60","66"))
 
   out <- rbind(out, alaska, hawaii)

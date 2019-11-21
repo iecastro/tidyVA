@@ -19,11 +19,13 @@ Imports:
     dplyr,
     ggplot2,
     magrittr,
+    rlang,
     readxl,
     sf,
     tibble,
     tidyr
-Suggests: 
+Suggests:
+    devtools,
     knitr,
     purrr,
     rmarkdown,

@@ -21,8 +21,8 @@ sail_tidy <- function(url){
   file <- curl::curl_download(url, destfile = tempfile())
 
   data <- suppressMessages(readxl::read_excel(file, skip = 26)) %>%
-    select(-c(2:10,12:14,17)) %>%
-    tidyr::gather(Site,Value, c(3))
+    dplyr::select(-c(2:10,12:14,17)) %>%
+    tidyr::gather(.data$Site, .data$Value, c(3))
 
   return(data)
 }

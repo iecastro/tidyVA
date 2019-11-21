@@ -4,10 +4,11 @@
 #' @name tidyVA
 #' @docType package
 #' @importFrom sf st_transform st_intersection st_geometry st_set_crs st_set_geometry
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter select
 #' @importFrom tibble tibble
 #' @importFrom curl curl_download
 #' @importFrom readxl read_excel
+#' @importFrom rlang .data
 #' @importFrom tidyr gather
-#' @importFrom ggplot2 theme_minimal theme
+#' @importFrom ggplot2 theme_minimal theme margin element_blank element_line element_text
 NULL
