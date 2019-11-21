@@ -181,8 +181,8 @@
 <h3 class="hasAnchor">
 <a href="#shift_geo" class="anchor"></a><code>shift_geo</code>
 </h3>
-<p><code><a href="https://rdrr.io/pkg/tidyVA/man/shift_geo.html">shift_geo()</a></code> will project and re-position Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/tidyVA/man/shift_geo.html">shift_geo</a></span>(submarket) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<p><code>shift_geo()</code> will project and re-position Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">shift_geo</span>(submarket) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>()</a></code></pre></div>
@@ -192,7 +192,7 @@
 <h3 class="hasAnchor">
 <a href="#theme_va" class="anchor"></a><code>theme_va()</code>
 </h3>
-<p><code><a href="https://rdrr.io/pkg/tidyVA/man/theme_va.html">theme_va()</a></code> is a ggplot theme with some default colors and plotting parameters. The core of this function is <code>theme_ipsum</code> from <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>, with some modifications and defaults.</p>
+<p><code>theme_va()</code> is a ggplot theme with some default colors and plotting parameters. The core of this function is <code>theme_ipsum</code> from <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>, with some modifications and defaults.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"visn"</span>)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">visn <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -202,7 +202,7 @@
 <a class="sourceLine" id="cb9-7" data-line-number="7">       <span class="dt">caption =</span> <span class="st">"CRS - EPSG:4326"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Shape Area of VA Service Networks"</span>, </a>
 <a class="sourceLine" id="cb9-9" data-line-number="9">          <span class="dt">subtitle =</span> <span class="st">"This is an example plot"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/tidyVA/man/theme_va.html">theme_va</a></span>(<span class="dt">grid =</span> <span class="st">"Y"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">grid =</span> <span class="st">"Y"</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
 <div id="sail_tidy" class="section level3">
@@ -210,7 +210,7 @@
 <a href="#sail_tidy" class="anchor"></a><code>sail_tidy</code>
 </h3>
 <p><code>sail_tidy</code> will return a tibble of VA SAIL metrics when provided a <a href="https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp">data table url</a>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/tidyVA/man/sail_tidy.html">sail_tidy</a></span>(<span class="st">"https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx"</span>)</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">sail_tidy</span>(<span class="st">"https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx"</span>)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; # A tibble: 79 x 6</span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;    Measure              `Measure Unit` `Best 10%` `10th-50th-90th … Site   Value</span></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;                &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;</span></a>
