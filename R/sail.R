@@ -21,8 +21,25 @@ sail_tidy <- function(url){
   file <- curl::curl_download(url, destfile = tempfile())
 
   data <- suppressMessages(readxl::read_excel(file, skip = 26)) %>%
-    dplyr::select(-c(2:10,12:14,17)) %>%
-    tidyr::gather(.data$Site, .data$Value, c(3))
+    janitor::remove_empty("cols") %>%
+    tidyr::gather(site, value, c(4)) %>%
+    janitor::clean_names() %>%
+    dplyr::rename(ntiles_10_50_90 = .data$x10th_50th_90th_ptile)
+
+  data <- suppressWarnings(
+    data %>%
+      tidyr::separate(.data$measure,
+                      into = c("prefix", "label"),
+                      sep = "\\."))
+
+  data <- data %>%
+    dplyr::mutate(label = ifelse(is.na(.data$label), .data$prefix, .data$label),
+                  label = stringr::str_trim(.data$label),
+                  measure = janitor::make_clean_names(
+                    .data$label,
+                    case = "upper_camel")) %>%
+    filter(!is.na(.data$value)) %>%
+    select(-.data$prefix)
 
   return(data)
 }

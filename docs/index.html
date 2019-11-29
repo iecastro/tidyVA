@@ -7,9 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tidy simple features of VHA geographies • tidyVA</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Tidy simple features of VHA geographies">
 <meta property="og:description" content="Simple features of Veterans Health Administration
     geographies.  Note that this package is not officially published or
@@ -21,7 +20,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -62,7 +61,10 @@
       <a href="articles/articles/census-data.html">Merging to Census data</a>
     </li>
     <li>
-      <a href="articles/articles/sail-metrics.html">VHA SAIL metrics</a>
+      <a href="articles/articles/sail-metrics.html">VHA SAIL Metrics Datasets</a>
+    </li>
+    <li>
+      <a href="articles/tidyva.html">Basic Usage of tidyVA</a>
     </li>
   </ul>
 </li>
@@ -83,10 +85,13 @@
 <!--/.navbar -->
 
       
-
       </header><div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
+    
 
+    
+    
+<!-- badges: start -->
 
 <div id="tidyva" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
@@ -98,7 +103,7 @@
 <h1 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h1>
 <p>You can install <strong>tidyVA</strong> from GitHub with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"iecastro/tidyVA"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"iecastro/tidyVA"</span>)</a></code></pre></div>
 </div>
 <div id="datasets" class="section level1">
 <h1 class="hasAnchor">
@@ -125,52 +130,52 @@
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <p>VHA Submarkets are an aggregation of Sectors; and Sectors are comprised of one or more counties. Since each VISN is defined in a hierarchy, this dataset contains attributes of all echelons above submarket - that is, Market and VISN.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyVA)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"submarket"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> submarket, <span class="dt">fill =</span> <span class="ot">NA</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyVA)</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"submarket"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> submarket, <span class="dt">fill =</span> <span class="ot">NA</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" width="100%"></p>
 <p>Although accurate, this output is not very easy to work with. But, since this is in tidy format, we can easily filter and manipulate the data.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(submarket)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; Observations: 153</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; Variables: 6</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; $ VISN       &lt;chr&gt; "01", "01", "01", "01", "02", "02", "02", "02", "02", "02"…</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; $ MARKET     &lt;chr&gt; "01-a", "01-b", "01-c", "01-d", "02-a", "02-b", "02-d", "0…</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; $ SUBMARKET  &lt;chr&gt; "01-a-9", "01-b-9", "01-c-9", "01-d-9", "02-a-9", "02-b-9"…</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; $ Shape_Leng &lt;dbl&gt; 38.391428, 81.160361, 13.413957, 14.839457, 13.081583, 18.…</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; $ Shape_Area &lt;dbl&gt; 1.78751288, 9.66806953, 5.47709016, 2.19550641, 4.90793287…</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-71.56974 4..., MULTIPOLYGON …</span></a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">visn2 &lt;-<span class="st"> </span>submarket <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(VISN <span class="op">==</span><span class="st"> "02"</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">visn2</a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">#&gt; Simple feature collection with 10 features and 5 fields</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; geometry type:  MULTIPOLYGON</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; dimension:      XY</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; bbox:           xmin: -79.13745 ymin: 39.50577 xmax: -71.85615 ymax: 45.01585</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; epsg (SRID):    4326</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; # A tibble: 10 x 6</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;    VISN  MARKET SUBMARKET Shape_Leng Shape_Area                         geometry</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  * &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;               &lt;MULTIPOLYGON [°]&gt;</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  1 02    02-a   02-a-9         13.1      4.91   (((-73.34312 45.01084, -73.3446…</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  2 02    02-b   02-b-9         18.8      4.01   (((-76.18704 43.66566, -76.1869…</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  3 02    02-d   02-d-9          6.58     1.25   (((-78.90518 42.93351, -78.9050…</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  4 02    02-e   02-e-1          2.49     0.191  (((-77.97621 43.36874, -77.9753…</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;  5 02    02-e   02-e-2          6.01     0.656  (((-76.94668 43.25894, -76.9463…</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt;  6 02    02-f   02-f-2          6.14     1.63   (((-76.94756 42.76441, -76.9477…</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt;  7 02    02-g   02-g-9         25.2      0.335  (((-73.72961 40.59637, -73.7289…</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt;  8 02    02-h   02-h-1          9.51     0.999  (((-73.89687 40.79565, -73.8970…</span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt;  9 02    02-h   02-h-3          5.92     0.0717 (((-74.20241 40.57956, -74.2023…</span></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt; 10 02    02-i   02-i-9         17.4      1.24   (((-74.30019 39.50628, -74.3048…</span></a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> visn2, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">fill =</span> MARKET), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> visn2, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">.25</span>)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  </a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">glimpse</span>(submarket)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; Observations: 153</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; Variables: 6</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; $ VISN       &lt;chr&gt; "01", "01", "01", "01", "02", "02", "02", "02", "02...</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; $ MARKET     &lt;chr&gt; "01-a", "01-b", "01-c", "01-d", "02-a", "02-b", "02...</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; $ SUBMARKET  &lt;chr&gt; "01-a-9", "01-b-9", "01-c-9", "01-d-9", "02-a-9", "...</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; $ Shape_Leng &lt;dbl&gt; 38.391428, 81.160361, 13.413957, 14.839457, 13.0815...</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; $ Shape_Area &lt;dbl&gt; 1.78751288, 9.66806953, 5.47709016, 2.19550641, 4.9...</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; $ geometry   &lt;MULTIPOLYGON [Â°]&gt; MULTIPOLYGON (((-71.56974 4..., MULTI...</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">visn2 &lt;-<span class="st"> </span>submarket <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(VISN <span class="op">==</span><span class="st"> "02"</span>)</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4">visn2</a></code></pre></div>
+<pre><code>#&gt; Simple feature collection with 10 features and 5 fields
+#&gt; geometry type:  MULTIPOLYGON
+#&gt; dimension:      XY
+#&gt; bbox:           xmin: -79.13745 ymin: 39.50577 xmax: -71.85615 ymax: 45.01585
+#&gt; epsg (SRID):    4326
+#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#&gt; # A tibble: 10 x 6
+#&gt;    VISN  MARKET SUBMARKET Shape_Leng Shape_Area                    geometry
+#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;         &lt;MULTIPOLYGON [Â°]&gt;
+#&gt;  1 02    02-a   02-a-9         13.1      4.91   (((-73.34312 45.01084, -73~
+#&gt;  2 02    02-b   02-b-9         18.8      4.01   (((-76.18704 43.66566, -76~
+#&gt;  3 02    02-d   02-d-9          6.58     1.25   (((-78.90518 42.93351, -78~
+#&gt;  4 02    02-e   02-e-1          2.49     0.191  (((-77.97621 43.36874, -77~
+#&gt;  5 02    02-e   02-e-2          6.01     0.656  (((-76.94668 43.25894, -76~
+#&gt;  6 02    02-f   02-f-2          6.14     1.63   (((-76.94756 42.76441, -76~
+#&gt;  7 02    02-g   02-g-9         25.2      0.335  (((-73.72961 40.59637, -73~
+#&gt;  8 02    02-h   02-h-1          9.51     0.999  (((-73.89687 40.79565, -73~
+#&gt;  9 02    02-h   02-h-3          5.92     0.0717 (((-74.20241 40.57956, -74~
+#&gt; 10 02    02-i   02-i-9         17.4      1.24   (((-74.30019 39.50628, -74~</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn2, <span class="kw">aes</span>(<span class="dt">fill =</span> MARKET), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn2, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">.25</span>)</a>
+<a class="sourceLine" id="cb7-4" title="4">  </a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 </div>
 </div>
@@ -181,28 +186,28 @@
 <h3 class="hasAnchor">
 <a href="#shift_geo" class="anchor"></a><code>shift_geo</code>
 </h3>
-<p><code>shift_geo()</code> will project and re-position Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">shift_geo</span>(submarket) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>()</a></code></pre></div>
+<p><code><a href="reference/shift_geo.html">shift_geo()</a></code> will project and re-position Alaska and Hawaii, When supplied a complete dataset (from VHA Geographies).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="reference/shift_geo.html">shift_geo</a></span>(submarket) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
 </div>
 <div id="theme_va" class="section level3">
 <h3 class="hasAnchor">
-<a href="#theme_va" class="anchor"></a><code>theme_va()</code>
+<a href="#theme_va" class="anchor"></a><code><a href="reference/theme_va.html">theme_va()</a></code>
 </h3>
-<p><code>theme_va()</code> is a ggplot theme with some default colors and plotting parameters. The core of this function is <code>theme_ipsum</code> from <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>, with some modifications and defaults.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"visn"</span>)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">visn <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span>(VISN,Shape_Area), Shape_Area)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">x =</span> <span class="st">"VISN"</span>, <span class="dt">y =</span> <span class="st">"Shape Area"</span>, </a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">       <span class="dt">caption =</span> <span class="st">"CRS - EPSG:4326"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Shape Area of VA Service Networks"</span>, </a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">          <span class="dt">subtitle =</span> <span class="st">"This is an example plot"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">grid =</span> <span class="st">"Y"</span>)</a></code></pre></div>
+<p><code><a href="reference/theme_va.html">theme_va()</a></code> is a ggplot theme with some default colors and plotting parameters. The core of this function is <code>theme_ipsum</code> from <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>, with some modifications and defaults.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"visn"</span>)</a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3">visn <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/reorder.factor">reorder</a></span>(VISN,Shape_Area), Shape_Area)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"VISN"</span>, <span class="dt">y =</span> <span class="st">"Shape Area"</span>, </a>
+<a class="sourceLine" id="cb9-7" title="7">       <span class="dt">caption =</span> <span class="st">"CRS - EPSG:4326"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Shape Area of VA Service Networks"</span>, </a>
+<a class="sourceLine" id="cb9-9" title="9">          <span class="dt">subtitle =</span> <span class="st">"This is an example plot"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="st">  </span><span class="kw"><a href="reference/theme_va.html">theme_va</a></span>(<span class="dt">grid =</span> <span class="st">"Y"</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
 <div id="sail_tidy" class="section level3">
@@ -210,21 +215,22 @@
 <a href="#sail_tidy" class="anchor"></a><code>sail_tidy</code>
 </h3>
 <p><code>sail_tidy</code> will return a tibble of VA SAIL metrics when provided a <a href="https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp">data table url</a>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">sail_tidy</span>(<span class="st">"https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx"</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; # A tibble: 79 x 6</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;    Measure              `Measure Unit` `Best 10%` `10th-50th-90th … Site   Value</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;                &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;  1 Acute care mortality &lt;NA&gt;           &lt;NA&gt;       &lt;NA&gt;              Clark… &lt;NA&gt; </span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;  2 1. Acute care Stand… O/E            0.469      0.469 - 0.857 - … Clark… 1.360</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;  3 2. Acute care 30-da… O/E            0.740      0.740 - 0.952 - … Clark… 1.109</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt;  4 a. AMI RSMR          %              7.219      7.219 - 7.666 - … Clark… 8.106</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt;  5 b. CHF RSMR          %              5.676      5.676 - 6.820 - … Clark… 8.300</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt;  6 c. Pneumonia RSMR    %              7.820      7.820 - 9.026 - … Clark… 11.9…</span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt;  7 d. COPD RSMR         %              4.402      4.402 - 5.942 - … Clark… 5.965</span></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt;  8 e. Stroke RSMR       %              5.134      5.134 - 5.933 - … Clark… 5.531</span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt;  9 Avoidable adverse e… &lt;NA&gt;           &lt;NA&gt;       &lt;NA&gt;              Clark… &lt;NA&gt; </span></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt; 10 1. In-hospital comp… O/E            0.000      0.000 - 0.834 - … Clark… 1.580</span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; # … with 69 more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/sail_tidy.html">sail_tidy</a></span>(<span class="st">"https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx"</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="co">#&gt; # A tibble: 63 x 8</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="co">#&gt;    label measure_unit preferred_direc~ best_10_percent ntiles_10_50_90</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;            &lt;chr&gt;           &lt;chr&gt;          </span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="co">#&gt;  1 Acut~ O/E          &lt;U+2193&gt;                0.469           0.469 - 0.857 ~</span></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="co">#&gt;  2 Acut~ O/E          &lt;U+2193&gt;                0.740           0.740 - 0.952 ~</span></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="co">#&gt;  3 AMI ~ %            &lt;U+2193&gt;                7.219           7.219 - 7.666 ~</span></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="co">#&gt;  4 CHF ~ %            &lt;U+2193&gt;                5.676           5.676 - 6.820 ~</span></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="co">#&gt;  5 Pneu~ %            &lt;U+2193&gt;                7.820           7.820 - 9.026 ~</span></a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="co">#&gt;  6 COPD~ %            &lt;U+2193&gt;                4.402           4.402 - 5.942 ~</span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="co">#&gt;  7 Stro~ %            &lt;U+2193&gt;                5.134           5.134 - 5.933 ~</span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="co">#&gt;  8 In-h~ O/E          &lt;U+2193&gt;                0.000           0.000 - 0.834 ~</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="co">#&gt;  9 Cath~ inf/1k devi~ &lt;U+2193&gt;                0.000           0.000 - 0.446 ~</span></a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="co">#&gt; 10 Cent~ inf/1k devi~ &lt;U+2193&gt;                0.000           0.000 - 0.395 ~</span></a>
+<a class="sourceLine" id="cb10-15" title="15"><span class="co">#&gt; # ... with 53 more rows, and 3 more variables: site &lt;chr&gt;, value &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb10-16" title="16"><span class="co">#&gt; #   measure &lt;chr&gt;</span></a></code></pre></div>
 </div>
 </div>
 <div id="info" class="section level1">
@@ -233,7 +239,6 @@
 <p>Development of this package is partly supported by a research grant from the National Institute on Alcohol Abuse and Alcoholism - NIH Grant #R34AA026745-01.</p>
 <p>This product is not endorsed nor certified by either the VA or NIH/NIAAA.</p>
 </div>
-
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -260,7 +265,7 @@
 </ul>
 </div>
 
-  <div class="dev-status">
+      <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
@@ -268,6 +273,7 @@
 </ul>
 </div>
 </div>
+
 </div>
 
 
@@ -276,14 +282,12 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
-
       </footer>
 </div>
 
   
-
 
   </body>
 </html>

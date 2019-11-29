@@ -9,8 +9,9 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(warning = FALSE,
-  collapse = TRUE,
-  comment = "#>"
+                      message = FALSE,
+                      collapse = TRUE,
+                      comment = "#>"
 )
 
 devtools::load_all()
@@ -18,9 +19,22 @@ devtools::load_all()
 ```
 
 
-VA SAIL metrics are a way of summarizing VA hospital performance data.  Individual data sets by location are available for download from [VA.gov](https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp).  These are excel datasets formatted with banners and special characters.
+VA SAIL metrics are a way of summarizing VA hospital performance data.  Individual data sets by location are available for download from [VA.gov](https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp).  These are excel files formatted with banners and special characters that produce a large amount of *dirtiness* when the data are imported into R:
 
-When provided a file's url, `sail_tidy` downloads, imports, and wrangles the dataset into a format that's easier to utilize in R.
+```{r}
+
+file <- curl::curl_download("https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_albany_fy19q1.xlsx", 
+                            destfile = tempfile())
+
+data_dirty <- suppressMessages(readxl::read_excel(file))
+
+dplyr::glimpse(data_dirty)
+
+```
+
+### sail_tidy  
+
+To make these data easier to handle in R, `sail_tidy` will download, import, and wrangle the dataset into a clean data frame that's easier to analyze in R.
 
 ```{r}
 library(tidyVA)
@@ -55,19 +69,19 @@ This can then easily be explored within the __tidyverse__
 
 ```{r}
 data %>% 
-  distinct(Measure)
+  distinct(measure)
 
 ```
 
 ```{r}
 
 data %>%
-  filter(Measure =="1. Acute care Standardized Mortality Ratio (SMR)") %>%
-  mutate(SMR = as.numeric(Value)) %>% 
-  ggplot(aes(reorder(Site, SMR), SMR)) +
+  filter(measure =="AcuteCareStandardizedMortalityRatioSmr") %>%
+  mutate(SMR = as.numeric(value)) %>% 
+  ggplot(aes(reorder(site, SMR), SMR)) +
   geom_point() +
-  geom_segment(aes(x = Site, y = 0, 
-                   xend = Site, yend = SMR)) +
+  geom_segment(aes(x = site, y = 0, 
+                   xend = site, yend = SMR)) +
   coord_flip() + 
   geom_hline(yintercept = 0.409, lty = "dashed", color = "darkred") +
   labs(x = NULL, y = "Standardized Ratio") +
@@ -83,12 +97,12 @@ data %>%
 ```{r}
 
 data %>% 
-  filter(Measure == "1. Population coverage") %>%
-  mutate(Value = as.numeric(Value)) %>%
-  arrange(desc(Value)) %>% 
-  ggplot(aes(forcats::fct_inorder(Site), Value)) +
+  filter(measure == "PopulationCoverage") %>%
+  mutate(value = as.numeric(value)) %>%
+  arrange(desc(value)) %>% 
+  ggplot(aes(forcats::fct_inorder(site), value)) +
   geom_col(alpha = .75, fill = "#fdbf11", width = .75 ) +
-  labs(y = "Standardized Score", x = "Year-Quarter",
+  labs(y = "Standardized Score", x = "",
        color= "Site") +
   ggtitle("Population Coverage - Mental Health",
           subtitle = "SAIL Metrics for VISN 2") +
@@ -100,14 +114,14 @@ data %>%
 ```{r}
 
 data %>% 
-  filter(Measure == "1. Population coverage") %>%
-  mutate(value = as.numeric(Value),
-         best_10 = as.numeric(`Best 10%`)) %>% 
+  filter(measure == "PopulationCoverage") %>%
+  mutate(value = as.numeric(value),
+         best_10 = as.numeric(`best_10_percent`)) %>% 
   arrange(desc(value)) %>% 
-  ggplot(aes(forcats::fct_inorder(Site), value)) +
+  ggplot(aes(forcats::fct_inorder(site), value)) +
   geom_point() +
-  geom_segment(aes(x = Site, y = best_10, 
-                   xend = Site, yend = value)) +
+  geom_segment(aes(x = site, y = best_10, 
+                   xend = site, yend = value)) +
   coord_flip()  +
   geom_hline(aes(yintercept = best_10), 
              lty = "solid", color = "#fdbf11") +

@@ -7,9 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VHA SAIL Metrics Datasets • tidyVA</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
 <script src="../../pkgdown.js"></script><meta property="og:title" content="VHA SAIL Metrics Datasets">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -60,7 +59,10 @@
       <a href="../../articles/articles/census-data.html">Merging to Census data</a>
     </li>
     <li>
-      <a href="../../articles/articles/sail-metrics.html">VHA SAIL metrics</a>
+      <a href="../../articles/articles/sail-metrics.html">VHA SAIL Metrics Datasets</a>
+    </li>
+    <li>
+      <a href="../../articles/tidyva.html">Basic Usage of tidyVA</a>
     </li>
   </ul>
 </li>
@@ -81,7 +83,6 @@
 <!--/.navbar -->
 
       
-
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -95,115 +96,138 @@
 
     
     
-<p>VA SAIL metrics are a way of summarizing VA hospital performance data. Individual data sets by location are available for download from <a href="https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp">VA.gov</a>. These are excel datasets formatted with banners and special characters.</p>
-<p>When provided a file’s url, <code>sail_tidy</code> downloads, imports, and wrangles the dataset into a format that’s easier to utilize in R.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyVA)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; Attaching package: 'dplyr'</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; The following objects are masked from 'package:stats':</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt;     filter, lag</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt; The following objects are masked from 'package:base':</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt;     intersect, setdiff, setequal, union</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">albany_sail &lt;-<span class="st"> </span><span class="kw">sail_tidy</span>(<span class="st">"https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_albany_fy19q1.xlsx"</span>)</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(albany_sail)</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; Observations: 79</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; Variables: 6</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; $ Measure                &lt;chr&gt; "Acute care mortality", "1. Acute care Standar…</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; $ `Measure Unit`         &lt;chr&gt; NA, "O/E", "O/E", "%", "%", "%", "%", "%", NA,…</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; $ `Best 10%`             &lt;chr&gt; NA, "0.469", "0.740", "7.219", "5.676", "7.820…</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; $ `10th-50th-90th ptile` &lt;chr&gt; NA, "0.469 - 0.857 - 1.193", "0.740 - 0.952 - …</span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; $ Site                   &lt;chr&gt; "Albany", "Albany", "Albany", "Albany", "Alban…</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; $ Value                  &lt;chr&gt; NA, "0.898", "0.923", "8.191", "8.726", "7.667…</span></a></code></pre></div>
+<p>VA SAIL metrics are a way of summarizing VA hospital performance data. Individual data sets by location are available for download from <a href="https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improvement_and_Learning_SAIL.asp">VA.gov</a>. These are excel files formatted with banners and special characters that produce a large amount of <em>dirtiness</em> when the data are imported into R:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"></a>
+<a class="sourceLine" id="cb1-2" title="2">file &lt;-<span class="st"> </span>curl<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/curl/topics/curl_download">curl_download</a></span>(<span class="st">"https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_albany_fy19q1.xlsx"</span>, </a>
+<a class="sourceLine" id="cb1-3" title="3">                            <span class="dt">destfile =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempfile</a></span>())</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">data_dirty &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/message">suppressMessages</a></span>(readxl<span class="op">::</span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(file))</a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7">dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(data_dirty)</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt; Observations: 102</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; Variables: 18</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; $ `..1`                                                     &lt;chr&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; $ `..2`                                                     &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; $ `..3`                                                     &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; $ `..4`                                                     &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; $ `..5`                                                     &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; $ `..6`                                                     &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co">#&gt; $ `Strategic Analytics for Improvement and Learning (SAIL)` &lt;chr&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="co">#&gt; $ `..8`                                                     &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="co">#&gt; $ `..9`                                                     &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt; $ `..10`                                                    &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="co">#&gt; $ `..11`                                                    &lt;chr&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="co">#&gt; $ `..12`                                                    &lt;chr&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="co">#&gt; $ `..13`                                                    &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-23" title="23"><span class="co">#&gt; $ `..14`                                                    &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; $ `..15`                                                    &lt;chr&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt; $ `..16`                                                    &lt;chr&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt; $ `..17`                                                    &lt;lgl&gt; NA, ...</span></a>
+<a class="sourceLine" id="cb1-27" title="27"><span class="co">#&gt; $ `..18`                                                    &lt;chr&gt; NA, ...</span></a></code></pre></div>
+<div id="sail_tidy" class="section level3">
+<h3 class="hasAnchor">
+<a href="#sail_tidy" class="anchor"></a>sail_tidy</h3>
+<p>To make these data easier to handle in R, <code>sail_tidy</code> will download, import, and wrangle the dataset into a clean data frame that’s easier to analyze in R.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyVA)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6">albany_sail &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/sail_tidy.html">sail_tidy</a></span>(<span class="st">"https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_albany_fy19q1.xlsx"</span>)</a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="kw">glimpse</span>(albany_sail)</a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; Observations: 62</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; Variables: 8</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt; $ label               &lt;chr&gt; "Acute care Standardized Mortality Ratio (...</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt; $ measure_unit        &lt;chr&gt; "O/E", "O/E", "%", "%", "%", "%", "%", "O/...</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; $ preferred_direction &lt;chr&gt; "&lt;U+2193&gt;", "&lt;U+2193&gt;", "&lt;U+2193&gt;", "&lt;U+2193&gt;", "&lt;U+2193&gt;", "&lt;U+2193&gt;", "&lt;U+2193&gt;", "&lt;U+2193&gt;", "&lt;U+2193&gt;...</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; $ best_10_percent     &lt;chr&gt; "0.469", "0.740", "7.219", "5.676", "7.820...</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; $ ntiles_10_50_90     &lt;chr&gt; "0.469 - 0.857 - 1.193", "0.740 - 0.952 - ...</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; $ site                &lt;chr&gt; "Albany", "Albany", "Albany", "Albany", "A...</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; $ value               &lt;chr&gt; "0.898", "0.923", "8.191", "8.726", "7.667...</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; $ measure             &lt;chr&gt; "AcuteCareStandardizedMortalityRatioSmr", ...</span></a></code></pre></div>
 <p>Using <code>map_df</code> from the <strong>purrr</strong> package you can create a data frame of metrics from several sites:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">albany &lt;-<span class="st">  "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_albany_fy19q1.xlsx"</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">syracuse &lt;-<span class="st"> "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_syracuse_fy19q1.xlsx"</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">bath &lt;-<span class="st"> "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_bath_fy19q1.xlsx"</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">buffalo &lt;-<span class="st"> "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_buffalo_fy19q1.xlsx"</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">bronx &lt;-<span class="st"> "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_bronx_fy19q1.xlsx"</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">links &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(albany, syracuse, bath,</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">           buffalo,bronx)</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">data &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(links, sail_tidy)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
+<a class="sourceLine" id="cb3-2" title="2">albany &lt;-<span class="st">  "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_albany_fy19q1.xlsx"</span></a>
+<a class="sourceLine" id="cb3-3" title="3">syracuse &lt;-<span class="st"> "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_syracuse_fy19q1.xlsx"</span></a>
+<a class="sourceLine" id="cb3-4" title="4">bath &lt;-<span class="st"> "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_bath_fy19q1.xlsx"</span></a>
+<a class="sourceLine" id="cb3-5" title="5">buffalo &lt;-<span class="st"> "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_buffalo_fy19q1.xlsx"</span></a>
+<a class="sourceLine" id="cb3-6" title="6">bronx &lt;-<span class="st"> "https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-2_bronx_fy19q1.xlsx"</span></a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8">links &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(albany, syracuse, bath,</a>
+<a class="sourceLine" id="cb3-9" title="9">           buffalo,bronx)</a>
+<a class="sourceLine" id="cb3-10" title="10"></a>
+<a class="sourceLine" id="cb3-11" title="11">data &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(links, sail_tidy)</a></code></pre></div>
 <p>This can then easily be explored within the <strong>tidyverse</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>(Measure)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; # A tibble: 79 x 1</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;    Measure                                                  </span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt;                                                    </span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt;  1 Acute care mortality                                     </span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;  2 1. Acute care Standardized Mortality Ratio (SMR)         </span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;  3 2. Acute care 30-day Standardized Mortality Ratio (SMR30)</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt;  4 a. AMI RSMR                                              </span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;  5 b. CHF RSMR                                              </span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt;  6 c. Pneumonia RSMR                                        </span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt;  7 d. COPD RSMR                                             </span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt;  8 e. Stroke RSMR                                           </span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt;  9 Avoidable adverse events                                 </span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; 10 1. In-hospital complications                             </span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; # … with 69 more rows</span></a></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(Measure <span class="op">==</span><span class="st">"1. Acute care Standardized Mortality Ratio (SMR)"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">SMR =</span> <span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(Value)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span>(Site, SMR), SMR)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> Site, <span class="dt">y =</span> <span class="dv">0</span>, </a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">                   <span class="dt">xend =</span> Site, <span class="dt">yend =</span> SMR)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="fl">0.409</span>, <span class="dt">lty =</span> <span class="st">"dashed"</span>, <span class="dt">color =</span> <span class="st">"darkred"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">"Standardized Ratio"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Acute Care Standardized Mortality Ratio (SMR)"</span>,</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">          <span class="dt">subtitle =</span> <span class="st">"VISN 2 - 2019 Q1"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">grid =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p><img src="sail-metrics_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(Measure <span class="op">==</span><span class="st"> "1. Population coverage"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Value =</span> <span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(Value)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(Value)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(forcats<span class="op">::</span><span class="kw"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span>(Site), Value)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="dt">alpha =</span> <span class="fl">.75</span>, <span class="dt">fill =</span> <span class="st">"#fdbf11"</span>, <span class="dt">width =</span> <span class="fl">.75</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">y =</span> <span class="st">"Standardized Score"</span>, <span class="dt">x =</span> <span class="st">"Year-Quarter"</span>,</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">       <span class="dt">color=</span> <span class="st">"Site"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Population Coverage - Mental Health"</span>,</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">          <span class="dt">subtitle =</span> <span class="st">"SAIL Metrics for VISN 2"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">grid =</span> <span class="st">"XY"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">distinct</span>(measure)</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; # A tibble: 63 x 1</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt;    measure                                      </span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt;    &lt;chr&gt;                                        </span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt;  1 AcuteCareStandardizedMortalityRatioSmr       </span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt;  2 AcuteCare30DayStandardizedMortalityRatioSmr30</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt;  3 AmiRsmr                                      </span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt;  4 ChfRsmr                                      </span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt;  5 PneumoniaRsmr                                </span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt;  6 CopdRsmr                                     </span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt;  7 StrokeRsmr                                   </span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;  8 InHospitalComplications                      </span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt;  9 CatheterAssociatedUrinaryTractInfection      </span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 10 CentralLineAssociatedBloodstreamInfection    </span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; # ... with 53 more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"></a>
+<a class="sourceLine" id="cb5-2" title="2">data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(measure <span class="op">==</span><span class="st">"AcuteCareStandardizedMortalityRatioSmr"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">SMR =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(value)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/reorder.factor">reorder</a></span>(site, SMR), SMR)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> site, <span class="dt">y =</span> <span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb5-8" title="8">                   <span class="dt">xend =</span> site, <span class="dt">yend =</span> SMR)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="fl">0.409</span>, <span class="dt">lty =</span> <span class="st">"dashed"</span>, <span class="dt">color =</span> <span class="st">"darkred"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">"Standardized Ratio"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Acute Care Standardized Mortality Ratio (SMR)"</span>,</a>
+<a class="sourceLine" id="cb5-13" title="13">          <span class="dt">subtitle =</span> <span class="st">"VISN 2 - 2019 Q1"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">grid =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="sail-metrics_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(Measure <span class="op">==</span><span class="st"> "1. Population coverage"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">value =</span> <span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(Value),</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">         <span class="dt">best_10 =</span> <span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="st">`</span><span class="dt">Best 10%</span><span class="st">`</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(value)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(forcats<span class="op">::</span><span class="kw"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span>(Site), value)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> Site, <span class="dt">y =</span> best_<span class="dv">10</span>, </a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">                   <span class="dt">xend =</span> Site, <span class="dt">yend =</span> value)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>()  <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">yintercept =</span> best_<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">             <span class="dt">lty =</span> <span class="st">"solid"</span>, <span class="dt">color =</span> <span class="st">"#fdbf11"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">"Standardized Score"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"VISN 2 Mental Health Coverage"</span>,</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16">          <span class="dt">subtitle =</span> <span class="st">"Distance from Best 10%"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">grid =</span> <span class="st">"Y"</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"></a>
+<a class="sourceLine" id="cb6-2" title="2">data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(measure <span class="op">==</span><span class="st"> "PopulationCoverage"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(value)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(forcats<span class="op">::</span><span class="kw"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span>(site), value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">alpha =</span> <span class="fl">.75</span>, <span class="dt">fill =</span> <span class="st">"#fdbf11"</span>, <span class="dt">width =</span> <span class="fl">.75</span> ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Standardized Score"</span>, <span class="dt">x =</span> <span class="st">""</span>,</a>
+<a class="sourceLine" id="cb6-9" title="9">       <span class="dt">color=</span> <span class="st">"Site"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Population Coverage - Mental Health"</span>,</a>
+<a class="sourceLine" id="cb6-11" title="11">          <span class="dt">subtitle =</span> <span class="st">"SAIL Metrics for VISN 2"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">grid =</span> <span class="st">"XY"</span>)</a></code></pre></div>
 <p><img src="sail-metrics_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"></a>
+<a class="sourceLine" id="cb7-2" title="2">data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(measure <span class="op">==</span><span class="st"> "PopulationCoverage"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(value),</a>
+<a class="sourceLine" id="cb7-5" title="5">         <span class="dt">best_10 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(<span class="st">`</span><span class="dt">best_10_percent</span><span class="st">`</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(forcats<span class="op">::</span><span class="kw"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span>(site), value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> site, <span class="dt">y =</span> best_<span class="dv">10</span>, </a>
+<a class="sourceLine" id="cb7-10" title="10">                   <span class="dt">xend =</span> site, <span class="dt">yend =</span> value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="st">  </span><span class="kw">coord_flip</span>()  <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> best_<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb7-13" title="13">             <span class="dt">lty =</span> <span class="st">"solid"</span>, <span class="dt">color =</span> <span class="st">"#fdbf11"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">"Standardized Score"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"VISN 2 Mental Health Coverage"</span>,</a>
+<a class="sourceLine" id="cb7-16" title="16">          <span class="dt">subtitle =</span> <span class="st">"Distance from Best 10%"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">grid =</span> <span class="st">"Y"</span>) </a></code></pre></div>
+<p><img src="sail-metrics_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-
       </div>
 
 </div>
-
 
 
       <footer><div class="copyright">
@@ -211,14 +235,12 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
-
       </footer>
 </div>
 
   
-
 
   </body>
 </html>
