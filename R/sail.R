@@ -22,7 +22,7 @@ sail_tidy <- function(url){
 
   data <- suppressMessages(readxl::read_excel(file, skip = 26)) %>%
     janitor::remove_empty("cols") %>%
-    tidyr::gather(site, value, c(4)) %>%
+    tidyr::gather(c(4), key = site, value = value) %>%
     janitor::clean_names() %>%
     dplyr::rename(ntiles_10_50_90 = .data$x10th_50th_90th_ptile)
 

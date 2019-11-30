@@ -24,7 +24,8 @@ Imports:
     sf,
     tibble,
     tidyr,
-    janitor
+    janitor,
+    stringr
 Suggests:
     devtools,
     knitr,

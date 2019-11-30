@@ -11,5 +11,6 @@
 #' @importFrom rlang .data
 #' @importFrom tidyr gather separate
 #' @importFrom janitor remove_empty clean_names make_clean_names
+#' @importFrom stringr str_trim
 #' @importFrom ggplot2 theme_minimal theme margin element_blank element_line element_text
 NULL
