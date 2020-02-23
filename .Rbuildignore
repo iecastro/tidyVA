@@ -12,3 +12,4 @@
 ^tidyVA\.Rcheck$
 ^tidyVA.*\.tar\.gz$
 ^tidyVA.*\.tgz$
+^appveyor\.yml$

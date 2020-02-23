@@ -2,6 +2,11 @@
 # sf-dep template: https://github.com/edzer/sf_dep/blob/master/.travis.yml
 
 language: r
+r:
+  - oldrel
+  - release
+  - devel
+
 cache: packages
 sudo: required
 dist: trusty
