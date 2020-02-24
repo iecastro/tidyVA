@@ -20,9 +20,12 @@ sail_tidy <- function(url){
 
   file <- curl::curl_download(url, destfile = tempfile())
 
-  data <- suppressMessages(readxl::read_excel(file, skip = 26)) %>%
+  data <- suppressMessages(
+    readxl::read_excel(file, skip = 26)) %>%
     janitor::remove_empty("cols") %>%
-    tidyr::gather(c(4), key = site, value = value) %>%
+    tidyr::gather(c(4),
+                  key = .data$site,
+                  value = .data$value) %>%
     janitor::clean_names() %>%
     dplyr::rename(ntiles_10_50_90 = .data$x10th_50th_90th_ptile)
 
@@ -33,7 +36,9 @@ sail_tidy <- function(url){
                       sep = "\\."))
 
   data <- data %>%
-    dplyr::mutate(label = ifelse(is.na(.data$label), .data$prefix, .data$label),
+    dplyr::mutate(label = ifelse(is.na(.data$label),
+                                 .data$prefix,
+                                 .data$label),
                   label = stringr::str_trim(.data$label),
                   measure = janitor::make_clean_names(
                     .data$label,

@@ -28,12 +28,12 @@ shift_geo <- function(data){
     matrix(c(cos(r), sin(r), -sin(r), cos(r)), nrow = 2, ncol = 2)
   }
 
-   data <- st_transform(data,proj)
-   states <- tidyVA::states %>% st_transform(proj)
-   proj_aea <- st_intersection(states, data)
+  data <- st_transform(data,proj)
+  states <- tidyVA::states %>% st_transform(proj)
+  proj_aea <- st_intersection(states, data)
 
   # extract, then rotate, shrink & move alaska (and reset projection)
-  alaska <- proj_aea %>% filter(STATEFP == "02")
+  alaska <- proj_aea %>% filter(.data$STATEFP == "02")
   alaska_geom <- st_geometry(alaska)
 
   alaska_shift <- alaska_geom + c(-3450000, -2500000)
@@ -43,7 +43,7 @@ shift_geo <- function(data){
   alaska <- st_set_geometry(alaska,alaska_shift)
 
   # extract, then rotate & shift hawaii
-  hawaii <- proj_aea %>% filter(STATEFP == "15")
+  hawaii <- proj_aea %>% filter(.data$STATEFP == "15")
   hawaii_geom <- st_geometry(hawaii)
 
   hawaii_shift <- hawaii_geom + c(4250000,-10500)
