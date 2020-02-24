@@ -5,15 +5,19 @@
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis build
 status](https://travis-ci.org/iecastro/tidyVA.svg?branch=master)](https://travis-ci.org/iecastro/tidyVA)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/iecastro/tidyVA?branch=master&svg=true)](https://ci.appveyor.com/project/iecastro/tidyVA)
 <!-- badges: end -->
 
 # tidyVA
 
 The goal of **tidyVA** is to provide [simple
 features](https://r-spatial.github.io/sf/articles/sf1.html) of Veterans
-Health Administration geographies. Data included are *tidy* data frames
-of VHA spatial data obtained from
+Health Administration geographies. Data included are tidy data frames of
+VHA spatial data obtained from
 [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties).
+*Please note the site is no longer operational while VA establishes a
+new open data portal.*
 
 The benefit of simple features in R is that they allow for [tidy spatial
 analysis](https://edzer.github.io/UseR2017/geostat2018.html#tidyverse-list-columns).
@@ -30,8 +34,8 @@ remotes::install_github("iecastro/tidyVA")
 
 ## VHA Geographies
 
-The following included datasets are sf tibbles of VHA geographies and
-have a common CRS - EPSG: 4326.
+The following included datasets are sf-tibbles of VHA geographies with a
+common CRS - EPSG: 4326.
 
 Summarized descriptions from
 [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties)
@@ -89,19 +93,19 @@ ggplot() +
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-Although accurate, this output is not very easy to work with. But, since
-this is in tidy format, we can easily filter and manipulate the data.
+Although accurate, this output is not very easy to work with. Since this
+is in tidy format, though, we can easily filter and manipulate the data.
 
 ``` r
 glimpse(submarket)
 #> Observations: 153
 #> Variables: 6
-#> $ VISN       <chr> "01", "01", "01", "01", "02", "02", "02", "02", "02", "02"…
-#> $ MARKET     <chr> "01-a", "01-b", "01-c", "01-d", "02-a", "02-b", "02-d", "0…
-#> $ SUBMARKET  <chr> "01-a-9", "01-b-9", "01-c-9", "01-d-9", "02-a-9", "02-b-9"…
-#> $ Shape_Leng <dbl> 38.391428, 81.160361, 13.413957, 14.839457, 13.081583, 18.…
-#> $ Shape_Area <dbl> 1.78751288, 9.66806953, 5.47709016, 2.19550641, 4.90793287…
-#> $ geometry   <MULTIPOLYGON [°]> MULTIPOLYGON (((-71.56974 4..., MULTIPOLYGON …
+#> $ VISN       <chr> "01", "01", "01", "01", "02", "02", "02", "02", "02", "0...
+#> $ MARKET     <chr> "01-a", "01-b", "01-c", "01-d", "02-a", "02-b", "02-d", ...
+#> $ SUBMARKET  <chr> "01-a-9", "01-b-9", "01-c-9", "01-d-9", "02-a-9", "02-b-...
+#> $ Shape_Leng <dbl> 38.391428, 81.160361, 13.413957, 14.839457, 13.081583, 1...
+#> $ Shape_Area <dbl> 1.78751288, 9.66806953, 5.47709016, 2.19550641, 4.907932...
+#> $ geometry   <MULTIPOLYGON [°]> MULTIPOLYGON (((-71.56974 4..., MULTIPOLYGO...
 ```
 
 ``` r
@@ -120,27 +124,32 @@ visn2
     #> # A tibble: 10 x 6
     #>    VISN  MARKET SUBMARKET Shape_Leng Shape_Area                         geometry
     #>  * <chr> <chr>  <chr>          <dbl>      <dbl>               <MULTIPOLYGON [°]>
-    #>  1 02    02-a   02-a-9         13.1      4.91   (((-73.34312 45.01084, -73.3446…
-    #>  2 02    02-b   02-b-9         18.8      4.01   (((-76.18704 43.66566, -76.1869…
-    #>  3 02    02-d   02-d-9          6.58     1.25   (((-78.90518 42.93351, -78.9050…
-    #>  4 02    02-e   02-e-1          2.49     0.191  (((-77.97621 43.36874, -77.9753…
-    #>  5 02    02-e   02-e-2          6.01     0.656  (((-76.94668 43.25894, -76.9463…
-    #>  6 02    02-f   02-f-2          6.14     1.63   (((-76.94756 42.76441, -76.9477…
-    #>  7 02    02-g   02-g-9         25.2      0.335  (((-73.72961 40.59637, -73.7289…
-    #>  8 02    02-h   02-h-1          9.51     0.999  (((-73.89687 40.79565, -73.8970…
-    #>  9 02    02-h   02-h-3          5.92     0.0717 (((-74.20241 40.57956, -74.2023…
-    #> 10 02    02-i   02-i-9         17.4      1.24   (((-74.30019 39.50628, -74.3048…
+    #>  1 02    02-a   02-a-9         13.1      4.91   (((-73.34312 45.01084, -73.3446~
+    #>  2 02    02-b   02-b-9         18.8      4.01   (((-76.18704 43.66566, -76.1869~
+    #>  3 02    02-d   02-d-9          6.58     1.25   (((-78.90518 42.93351, -78.9050~
+    #>  4 02    02-e   02-e-1          2.49     0.191  (((-77.97621 43.36874, -77.9753~
+    #>  5 02    02-e   02-e-2          6.01     0.656  (((-76.94668 43.25894, -76.9463~
+    #>  6 02    02-f   02-f-2          6.14     1.63   (((-76.94756 42.76441, -76.9477~
+    #>  7 02    02-g   02-g-9         25.2      0.335  (((-73.72961 40.59637, -73.7289~
+    #>  8 02    02-h   02-h-1          9.51     0.999  (((-73.89687 40.79565, -73.8970~
+    #>  9 02    02-h   02-h-3          5.92     0.0717 (((-74.20241 40.57956, -74.2023~
+    #> 10 02    02-i   02-i-9         17.4      1.24   (((-74.30019 39.50628, -74.3048~
 
 ``` r
 ggplot() + 
-  geom_sf(data = visn2, aes(fill = MARKET), color = NA) +
-  geom_sf(data = visn2, fill = NA, color = "#ffffff", size = .25)
+  geom_sf(data = visn2, 
+          aes(fill = MARKET), 
+          color = NA) +
+  geom_sf(data = visn2, 
+          fill = NA, 
+          color = "#ffffff", 
+          size = .25)
   
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
-# Functions
+# Some Functions
 
 ### `shift_geo`
 
@@ -158,10 +167,9 @@ shift_geo(submarket) %>%
 
 ### `theme_va()`
 
-`theme_va()` is a ggplot theme with some default colors and plotting
-parameters. The core of this function is `theme_ipsum` from
-[hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/), with some
-modifications and defaults.
+`theme_va()` is a copy of `theme_ipsum` from
+[hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/). It’s a ggplot
+theme with some color and plotting modifications to the defaults.
 
 ``` r
 data("visn")
@@ -186,27 +194,26 @@ url](https://www.va.gov/QUALITYOFCARE/measure-up/Strategic_Analytics_for_Improve
 
 ``` r
 sail_tidy("https://www.va.gov/QUALITYOFCARE/SAIL_FY19_Q1/SAIL-5_clarksburg_fy19q1.xlsx")
-#> # A tibble: 79 x 6
-#>    Measure              `Measure Unit` `Best 10%` `10th-50th-90th … Site   Value
-#>    <chr>                <chr>          <chr>      <chr>             <chr>  <chr>
-#>  1 Acute care mortality <NA>           <NA>       <NA>              Clark… <NA> 
-#>  2 1. Acute care Stand… O/E            0.469      0.469 - 0.857 - … Clark… 1.360
-#>  3 2. Acute care 30-da… O/E            0.740      0.740 - 0.952 - … Clark… 1.109
-#>  4 a. AMI RSMR          %              7.219      7.219 - 7.666 - … Clark… 8.106
-#>  5 b. CHF RSMR          %              5.676      5.676 - 6.820 - … Clark… 8.300
-#>  6 c. Pneumonia RSMR    %              7.820      7.820 - 9.026 - … Clark… 11.9…
-#>  7 d. COPD RSMR         %              4.402      4.402 - 5.942 - … Clark… 5.965
-#>  8 e. Stroke RSMR       %              5.134      5.134 - 5.933 - … Clark… 5.531
-#>  9 Avoidable adverse e… <NA>           <NA>       <NA>              Clark… <NA> 
-#> 10 1. In-hospital comp… O/E            0.000      0.000 - 0.834 - … Clark… 1.580
-#> # … with 69 more rows
+#> # A tibble: 63 x 8
+#>    label measure_unit preferred_direc~ best_10_percent ntiles_10_50_90 site 
+#>    <chr> <chr>        <chr>            <chr>           <chr>           <chr>
+#>  1 Acut~ O/E          <U+2193>                0.469           0.469 - 0.857 ~ Clar~
+#>  2 Acut~ O/E          <U+2193>                0.740           0.740 - 0.952 ~ Clar~
+#>  3 AMI ~ %            <U+2193>                7.219           7.219 - 7.666 ~ Clar~
+#>  4 CHF ~ %            <U+2193>                5.676           5.676 - 6.820 ~ Clar~
+#>  5 Pneu~ %            <U+2193>                7.820           7.820 - 9.026 ~ Clar~
+#>  6 COPD~ %            <U+2193>                4.402           4.402 - 5.942 ~ Clar~
+#>  7 Stro~ %            <U+2193>                5.134           5.134 - 5.933 ~ Clar~
+#>  8 In-h~ O/E          <U+2193>                0.000           0.000 - 0.834 ~ Clar~
+#>  9 Cath~ inf/1k devi~ <U+2193>                0.000           0.000 - 0.446 ~ Clar~
+#> 10 Cent~ inf/1k devi~ <U+2193>                0.000           0.000 - 0.395 ~ Clar~
+#> # ... with 53 more rows, and 2 more variables: value <chr>, measure <chr>
 ```
 
 # Info
 
-Development of this package is partly supported by a research grant from
+Development of this package partly supported by a research grant from
 the National Institute on Alcohol Abuse and Alcoholism - NIH Grant
 \#R34AA026745-01.
 
-This product is not endorsed nor certified by either the VA or
-NIH/NIAAA.
+This product is not endorsed nor certified by either VA or NIH/NIAAA.
