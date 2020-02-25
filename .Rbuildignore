@@ -9,6 +9,7 @@
 ^tidyVA\.Rproj$
 ^\.Rproj\.user$
 ^run_setup\.R$
+^use-logo\.R$
 ^tidyVA\.Rcheck$
 ^tidyVA.*\.tar\.gz$
 ^tidyVA.*\.tgz$

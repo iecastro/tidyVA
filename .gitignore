@@ -2,6 +2,7 @@ inst/doc
 .Rproj.user
 .Rhistory
 run_setup.R
+use-logo.R
 tidyVA.Rcheck/
 tidyVA*.tar.gz
 tidyVA*.tgz

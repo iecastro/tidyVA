@@ -9,7 +9,7 @@ status](https://travis-ci.org/iecastro/tidyVA.svg?branch=master)](https://travis
 status](https://ci.appveyor.com/api/projects/status/github/iecastro/tidyVA?branch=master&svg=true)](https://ci.appveyor.com/project/iecastro/tidyVA)
 <!-- badges: end -->
 
-# tidyVA
+# tidyVA <img src='man/figures/logo.png' align="right" height="139" />
 
 The goal of **tidyVA** is to provide [simple
 features](https://r-spatial.github.io/sf/articles/sf1.html) of Veterans

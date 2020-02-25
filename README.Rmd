@@ -23,7 +23,7 @@ library(ggplot2)
 library(dplyr)
 
 ```
-# tidyVA
+# tidyVA <img src='man/figures/logo.png' align="right" height="139" />
 
 The goal of **tidyVA** is to provide [simple features](https://r-spatial.github.io/sf/articles/sf1.html) of Veterans Health Administration geographies.  Data included are tidy data frames of VHA spatial data obtained from [data.va.gov](https://www.data.va.gov/dataset/veterans-integrated-services-networks-visn-markets-submarkets-sectors-and-counties). *Please note the site is no longer operational while VA establishes a new open data portal.*  
 
