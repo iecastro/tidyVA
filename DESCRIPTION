@@ -5,10 +5,9 @@ Authors@R:
     person(given = "Ivan",
            family = "Castro",
            role = c("aut", "cre"),
-           email = "ivan.castro@va.gov")
-Description: Simple features of Veterans Health Administration
-    geographies.  Note that this package is not officially published or
-    endorsed by the Dept. of Veterans Affairs.
+           email = "iecastro@syr.edu")
+Description: This package provides spatial datasets of Veterans Health Administration
+    geographies. 
 License: MIT + file LICENSE
 URL: https://github.com/iecastro/tidyVA
 BugReports: https://github.com/iecastro/tidyVA/issues
