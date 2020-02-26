@@ -1,6 +1,9 @@
+url: https://iecastro.github.io/tidyVA/
+
 template:
   params:
     bootswatch: flatly
+    ganalytics: UA-125864716-3
 
 reference:
 - title: Functions

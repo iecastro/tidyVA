@@ -1,0 +1,11 @@
+pandoc: 2.7.2
+pkgdown: 1.4.1
+pkgdown_sha: ~
+articles:
+  census-data: articles/census-data.html
+  sail-metrics: articles/sail-metrics.html
+  tidyva: tidyva.html
+urls:
+  reference: https://iecastro.github.io/tidyVA//reference
+  article: https://iecastro.github.io/tidyVA//articles
+
