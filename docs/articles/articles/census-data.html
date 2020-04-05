@@ -23,7 +23,13 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-125864716-3"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125864716-3');
+</script>
 </head>
 <body>
     <div class="container template-article">
@@ -118,7 +124,7 @@
 <a class="sourceLine" id="cb1-13" title="13"></a>
 <a class="sourceLine" id="cb1-14" title="14"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"county"</span>)</a>
 <a class="sourceLine" id="cb1-15" title="15"></a>
-<a class="sourceLine" id="cb1-16" title="16">countyshift &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/shift_geo.html">shift_geo</a></span>(county)</a>
+<a class="sourceLine" id="cb1-16" title="16">countyshift &lt;-<span class="st"> </span><span class="kw">shift_geo</span>(county)</a>
 <a class="sourceLine" id="cb1-17" title="17"><span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></a></code></pre></div>
 <p>VA Healthcare Coverage at the county-level</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"></a>
@@ -139,7 +145,7 @@
 <a class="sourceLine" id="cb2-16" title="16"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"visn"</span>)</a>
 <a class="sourceLine" id="cb2-17" title="17"></a>
 <a class="sourceLine" id="cb2-18" title="18">visn &lt;-<span class="st"> </span>visn <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-19" title="19"><span class="st">  </span><span class="kw"><a href="../../reference/shift_geo.html">shift_geo</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="st">  </span><span class="kw">shift_geo</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-20" title="20"><span class="st">  </span><span class="kw">group_by</span>(VISN) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-21" title="21"><span class="st">  </span><span class="kw">summarise</span>()</a>
 <a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; Please note: Alaska and Hawaii are being shifted and are not to scale.</span></a></code></pre></div>
@@ -148,14 +154,15 @@
 <a class="sourceLine" id="cb3-3" title="3"><span class="st">    </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC, <span class="kw">aes</span>(<span class="dt">fill =</span> var), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span><span class="co">#county layer</span></a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="st">    </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn, <span class="dt">fill =</span> <span class="ot">NA</span>, </a>
 <a class="sourceLine" id="cb3-5" title="5">            <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">.5</span>) <span class="op">+</span><span class="st">   </span><span class="co">#visn layer                 </span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="st">    </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="st">    </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, </a>
-<a class="sourceLine" id="cb3-9" title="9">         <span class="dt">fill =</span> <span class="st">"Count"</span>)</a>
-<a class="sourceLine" id="cb3-10" title="10">}</a>
-<a class="sourceLine" id="cb3-11" title="11"></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(VAHC<span class="op">$</span>Total) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VHA Coverage"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-6" title="6"><span class="st">    </span>scico<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/scico/man/ggplot2-scales.html">scale_fill_scico</a></span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma,</a>
+<a class="sourceLine" id="cb3-7" title="7">                            <span class="dt">palette =</span> <span class="st">"tokyo"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="st">    </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, </a>
+<a class="sourceLine" id="cb3-10" title="10">         <span class="dt">fill =</span> <span class="st">"Count"</span>)</a>
+<a class="sourceLine" id="cb3-11" title="11">}</a>
+<a class="sourceLine" id="cb3-12" title="12"></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(VAHC<span class="op">$</span>Total) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VHA Coverage"</span>)</a></code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(VAHC<span class="op">$</span>TotalFemale) <span class="op">+</span><span class="st"> </span></a>
@@ -169,12 +176,13 @@
 <a class="sourceLine" id="cb5-4" title="4">          <span class="kw">aes</span>(<span class="dt">fill =</span> (TotalFemale<span class="op">/</span>TotalMale)<span class="op">*</span><span class="dv">100</span>), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">       </span></a>
 <a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn, </a>
 <a class="sourceLine" id="cb5-6" title="6">          <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">.5</span>) <span class="op">+</span><span class="st">                  </span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, </a>
-<a class="sourceLine" id="cb5-9" title="9">       <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,</a>
-<a class="sourceLine" id="cb5-11" title="11">          <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans </span><span class="ch">\n</span><span class="st">per 100 Male Veterans"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-12" title="12"><span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb5-7" title="7"><span class="st">  </span>scico<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/scico/man/ggplot2-scales.html">scale_fill_scico</a></span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma,</a>
+<a class="sourceLine" id="cb5-8" title="8">                          <span class="dt">palette =</span> <span class="st">"tokyo"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, </a>
+<a class="sourceLine" id="cb5-10" title="10">       <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,</a>
+<a class="sourceLine" id="cb5-12" title="12">          <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans </span><span class="ch">\n</span><span class="st">per 100 Male Veterans"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"market"</span>)</a>
 <a class="sourceLine" id="cb6-2" title="2"></a>
@@ -182,32 +190,18 @@
 <a class="sourceLine" id="cb6-4" title="4">market &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(market,proj)</a>
 <a class="sourceLine" id="cb6-5" title="5"></a>
 <a class="sourceLine" id="cb6-6" title="6"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC[VAHC<span class="op">$</span>VISN <span class="op">==</span><span class="st"> "19"</span>,],</a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC[VAHC<span class="op">$</span>VISN <span class="op">==</span><span class="st"> "17"</span>,],</a>
 <a class="sourceLine" id="cb6-8" title="8">        <span class="kw">aes</span>(<span class="dt">fill =</span> (TotalFemale<span class="op">/</span>TotalMale)<span class="op">*</span><span class="dv">100</span>), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> market[market<span class="op">$</span>VISN <span class="op">==</span><span class="st"> "19"</span>,], </a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> market[market<span class="op">$</span>VISN <span class="op">==</span><span class="st"> "17"</span>,], </a>
 <a class="sourceLine" id="cb6-10" title="10">          <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">.5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-12" title="12"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates </span><span class="ch">\n</span><span class="st">Geography: Markets in VISN 19"</span>, </a>
-<a class="sourceLine" id="cb6-13" title="13">       <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-14" title="14"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,</a>
-<a class="sourceLine" id="cb6-15" title="15">          <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans per 100 </span><span class="ch">\n</span><span class="st">Male Veterans at the county-level"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-16" title="16"><span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
+<a class="sourceLine" id="cb6-11" title="11"><span class="st">   </span>scico<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/scico/man/ggplot2-scales.html">scale_fill_scico</a></span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma,</a>
+<a class="sourceLine" id="cb6-12" title="12">                          <span class="dt">palette =</span> <span class="st">"tokyo"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates </span><span class="ch">\n</span><span class="st">Geography: Markets in VISN 17"</span>, </a>
+<a class="sourceLine" id="cb6-14" title="14">       <span class="dt">fill =</span> <span class="st">"Ratio"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Sex ratio of Veterans with VA Health Coverage:"</span>,</a>
+<a class="sourceLine" id="cb6-16" title="16">          <span class="dt">subtitle =</span> <span class="st">"calculated as number of Female Veterans per 100 </span><span class="ch">\n</span><span class="st">Male Veterans at the county-level"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="st">  </span><span class="kw">theme_va</span>(<span class="dt">map =</span> <span class="ot">TRUE</span>, <span class="dt">grid_col =</span> <span class="st">"transparent"</span>) </a></code></pre></div>
 <p><img src="census-data_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> VAHC[VAHC<span class="op">$</span>VISN <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"01"</span>,<span class="st">"02"</span>,<span class="st">"04"</span>),],</a>
-<a class="sourceLine" id="cb7-4" title="4">          <span class="kw">aes</span>(<span class="dt">fill =</span> Total), <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> market[market<span class="op">$</span>VISN <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"01"</span>,<span class="st">"02"</span>,<span class="st">"04"</span>),], </a>
-<a class="sourceLine" id="cb7-6" title="6">          <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"deeppink"</span>, <span class="dt">size =</span> <span class="fl">.4</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> visn[visn<span class="op">$</span>VISN <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"01"</span>,<span class="st">"02"</span>,<span class="st">"04"</span>),], </a>
-<a class="sourceLine" id="cb7-8" title="8">          <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">"#ffffff"</span>, <span class="dt">size =</span> <span class="fl">1.2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">"Source: 2017 ACS 5-year Estimates"</span>, </a>
-<a class="sourceLine" id="cb7-11" title="11">       <span class="dt">fill =</span> <span class="st">"Count"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Total Veterans with VA Health Coverage"</span>, </a>
-<a class="sourceLine" id="cb7-13" title="13">          <span class="dt">subtitle =</span> <span class="st">"VA Healthcare Markets within VISN 4, NY/NJ, and New England Networks"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="st">  </span><span class="kw"><a href="../../reference/theme_va.html">theme_va</a></span>(<span class="dt">map =</span> <span class="ot">TRUE</span>, <span class="dt">grid_col =</span> <span class="st">"transparent"</span>)</a></code></pre></div>
-<p><img src="census-data_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

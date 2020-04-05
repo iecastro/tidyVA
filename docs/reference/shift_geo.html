@@ -60,6 +60,16 @@
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125864716-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125864716-3');
+</script>
+
 
   </head>
 
@@ -140,7 +150,7 @@
     <p>Shift VHA geographies for Alaska and Hawaii</p>
     </div>
 
-    <pre class="usage"><span class='fu'>shift_geo</span>(<span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'>shift_geo</span>(<span class='no'>data</span>, <span class='kw'>conus</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,6 +159,11 @@
       <th>data</th>
       <td><p>The shapefile with the feature geography you want to shift.
 Currently only supports sector and submarket shapefiles.</p></td>
+    </tr>
+    <tr>
+      <th>conus</th>
+      <td><p>if set to TRUE, will only return the continental US
+Defaults to FALSE.</p></td>
     </tr>
     </table>
 

@@ -66,7 +66,8 @@ plot <- function(var){
     geom_sf(data = VAHC, aes(fill = var), color = NA) + #county layer
     geom_sf(data = visn, fill = NA, 
             color = "#ffffff", size = .5) +   #visn layer                 
-    scale_fill_viridis_c(labels = scales::comma) +
+    scico::scale_fill_scico(labels = scales::comma,
+                            palette = "tokyo") +
     theme_va(map = TRUE) + 
     labs(caption = "Source: 2017 ACS 5-year Estimates", 
          fill = "Count")
@@ -97,7 +98,8 @@ ggplot() +
           aes(fill = (TotalFemale/TotalMale)*100), color = NA) +       
   geom_sf(data = visn, 
           fill = NA, color = "#ffffff", size = .5) +                  
-  scale_fill_viridis_c(labels = scales::comma) + 
+  scico::scale_fill_scico(labels = scales::comma,
+                          palette = "tokyo") + 
   labs(caption = "Source: 2017 ACS 5-year Estimates", 
        fill = "Ratio") +
   ggtitle("Sex ratio of Veterans with VA Health Coverage:",
@@ -114,20 +116,21 @@ proj <- sf::st_crs(visn)
 market <- sf::st_transform(market,proj)
 
 ggplot() +
-  geom_sf(data = VAHC[VAHC$VISN == "19",],
+  geom_sf(data = VAHC[VAHC$VISN == "17",],
         aes(fill = (TotalFemale/TotalMale)*100), color = NA) +
-  geom_sf(data = market[market$VISN == "19",], 
+  geom_sf(data = market[market$VISN == "17",], 
           fill = NA, color = "#ffffff", size = .5) +
-  scale_fill_viridis_c(labels = scales::comma) +
-  labs(caption = "Source: 2017 ACS 5-year Estimates \nGeography: Markets in VISN 19", 
+   scico::scale_fill_scico(labels = scales::comma,
+                          palette = "tokyo") +
+  labs(caption = "Source: 2017 ACS 5-year Estimates \nGeography: Markets in VISN 17", 
        fill = "Ratio") + 
   ggtitle("Sex ratio of Veterans with VA Health Coverage:",
           subtitle = "calculated as number of Female Veterans per 100 \nMale Veterans at the county-level") +
-  theme_va(map = TRUE) 
+  theme_va(map = TRUE, grid_col = "transparent") 
 
 ```
 
-```{r}
+```{r, eval=FALSE, echo = FALSE}
 
 ggplot() +
   geom_sf(data = VAHC[VAHC$VISN %in% c("01","02","04"),],
