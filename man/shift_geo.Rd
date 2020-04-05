@@ -4,11 +4,14 @@
 \alias{shift_geo}
 \title{Shift VHA geographies for Alaska and Hawaii}
 \usage{
-shift_geo(data)
+shift_geo(data, conus = FALSE)
 }
 \arguments{
 \item{data}{The shapefile with the feature geography you want to shift.
 Currently only supports sector and submarket shapefiles.}
+
+\item{conus}{if set to TRUE, will only return the continental US
+Defaults to FALSE.}
 }
 \value{
 a [tibble][tibble::tibble-package] of VHA geographies and attributes
