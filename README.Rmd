@@ -150,14 +150,14 @@ knitr::include_graphics("man/figures/README-unnamed-chunk-5-1.png")
 
 `theme_va()` is a copy of `theme_ipsum` from [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/). It's a ggplot theme with some color and plotting modifications to the defaults.  
 
-```{r plot4, eval=FALSE}
+```{r plot4, , eval=FALSE}
 data("visn")
 
 visn %>% 
   ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
   geom_col() + 
   labs(x = "VISN", y = "Shape Area", 
-       caption = "CRS - EPSG:4326") +
+       caption = "Caption here") +
   ggtitle("Shape Area of VA Service Networks", 
           subtitle = "This is an example plot") +
   theme_va(grid = "Y")
@@ -165,7 +165,7 @@ visn %>%
 ```
 
 ```{r img4, echo=FALSE}
-knitr::include_graphics("man/figures/README-unnamed-chunk-6-1.png")
+knitr::include_graphics("man/figures/README-plot4-1.png")
 ```
 
 

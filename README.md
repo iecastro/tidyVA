@@ -178,13 +178,13 @@ visn %>%
   ggplot(aes(reorder(VISN,Shape_Area), Shape_Area)) +
   geom_col() + 
   labs(x = "VISN", y = "Shape Area", 
-       caption = "CRS - EPSG:4326") +
+       caption = "Caption here") +
   ggtitle("Shape Area of VA Service Networks", 
           subtitle = "This is an example plot") +
   theme_va(grid = "Y")
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-plot4-1.png" width="100%" />
 
 ### `sail_tidy`
 

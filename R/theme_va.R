@@ -31,9 +31,9 @@ theme_va <- function(base_family = "", base_size = 11.5,
                      strip_text_face = "plain",
                      caption_family = base_family, caption_size = 9,
                      caption_face = "bold.italic", caption_margin = 10,
-                     axis_text_size = 9,
+                     axis_text_size = 9, axis_text_face = "bold",
                      axis_title_family = subtitle_family, axis_title_size = 10,
-                     axis_title_face = "plain", axis_title_just = "rt",
+                     axis_title_face = "italic", axis_title_just = "rt",
                      plot_margin = margin(15, 15, 15, 15),
                      grid_col = "#cccccc", grid = TRUE, map = FALSE,
                      axis_col = "#cccccc", axis = FALSE, ticks = FALSE) {
@@ -100,8 +100,12 @@ theme_va <- function(base_family = "", base_size = 11.5,
     ret <- ret + theme(axis.text.x=element_blank())
     ret <- ret + theme(axis.text.y=element_blank())
   } else {
-    ret <- ret + theme(axis.text.x=element_text(size=axis_text_size, margin=margin(t=0), color = "black"))
-    ret <- ret + theme(axis.text.y=element_text(size=axis_text_size, margin=margin(r=0), color = "black"))
+    ret <- ret + theme(axis.text.x=element_text(size=axis_text_size,
+                                                margin=margin(t=0),
+                                                color = "#515A5A", face = axis_text_face))
+    ret <- ret + theme(axis.text.y=element_text(size=axis_text_size,
+                                                margin=margin(r=0),
+                                                color = "#515A5A", face = axis_text_face))
   }
 
   ret <- ret + theme(axis.title=element_text(size=axis_title_size, family=axis_title_family))
@@ -119,11 +123,11 @@ theme_va <- function(base_family = "", base_size = 11.5,
   ret <- ret + theme(plot.title=element_text(hjust=0, size=plot_title_size,
                                              margin=margin(b=plot_title_margin),
                                              family=plot_title_family, face=plot_title_face,
-                                             color = "#0a4c6a"))
+                                             color = "#34495E"))
   ret <- ret + theme(plot.subtitle=element_text(hjust=0, size=subtitle_size,
                                                 margin=margin(b=subtitle_margin),
                                                 family=subtitle_family, face=subtitle_face,
-                                                color = "#062635"))
+                                                color = "#34495E"))
   ret <- ret + theme(plot.caption=element_text(hjust=1, size=caption_size,
                                                margin=margin(t=caption_margin),
                                                family=caption_family, face=caption_face,
